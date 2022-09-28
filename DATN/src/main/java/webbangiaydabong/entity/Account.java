@@ -41,5 +41,6 @@ public class Account {
 	Set<Authority> authorities;
 	@OneToMany(mappedBy = "account")
 	private Set<Promotion> danhSachkhuyenmai;
-
+@OneToMany(mappedBy = "account")
+Set<CustommerInfo>danhSachDiaChiGiaoHang;
 }

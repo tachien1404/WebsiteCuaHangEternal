@@ -3,6 +3,7 @@ package webbangiaydabong.entity;
 import java.util.Date;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -40,9 +41,12 @@ private VanChuyen vanChuyen;
 @JoinColumn(name="thanh_toan_id")
 private Payment thanhToan;
 
-@OneToMany(mappedBy = "order")
+@OneToMany(cascade = CascadeType.ALL,  orphanRemoval = true,mappedBy = "order" )
 private Set<OrderDetail>danhSachOrder;
 @ManyToOne
 @JoinColumn(name="promotion_id")
 private Promotion giamgia;
+@ManyToOne
+@JoinColumn(name="custommerinfo_id")
+private CustommerInfo diaChi;
 }
