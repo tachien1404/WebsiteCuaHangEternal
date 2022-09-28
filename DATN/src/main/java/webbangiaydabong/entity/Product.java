@@ -27,7 +27,7 @@ private String name;
 private float price;
 private Integer quantity;
 private Date createDate;//ngày tạo
-private String photo;
+
 private Double inportprice;//giá nhập
 private Double outputprice;//giá xuất 
 private Date updatedate;//ngày sửa sẳn phẩm 

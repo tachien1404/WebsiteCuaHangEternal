@@ -27,7 +27,7 @@ private Date createDate;//ngày tạo
 private Date updatetedDate;//ngày sửa đôiỉ 
 private int value;//dis count
 @ManyToOne
-@JoinColumn(name = "promotion_id")
+@JoinColumn(name = "account_id")
 private Account account;
 
 @OneToMany(mappedBy = "giamgia")
