@@ -2,6 +2,7 @@ package webbangiaydabong.entity;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,7 +29,7 @@ private Date createDate;//ngày đổi trả
 @ManyToOne
 @JoinColumn(name="product_id")
 private Product product;
-@ManyToOne
+@ManyToOne(cascade = CascadeType.PERSIST)
 @JoinColumn(name="order_id")
 private Order order;
 @OneToMany(mappedBy = "orderDetail")
