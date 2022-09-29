@@ -9,5 +9,5 @@ import webbangiaydabong.entity.Product;
 
 public interface ProductRepository extends JpaRepository<Product, Long>{
 	@Query("select p FROM Product p WHERE p.category.id=?1")
-	List<Product> finByCategoryId(Long categoryId);
+	List<Product> finByCategoryId(String categoryId);
 }

@@ -7,7 +7,7 @@ import webbangiaydabong.entity.Product;
 public interface ProductService {
 
 	List<Product> findAll();
-	List<Product> findByCategoryId(Long categoryId);
+	List<Product> findByCategoryId(String categoryId);
 	Product findById(Long id);
 	Product create(Product product);
 	Product update(Product product);
