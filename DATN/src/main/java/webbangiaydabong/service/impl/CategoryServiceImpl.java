@@ -17,5 +17,26 @@ public class CategoryServiceImpl implements CategoryService {
 	public List<Category> findAll() {
 		return categoryRepo.findAll();
 	}
+
+	@Override
+	public Category findById(Long id) {
+		return categoryRepo.findById(id).get();
+	}
+
+	@Override
+	public Category create(Category category) {
+		return categoryRepo.save(category);
+	}
+
+	@Override
+	public Category update(Category category) {
+		return categoryRepo.save(category);
+	}
+
+	@Override
+	public void delete(Long id) {
+		categoryRepo.existsById(id);
+		
+	}
 	
 }
