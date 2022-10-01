@@ -14,4 +14,5 @@ public interface OrderService {
 	Object finById(Long id);
 	List<Order> findByUserId(Long id);
 	OrderDTO save(DatHangDto dto);
+	List<OrderDTO>order(OrderDTO dto);
 }
