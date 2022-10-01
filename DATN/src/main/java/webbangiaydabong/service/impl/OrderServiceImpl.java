@@ -73,8 +73,8 @@ public class OrderServiceImpl implements OrderService {
 		if (dto.getNote() != null) {
 			order.setNote(dto.getNote());
 		}
-		if (dto.getStatus() > 0) {
-			order.setStatus(dto.getStatus());
+		if (dto.getStatus()<0) {
+			order.setStatus(0);
 		}
 		if (dto.getChitiethoadon() != null) {
 			Iterator<OrderDetailDTO> iters = dto.getChitiethoadon().iterator();
@@ -111,5 +111,12 @@ public class OrderServiceImpl implements OrderService {
 		order = orderRepo.save(order);
 		return null;
 	}
+
+	@Override
+	public List<OrderDTO> order(OrderDTO dto) {
+		
+		return null;
+	}
+	
 
 }

@@ -1,5 +1,6 @@
 package webbangiaydabong.Rest;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,6 @@ public class OrderRestController {
 	@PostMapping("/dathang")
 	public ResponseEntity<?> dathang(@RequestBody DatHangDto dto) {
 		orderService.save(dto);
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(dto,HttpStatus.OK);
 	}
 }

@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderDTO {
+	private Long id;
 	private Date create_date;
 	private Double price;
 	private String note;
