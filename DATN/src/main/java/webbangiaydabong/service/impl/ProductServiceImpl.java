@@ -3,11 +3,12 @@ package webbangiaydabong.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import webbangiaydabong.entity.Product;
 import webbangiaydabong.repository.ProductRepository;
 import webbangiaydabong.service.ProductService;
-
+@Service
 public class ProductServiceImpl implements ProductService {
 
 	@Autowired

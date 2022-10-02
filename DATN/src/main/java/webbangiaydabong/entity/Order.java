@@ -17,36 +17,36 @@ import javax.persistence.UniqueConstraint;
 
 import lombok.Getter;
 import lombok.Setter;
+
 @Entity
-@Table(name="order")
+@Table(name = "order")
 @Getter
 @Setter
 
-
 public class Order {
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-private Long id;
-private Date create_date;//ngày tạo hóa đơn 
-private Double price;//tổng tiền
-private String note;
-private int status;//1 giaohangf thành công,2 d
-@ManyToOne
-@JoinColumn(name="account_id")
-private Account account;
-@ManyToOne
-@JoinColumn(name="van_chuyen_id")
-private VanChuyen vanChuyen;
-@ManyToOne
-@JoinColumn(name="thanh_toan_id")
-private Payment thanhToan;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	private Date create_date;// ngày tạo hóa đơn
+	private Double price;// tổng tiền
+	private String note;
+	private int status;// 0 chưa xác nhận ,1 đã xác nhận 
+	@ManyToOne
+	@JoinColumn(name = "account_id")
+	private Account account;
+	@ManyToOne
+	@JoinColumn(name = "van_chuyen_id")
+	private VanChuyen vanChuyen;
+	@ManyToOne
+	@JoinColumn(name = "thanh_toan_id")
+	private Payment thanhToan;
 
-@OneToMany(cascade = CascadeType.ALL,  orphanRemoval = true,mappedBy = "order" )
-private Set<OrderDetail>danhSachOrder;
-@ManyToOne
-@JoinColumn(name="promotion_id")
-private Promotion giamgia;
-@ManyToOne
-@JoinColumn(name="custommerinfo_id")
-private CustommerInfo diaChi;
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "order")
+	private Set<OrderDetail> danhSachOrder;
+	@ManyToOne
+	@JoinColumn(name = "promotion_id")
+	private Promotion giamgia;
+	@ManyToOne
+	@JoinColumn(name = "custommerinfo_id")
+	private CustommerInfo diaChi;
 }
