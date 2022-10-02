@@ -15,4 +15,5 @@ public interface OrderService {
 	List<Order> findByUserId(Long id);
 	OrderDTO save(DatHangDto dto);
 	List<OrderDTO>order(OrderDTO dto);
+	List<OrderDTO>getAllByStatus();
 }

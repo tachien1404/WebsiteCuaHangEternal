@@ -5,6 +5,7 @@ import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import webbangiaydabong.entity.Order;
 
 @Data
 @AllArgsConstructor
@@ -19,4 +20,17 @@ public class OrderDTO {
 	private Long van_chuyen_id;
 	private Long thanh_toan_id;
 	private int promotion_id;
+	private String name_acount;
+	
+	public OrderDTO(Order entity, boolean onlyVanBang) {
+		this.id = entity.getId();
+		this.create_date=entity.getCreate_date();
+		this.price=entity.getPrice();
+		this.status=entity.getStatus();
+		this.note=entity.getNote();
+		if (onlyVanBang && entity.getAccount() != null) {
+			this.name_acount = entity.getAccount().getFullname();
+		}
+
+	}
 }

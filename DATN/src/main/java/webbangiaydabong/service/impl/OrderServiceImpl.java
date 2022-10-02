@@ -117,6 +117,12 @@ public class OrderServiceImpl implements OrderService {
 		
 		return null;
 	}
+
+	@Override
+	public List<OrderDTO> getAllByStatus() {
+	return	orderRepo.getAllByStatus();
+		
+	}
 	
 
 }
