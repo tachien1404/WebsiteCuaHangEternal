@@ -12,4 +12,5 @@ public class CustommerInfoDTO {
 	private String name;
 	private String Address;
 	private String Sdt;
+	private int account_id;
 }
