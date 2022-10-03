@@ -11,20 +11,24 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import lombok.Getter;
+import lombok.Setter;
+@Getter
+@Setter
 @Entity
 @Table(name = "custommerinfo")
 public class CustommerInfo {
 	
 	@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	private String Sdt;
-	private String name;
-	private String Address;
-	@ManyToOne
-	@JoinColumn(name = "account_id")
-	private Account account;
-	@OneToMany(mappedBy = "diaChi")
-	private Set<Order> danhSachOrder;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+		private Long id;
+		private String sdt;
+		private String name;
+		private String address;
+		@ManyToOne
+		@JoinColumn(name = "account_id")
+		private Account account;
+		@OneToMany(mappedBy = "diaChi")
+		private Set<Order> danhSachOrder;
 
 }

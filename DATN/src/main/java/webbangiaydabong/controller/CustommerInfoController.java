@@ -14,13 +14,7 @@ import webbangiaydabong.service.CustommerInfoServie;
 
 @Controller
 public class CustommerInfoController {
-	@Autowired
-	CustommerInfoServie CusService;
-	@RequestMapping("/custommerinfo/andress/{id}")
-	public String detai(Model model, @PathVariable("id") Integer id) {
-		CustommerInfo item = CusService.findById(id);
-		model.addAttribute("item",item);
-		return "custommer/andress";
-	}
+	
+	
 	
 }

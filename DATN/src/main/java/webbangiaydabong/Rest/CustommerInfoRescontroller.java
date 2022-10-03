@@ -17,27 +17,25 @@ import webbangiaydabong.entity.CustommerInfo;
 import webbangiaydabong.service.CustommerInfoServie;
 
 @RestController
-@RequestMapping("/rest/custommerinfo")
+@RequestMapping("/api/custommerinfo")
 public class CustommerInfoRescontroller {
 	@Autowired
 	CustommerInfoServie Cuservice;
+	
+//	@GetMapping
+//	public ResponseEntity<List<CustommerInfo>> getall() {
+//		return  ResponseEntity.ok(Cuservice.findAll());
+//	}
+	
 	@GetMapping("{id}")
-	public CustommerInfo getOne(@PathVariable("id") Integer id) {
+	public CustommerInfo  getOne(@PathVariable("id") Long id) {
 		return Cuservice.findById(id);
 	}
 	
-	@PostMapping
-	public CustommerInfo create(@RequestBody CustommerInfoDTO dto) {
-		CustommerInfo entity = new CustommerInfo();
-		BeanUtils.copyProperties(dto, entity);
-		return Cuservice.create(entity);
+	@PostMapping("/save")
+	public CustommerInfoDTO Crud(@RequestBody CustommerInfoDTO dto) {
+		return Cuservice.CRUD(dto);
 	}
 	
-	@PutMapping("{id}")
-	public CustommerInfo update(@PathVariable("id") Integer id, @RequestBody CustommerInfoDTO dto) {
-		CustommerInfo entity = new CustommerInfo();
-		BeanUtils.copyProperties(dto, entity);
-		return Cuservice.update(entity);
-	}
 	
 }
