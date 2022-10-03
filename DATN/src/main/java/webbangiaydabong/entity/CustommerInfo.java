@@ -14,17 +14,17 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "custommerinfo")
 public class CustommerInfo {
-
-@Id
+	
+	@Id
 @GeneratedValue(strategy = GenerationType.IDENTITY)
-private int id;
-private String Sdt;
-private String name;
-private String Address;
-@ManyToOne
-@JoinColumn(name="account_id")
-private Account account;
-@OneToMany(mappedBy = "diaChi")
-private Set<Order>danhSachOrder;
+	private Long id;
+	private String Sdt;
+	private String name;
+	private String Address;
+	@ManyToOne
+	@JoinColumn(name = "account_id")
+	private Account account;
+	@OneToMany(mappedBy = "diaChi")
+	private Set<Order> danhSachOrder;
 
 }

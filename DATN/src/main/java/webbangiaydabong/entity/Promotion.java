@@ -22,7 +22,7 @@ import lombok.Setter;
 public class Promotion {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-private int id;
+private Long id;
 private String name;
 private Date starttime;//bắt đầu 
 private Date endtime;//kt
