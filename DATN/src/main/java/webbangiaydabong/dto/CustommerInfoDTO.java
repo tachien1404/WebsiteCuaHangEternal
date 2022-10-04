@@ -1,5 +1,7 @@
 package webbangiaydabong.dto;
 
+
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,9 +10,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CustommerInfoDTO {
-	private int id;
+	private Long id;
 	private String name;
-	private String Address;
-	private String Sdt;
-	private int account_id;
+	private String address;
+	private String sdt;
+	private Long account_id;
+	
+	
 }

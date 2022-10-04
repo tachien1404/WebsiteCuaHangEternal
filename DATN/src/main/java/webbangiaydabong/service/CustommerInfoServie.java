@@ -2,12 +2,15 @@ package webbangiaydabong.service;
 
 import java.util.List;
 
+import webbangiaydabong.dto.CustommerInfoDTO;
 import webbangiaydabong.entity.CustommerInfo;	
 public interface CustommerInfoServie {
-	List<CustommerInfo> findAll();
+List<CustommerInfo> findAll();
 	
-	CustommerInfo findById(Integer id);
+	CustommerInfo findById(Long id);
 	
-	CustommerInfo create(CustommerInfo CustomerIn);
-	CustommerInfo update(CustommerInfo CustomerIn);
+
+	
+
+	CustommerInfoDTO CRUD(CustommerInfoDTO CustomerIn);
 }
