@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -32,6 +33,7 @@ private Product product;
 @ManyToOne(cascade = CascadeType.PERSIST)
 @JoinColumn(name="order_id")
 private Order order;
+@JsonIgnore
 @OneToMany(mappedBy = "orderDetail")
 private List<Exchange>danhSachExchange;
 

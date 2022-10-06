@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,6 +22,7 @@ public class VanChuyen {
 private Long id;
 private String name;
 private float price;
+@JsonIgnore
 @OneToMany(mappedBy = "vanChuyen")
 private Set<Order>danhSachOrdervanchuyen;
 }

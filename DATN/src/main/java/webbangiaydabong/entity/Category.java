@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,6 +23,7 @@ public class Category {
 @GeneratedValue(strategy = GenerationType.IDENTITY)
 private Long id;
 private String name;
+@JsonIgnore
 @OneToMany(mappedBy = "category")
 private Set<Product>danhSachProduct;
 }
