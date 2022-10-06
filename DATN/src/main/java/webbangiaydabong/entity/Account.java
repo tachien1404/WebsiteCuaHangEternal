@@ -39,6 +39,8 @@ public class Account {
 	@JsonIgnore
 	@OneToMany(mappedBy = "account", fetch = FetchType.EAGER)
 	Set<Authority> authorities;
+
+	@JsonIgnore
 	@OneToMany(mappedBy = "account")
 	private Set<Promotion> danhSachkhuyenmai;
 @OneToMany(mappedBy = "account")

@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -34,8 +35,9 @@ public class Product {
 	private Double outputprice;// giá xuất
 	private Date updatedate;// ngày sửa sẳn phẩm
 	private Integer status;
-	@OneToMany(mappedBy = "product")
-	private Set<Image>listanh;// ảnh
+//	@JsonIgnore
+//	@OneToMany(mappedBy = "product")
+//	private Set<Image>listanh;// ảnh
 	@ManyToOne
 	@JoinColumn(name = "category_id")
 	private Category category;// danhmuc
@@ -43,12 +45,16 @@ public class Product {
 	@JoinColumn(name = "hang_id")
 	private Brand hang;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "product")
 	private List<ColorDetail> danhSachMau;
+	@JsonIgnore
 	@OneToMany(mappedBy = "size")
 	private List<SizeDetail> danhSachSize;
+	@JsonIgnore
 	@OneToMany(mappedBy = "product")
 	private List<Image> danhSachAnh;
+	@JsonIgnore
 	@OneToMany(mappedBy = "product")
 	private List<Exchange> danhSachExchange;
 }

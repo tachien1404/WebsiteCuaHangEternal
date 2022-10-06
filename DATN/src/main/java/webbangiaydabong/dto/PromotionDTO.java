@@ -17,6 +17,6 @@ public class PromotionDTO {
 	private Date createDate;
 	private Date updatetedDate;
 	private int value;
-	private Long promotion_id;
+	private Long account_id;
 	
 }

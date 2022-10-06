@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -33,6 +34,7 @@ private int value;//dis count
 @JoinColumn(name = "account_id")
 private Account account;
 
+@JsonIgnore
 @OneToMany(mappedBy = "giamgia")
 private List<Order>danhSachOrders;
 

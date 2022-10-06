@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -40,7 +41,7 @@ public class Order {
 	@ManyToOne
 	@JoinColumn(name = "thanh_toan_id")
 	private Payment thanhToan;
-
+	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "order")
 	private Set<OrderDetail> danhSachOrder;
 	@ManyToOne

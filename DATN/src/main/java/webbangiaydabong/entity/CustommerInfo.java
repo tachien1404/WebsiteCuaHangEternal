@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 @Getter
@@ -28,6 +29,7 @@ public class CustommerInfo {
 		@ManyToOne
 		@JoinColumn(name = "account_id")
 		private Account account;
+		@JsonIgnore
 		@OneToMany(mappedBy = "diaChi")
 		private Set<Order> danhSachOrder;
 

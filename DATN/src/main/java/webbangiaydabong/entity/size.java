@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,6 +23,7 @@ public class size {
 @GeneratedValue(strategy = GenerationType.IDENTITY)
 private Long id;
 private Integer value;//38-43
-@OneToMany(mappedBy = "size")
+    @JsonIgnore
+    @OneToMany(mappedBy = "size")
 private List<SizeDetail>danhSachSize;
 }
