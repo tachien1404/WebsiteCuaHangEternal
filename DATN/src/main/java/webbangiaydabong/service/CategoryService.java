@@ -7,4 +7,5 @@ import webbangiaydabong.entity.Category;
 public interface CategoryService {
 
 	List<Category> findAll();
+	Category findById(Long id);
 }

@@ -1,5 +1,6 @@
 package webbangiaydabong.Rest;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
@@ -19,9 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import webbangiaydabong.dto.ProductDTO;
 import webbangiaydabong.entity.Product;
-import webbangiaydabong.service.ProductService;
-import webbangiaydabong.service.UploadService;
-import webbangiaydabong.service.impl.UploadServiceImpl;
+import webbangiaydabong.service.*;
 
 @RestController
 @RequestMapping("/rest/products")
@@ -30,7 +29,19 @@ public class ProductRestController {
 UploadService uploadService;
 	@Autowired
 	ProductService productService;
-	
+
+	@Autowired
+	CategoryService categoryService;
+
+	@Autowired
+	BrandService brandService;
+
+
+	@GetMapping()
+	public List<Product> getAll() {
+		return productService.findAll();
+	}
+
 	@GetMapping("{id}")
 	public Product getOne(@PathVariable("id") Long id) {
 		return productService.findById(id);
@@ -40,13 +51,25 @@ UploadService uploadService;
 	public Product create(@RequestBody ProductDTO dto) {
 		Product entity = new Product();
 		BeanUtils.copyProperties(dto, entity);
+		Date date = new Date();
+		entity.setCreateDate(date);
+		entity.setCategory(categoryService.findById(dto.getCategory_id()));
+		entity.setHang(brandService.findById(dto.getHang_id()));
 		return productService.create(entity);
 	}
 	
 	@PutMapping("{id}")
 	public Product update(@PathVariable("id") Long id, @RequestBody ProductDTO dto) {
 		Product entity = new Product();
-		BeanUtils.copyProperties(dto, entity);
+		entity = productService.findById(id);
+		entity.setName(dto.getName());
+		entity.setInportprice(dto.getInportprice());
+		entity.setOutputprice(dto.getOutputprice());
+		entity.setStatus(dto.getStatus());
+		Date date = new Date();
+		entity.setUpdatedate(date);
+		entity.setCategory(categoryService.findById(dto.getCategory_id()));
+		entity.setHang(brandService.findById(dto.getHang_id()));
 		return productService.update(entity);
 	}
 	
