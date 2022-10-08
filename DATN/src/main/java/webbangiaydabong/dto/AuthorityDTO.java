@@ -13,4 +13,8 @@ public class AuthorityDTO {
 private Long id;
 private Long account_id;
 private Long role_id;
+
+    public static class SizeColorDTO {
+
+    }
 }
