@@ -48,7 +48,7 @@ public class Product {
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "product")
-	private List<SizeColorDetails> danhSachSizeMau;
+	private List<S_C_Details> danhSachSizeMau;
 
 //	@JsonIgnore
 //	@OneToMany(mappedBy = "product")
