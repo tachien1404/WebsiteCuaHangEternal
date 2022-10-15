@@ -15,6 +15,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Table(name="Orderdetail")
@@ -25,8 +26,9 @@ public class OrderDetail {
 @GeneratedValue(strategy = GenerationType.IDENTITY)
 private Long id;
 private float price;//giá sản phẩm 
-private Integer quantity;//số lượng bán đc 
-private Date createDate;//ngày đổi trả 
+private Integer quantity;//số lượng bán đc
+@CreationTimestamp
+private Date createDate;//ngày đổi trả
 @ManyToOne
 @JoinColumn(name="product_id")
 private Product product;

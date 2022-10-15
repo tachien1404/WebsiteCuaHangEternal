@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import webbangiaydabong.dto.OrderDTO;
 import webbangiaydabong.dto.functiondto.DatHangDto;
+import webbangiaydabong.entity.Order;
 import webbangiaydabong.service.OrderService;
 
 @RestController
@@ -24,9 +25,9 @@ public class OrderRestController {
 	OrderService orderService;
 
 	@PostMapping("/dathang")
-	public ResponseEntity<?> dathang(@RequestBody DatHangDto dto) {
-		orderService.save(dto);
-		return new ResponseEntity<>(dto,HttpStatus.OK);
+	public ResponseEntity<Order> dathang(@RequestBody List<DatHangDto> dto) {
+
+		return orderService.add(dto);
 	}
 	@GetMapping("/getAllbystatus")
 	public List<OrderDTO>getAllbyStatus(){
