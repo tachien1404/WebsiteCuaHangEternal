@@ -4,9 +4,12 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import webbangiaydabong.dto.OrderDTO;
 import webbangiaydabong.dto.functiondto.DatHangDto;
 import webbangiaydabong.entity.Order;
+@Service
 
 public interface OrderService {
 
@@ -16,4 +19,5 @@ public interface OrderService {
 	OrderDTO save(DatHangDto dto);
 	List<OrderDTO>order(OrderDTO dto);
 	List<OrderDTO>getAllByStatus();
+	ResponseEntity add(List<DatHangDto> dto);
 }

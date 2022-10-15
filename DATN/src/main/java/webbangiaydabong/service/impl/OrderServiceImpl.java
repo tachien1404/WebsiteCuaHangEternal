@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -62,53 +64,53 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public OrderDTO save(DatHangDto dto) {
-		Order order = new Order();
-		if (dto.getTongtien() > 0) {
-			order.setPrice(dto.getTongtien());
-		}
-		if (dto.getAccount_id() != null) {
-			Account acc = accountRepository.getOne(dto.getAccount_id());
-			order.setAccount(acc);
-		}
-		if (dto.getNote() != null) {
-			order.setNote(dto.getNote());
-		}
-		if (dto.getStatus()<0) {
-			order.setStatus(0);
-		}
-		if (dto.getChitiethoadon() != null) {
-			Iterator<OrderDetailDTO> iters = dto.getChitiethoadon().iterator();
-			HashSet<OrderDetail> orderdetais = new HashSet<OrderDetail>();
-			while (iters.hasNext()) {
-				OrderDetailDTO detailDTO = iters.next();
-				OrderDetail orderDetail = new OrderDetail();
-				if (detailDTO.getCreateDate() != null) {
-					orderDetail.setCreateDate(detailDTO.getCreateDate());
-				}
-				if (detailDTO.getPrice() > 0) {
-					orderDetail.setPrice(detailDTO.getPrice());
-				}
-				if (detailDTO.getQuantity() > 0) {
-					orderDetail.setQuantity(detailDTO.getQuantity());
-				}
-				if (detailDTO.getProduct_id() != null) {
-					Product product = productRepository.getOne(detailDTO.getProduct_id());
-					orderDetail.setProduct(product);
-				}
-				if (orderDetail != null) {
-					orderDetail.setOrder(order);
-				}
-				orderdetais.add(orderDetail);
-				orderDetailRepo.save(orderDetail);
-			}
-			if (order.getDanhSachOrder() != null) {
-				order.getDanhSachOrder().clear();
-				order.getDanhSachOrder().addAll(orderdetais);
-			} else {
-				order.setDanhSachOrder(orderdetais);
-			}
-		}
-		order = orderRepo.save(order);
+//		Order order = new Order();
+//		if (dto.getTongtien() > 0) {
+//			order.setPrice(dto.getTongtien());
+//		}
+//		if (dto.getAccount_id() != null) {
+//			Account acc = accountRepository.getOne(dto.getAccount_id());
+//			order.setAccount(acc);
+//		}
+//		if (dto.getNote() != null) {
+//			order.setNote(dto.getNote());
+//		}
+//		if (dto.getStatus()<0) {
+//			order.setStatus(0);
+//		}
+//		if (dto.getChitiethoadon() != null) {
+//			Iterator<OrderDetailDTO> iters = dto.getChitiethoadon().iterator();
+//			HashSet<OrderDetail> orderdetais = new HashSet<OrderDetail>();
+//			while (iters.hasNext()) {
+//				OrderDetailDTO detailDTO = iters.next();
+//				OrderDetail orderDetail = new OrderDetail();
+//				if (detailDTO.getCreateDate() != null) {
+//					orderDetail.setCreateDate(detailDTO.getCreateDate());
+//				}
+//				if (detailDTO.getPrice() > 0) {
+//					orderDetail.setPrice(detailDTO.getPrice());
+//				}
+//				if (detailDTO.getQuantity() > 0) {
+//					orderDetail.setQuantity(detailDTO.getQuantity());
+//				}
+//				if (detailDTO.getProduct_id() != null) {
+//					Product product = productRepository.getOne(detailDTO.getProduct_id());
+//					orderDetail.setProduct(product);
+//				}
+//				if (orderDetail != null) {
+//					orderDetail.setOrder(order);
+//				}
+//				orderdetais.add(orderDetail);
+//				orderDetailRepo.save(orderDetail);
+//			}
+//			if (order.getDanhSachOrder() != null) {
+//				order.getDanhSachOrder().clear();
+//				order.getDanhSachOrder().addAll(orderdetais);
+//			} else {
+//				order.setDanhSachOrder(orderdetais);
+//			}
+//		}
+//		order = orderRepo.save(order);
 		return null;
 	}
 
@@ -123,6 +125,31 @@ public class OrderServiceImpl implements OrderService {
 	return	orderRepo.getAllByStatus();
 		
 	}
-	
 
+	@Override
+	public ResponseEntity add(List<DatHangDto> dto) {
+		System.out.println(dto.toString());
+
+		Order order = new Order();
+		if (!dto.isEmpty()){
+			float total = 0;
+			for (DatHangDto tong : dto){
+				total += tong.getTotal();
+			}
+			order.setPrice((double) total);
+			order.setStatus(0);
+
+			orderRepo.save(order);
+
+			for (DatHangDto c : dto){
+				OrderDetail orderDetail = new OrderDetail();
+				orderDetail.setPrice(Float.parseFloat(String.valueOf(c.getOutputprice())));
+				orderDetail.setQuantity(c.getQuantity());
+				orderDetail.setOrder(order);
+				orderDetail.setProduct(productRepository.getById(c.getId()));
+				orderDetailRepo.save(orderDetail);
+			}
+		}
+		return new ResponseEntity<Order>(order, HttpStatus.OK);
+	}
 }
