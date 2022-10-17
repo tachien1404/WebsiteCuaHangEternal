@@ -121,8 +121,8 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<OrderDTO> getAllByStatus() {
-	return	orderRepo.getAllByStatus();
+	public List<OrderDTO> getAllByStatus(Integer status) {
+	return	orderRepo.getAllByStatus(status);
 		
 	}
 
