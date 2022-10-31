@@ -152,4 +152,23 @@ public class OrderServiceImpl implements OrderService {
 		}
 		return new ResponseEntity<Order>(order, HttpStatus.OK);
 	}
+
+	@Override
+	public void updatetrangthai(Long id, OrderDTO dto) {
+		if(id!=null){
+			Order order=orderRepo.getById(id);
+			if(dto.getStatus()>=0){
+				order.setStatus(dto.getStatus());
+				orderRepo.save(order);
+			}else {
+				return;
+			}
+
+
+		}else{
+			return;
+		}
+
+
+	}
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.relational.core.sql.In;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,8 @@ import webbangiaydabong.service.OrderService;
 
 @RestController
 @RequestMapping("/api/order")
+	@CrossOrigin("*")
+
 public class OrderRestController {
 	@Autowired
 	OrderService orderService;
@@ -27,5 +30,9 @@ public class OrderRestController {
 	@GetMapping("/getAllbystatus/{status}")
 	public List<OrderDTO>getAllbyStatus(@PathVariable Integer status){
 		return orderService.getAllByStatus(status);
+	}
+	@PutMapping("/trangthai/{id}")
+	public void update(@PathVariable ("id") Long id,@RequestBody OrderDTO dto){
+		orderService.updatetrangthai(id,dto);
 	}
 }
