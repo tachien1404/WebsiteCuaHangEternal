@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
+import org.hibernate.validator.cfg.defs.NormalizedDef;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import webbangiaydabong.dto.OrderDTO;
@@ -20,4 +21,5 @@ public interface OrderService {
 	List<OrderDTO>order(OrderDTO dto);
 	List<OrderDTO>getAllByStatus(Integer status);
 	ResponseEntity add(List<DatHangDto> dto);
+	void updatetrangthai(Long id, OrderDTO dto);
 }
