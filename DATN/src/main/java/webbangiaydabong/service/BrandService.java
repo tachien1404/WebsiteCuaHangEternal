@@ -9,4 +9,5 @@ public interface BrandService {
     Brand findById(Long id);
     BrandDTO saveOrUpdate(BrandDTO dto);
     List<BrandDTO>getAllBrandDtos();
+    List<Brand>  getAll();
 }

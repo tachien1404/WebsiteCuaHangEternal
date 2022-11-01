@@ -23,7 +23,9 @@ public class Category {
 @GeneratedValue(strategy = GenerationType.IDENTITY)
 private Long id;
 private String name;
+private boolean delete;
 @JsonIgnore
 @OneToMany(mappedBy = "category")
 private Set<Product>danhSachProduct;
+
 }

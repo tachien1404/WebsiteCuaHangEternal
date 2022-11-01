@@ -12,4 +12,7 @@ import java.util.List;
 public interface BrandRepository extends JpaRepository<Brand, Long>{
     @Query("select new webbangiaydabong.dto.BrandDTO(o) from Brand o ")
     List<BrandDTO> getAllBrand();
+
+    @Query("select b FROM Brand b where b.delete =true ")
+    List<Brand> getAll();
 }
