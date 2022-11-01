@@ -2,6 +2,10 @@ package webbangiaydabong.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import webbangiaydabong.entity.Brand;
+import webbangiaydabong.entity.Category;
 import webbangiaydabong.entity.Product;
 
 public interface ProductService {
@@ -13,4 +17,14 @@ public interface ProductService {
 	Product update(Product product);
 	
 	void delete(Long id);
+
+	Page<Product> findByKey(Pageable pageable,
+							String name,
+							Long id,
+							Double inportprice,
+							Double outputprice,
+							Category category,
+							Brand hang);
+
+
 }

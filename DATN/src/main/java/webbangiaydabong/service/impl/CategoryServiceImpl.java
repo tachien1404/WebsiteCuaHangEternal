@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import webbangiaydabong.dto.BrandDTO;
 import webbangiaydabong.dto.CategoryDTO;
@@ -26,6 +28,21 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
+	public List<Category> getAll() {
+		return categoryRepo.getAll();
+	}
+
+	@Override
+	public Page<Category> findByKey(Pageable pageable, String name, Long id) {
+		return categoryRepo.findByKey(pageable, name, id);
+	}
+
+	@Override
+	public Category createOrUpdate(Category category) {
+		return categoryRepo.save(category);
+	}
+
+	@Override
 	public CategoryDTO saveOrUpdate(CategoryDTO dto) {
 		Category cate=null;
 		if(dto.getId()!=null){
@@ -44,7 +61,6 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Override
 	public List<CategoryDTO> findAll() {
-
 		return categoryRepo.getAllCategory();
 	}
 }

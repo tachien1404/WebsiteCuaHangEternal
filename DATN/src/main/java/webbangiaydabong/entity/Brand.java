@@ -21,6 +21,7 @@ public class Brand {
 @GeneratedValue(strategy = GenerationType.IDENTITY)
 private Long id;
 private String name;
+private boolean delete;
 @JsonIgnore
 @OneToMany(mappedBy = "hang")
 private Set<Product>danhSachProduct;

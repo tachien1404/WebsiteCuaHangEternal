@@ -10,6 +10,7 @@ import webbangiaydabong.service.BrandService;
 import java.util.List;
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/api/brand")
 public class BrandRestController {
     @Autowired

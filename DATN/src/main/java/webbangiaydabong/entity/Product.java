@@ -13,13 +13,15 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-
+@Data
 @Entity
 @Table(name = "product")
 public class Product {
@@ -29,12 +31,16 @@ public class Product {
 	private String name;
 	
 	private Integer quantity;
+
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date createDate;// ngày tạo
 
 	private Double inportprice;// giá nhập
 	private Double outputprice;// giá xuất
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date updatedate;// ngày sửa sẳn phẩm
 	private Integer status;
+	private boolean delete;
 //	@JsonIgnore
 //	@OneToMany(mappedBy = "product")
 //	private Set<Image>listanh;// ảnh
