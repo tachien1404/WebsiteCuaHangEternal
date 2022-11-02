@@ -6,6 +6,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -17,6 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import webbangiaydabong.dto.OrderDTO;
 import webbangiaydabong.dto.OrderDetailDTO;
 import webbangiaydabong.dto.functiondto.DatHangDto;
+import webbangiaydabong.dto.functiondto.SearchDto;
 import webbangiaydabong.entity.Account;
 import webbangiaydabong.entity.Order;
 import webbangiaydabong.entity.OrderDetail;
@@ -27,9 +32,14 @@ import webbangiaydabong.repository.OrderRepository;
 import webbangiaydabong.repository.ProductRepository;
 import webbangiaydabong.service.OrderService;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
 @Service
 public class OrderServiceImpl implements OrderService {
-
+	@PersistenceContext
+	EntityManager manager;
 	@Autowired
 	OrderRepository orderRepo;
 	@Autowired
@@ -169,6 +179,46 @@ public class OrderServiceImpl implements OrderService {
 			return;
 		}
 
+
+	}
+
+	@Override
+	public Page<OrderDTO> searchByPage(SearchDto dto) {
+		if (dto == null) {
+			return null;
+		}
+		int pageIndex = dto.getPageIndex();
+		int pageSize = dto.getPageSize();
+
+		if (pageIndex > 0) {
+			pageIndex--;
+		} else {
+			pageIndex = 0;
+		}
+
+		String whereClause = "";
+
+		String orderBy = " ORDER BY entity.createDate DESC";
+
+		String sqlCount = "select count(entity.id) from Order as entity where (1=1)   ";
+		String sql = "select new webbangiaydabong.dto.OrderDTO(o,true) from Order o group by o.id ";
+
+
+
+
+		sqlCount += whereClause;
+
+		Query q = manager.createQuery(sql, OrderDTO.class);
+		Query qCount = manager.createQuery(sqlCount);
+
+
+		int startPosition = pageIndex * pageSize;
+		q.setFirstResult(startPosition);
+		q.setMaxResults(pageSize);
+		List<OrderDTO> entities = q.getResultList();
+		long count = (long) qCount.getSingleResult();
+		Pageable pageable = PageRequest.of(pageIndex, pageSize);
+		return new PageImpl<>(entities, pageable, count);
 
 	}
 }
