@@ -9,6 +9,6 @@ import webbangiaydabong.entity.OrderDetail;
 import java.util.List;
 
 public interface OrderDetailRepository extends JpaRepository<OrderDetail, Long>{
-    @Query("SELECT o FROM OrderDetail o where o.order.id= ?1")
+    @Query("SELECT o FROM OrderDetail o where o.order.id= :id")
     List<OrderDetail> findOrderDetailByOrder(@Param("id") long id);
 }
