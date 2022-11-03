@@ -17,6 +17,7 @@ import webbangiaydabong.entity.Order;
 import webbangiaydabong.service.OrderService;
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/api/order")
 	@CrossOrigin("*")
 
