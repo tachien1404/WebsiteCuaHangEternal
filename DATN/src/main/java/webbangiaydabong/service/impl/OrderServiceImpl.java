@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.hibernate.transform.AliasToBeanResultTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -38,42 +39,42 @@ import javax.persistence.Query;
 
 @Service
 public class OrderServiceImpl implements OrderService {
-	@PersistenceContext
-	EntityManager manager;
-	@Autowired
-	OrderRepository orderRepo;
-	@Autowired
-	ProductRepository productRepository;
-	@Autowired
-	OrderDetailRepository orderDetailRepo;
-	@Autowired
-	AccountRepository accountRepository;
+    @PersistenceContext
+    EntityManager manager;
+    @Autowired
+    OrderRepository orderRepo;
+    @Autowired
+    ProductRepository productRepository;
+    @Autowired
+    OrderDetailRepository orderDetailRepo;
+    @Autowired
+    AccountRepository accountRepository;
 
-	@Override
-	public Order create(JsonNode orderData) {
-		ObjectMapper mapper = new ObjectMapper();
-		Order order = mapper.convertValue(orderData, Order.class);
-		orderRepo.save(order);
-		TypeReference<List<OrderDetail>> type = new TypeReference<List<OrderDetail>>() {
-		};
-		List<OrderDetail> details = mapper.convertValue(orderData.get("danhSachOrder"), type).stream()
-				.peek(d -> d.setOrder(order)).collect(Collectors.toList());
-		orderDetailRepo.saveAll(details);
-		return order;
-	}
+    @Override
+    public Order create(JsonNode orderData) {
+        ObjectMapper mapper = new ObjectMapper();
+        Order order = mapper.convertValue(orderData, Order.class);
+        orderRepo.save(order);
+        TypeReference<List<OrderDetail>> type = new TypeReference<List<OrderDetail>>() {
+        };
+        List<OrderDetail> details = mapper.convertValue(orderData.get("danhSachOrder"), type).stream()
+                .peek(d -> d.setOrder(order)).collect(Collectors.toList());
+        orderDetailRepo.saveAll(details);
+        return order;
+    }
 
-	@Override
-	public Object finById(Long id) {
-		return orderRepo.findById(id).get();
-	}
+    @Override
+    public Object finById(Long id) {
+        return orderRepo.findById(id).get();
+    }
 
-	@Override
-	public List<Order> findByUserId(Long id) {
-		return orderRepo.findByUserId(id);
-	}
+    @Override
+    public List<Order> findByUserId(Long id) {
+        return orderRepo.findByUserId(id);
+    }
 
-	@Override
-	public OrderDTO save(DatHangDto dto) {
+    @Override
+    public OrderDTO save(DatHangDto dto) {
 //		Order order = new Order();
 //		if (dto.getTongtien() > 0) {
 //			order.setPrice(dto.getTongtien());
@@ -121,104 +122,116 @@ public class OrderServiceImpl implements OrderService {
 //			}
 //		}
 //		order = orderRepo.save(order);
-		return null;
-	}
+        return null;
+    }
 
-	@Override
-	public List<OrderDTO> order(OrderDTO dto) {
-		
-		return null;
-	}
+    @Override
+    public List<OrderDTO> order(OrderDTO dto) {
 
-	@Override
-	public List<OrderDTO> getAllByStatus(Integer status) {
-	return	orderRepo.getAllByStatus(status);
-		
-	}
+        return null;
+    }
 
-	@Override
-	public ResponseEntity add(List<DatHangDto> dto) {
-		System.out.println(dto.toString());
+    @Override
+    public List<OrderDTO> getAllByStatus(Integer status) {
+        return orderRepo.getAllByStatus(status);
 
-		Order order = new Order();
-		if (!dto.isEmpty()){
-			float total = 0;
-			for (DatHangDto tong : dto){
-				total += tong.getTotal();
-			}
-			order.setPrice((double) total);
-			order.setStatus(0);
+    }
 
-			orderRepo.save(order);
+    @Override
+    public ResponseEntity add(List<DatHangDto> dto) {
+        System.out.println(dto.toString());
 
-			for (DatHangDto c : dto){
-				OrderDetail orderDetail = new OrderDetail();
-				orderDetail.setPrice(Float.parseFloat(String.valueOf(c.getOutputprice())));
-				orderDetail.setQuantity(c.getQuantity());
-				orderDetail.setOrder(order);
-				orderDetail.setProduct(productRepository.getById(c.getId()));
-				orderDetailRepo.save(orderDetail);
-			}
-		}
-		return new ResponseEntity<Order>(order, HttpStatus.OK);
-	}
+        Order order = new Order();
+        if (!dto.isEmpty()) {
+            float total = 0;
+            for (DatHangDto tong : dto) {
+                total += tong.getTotal();
+            }
+            order.setPrice((double) total);
+            order.setStatus(0);
 
-	@Override
-	public void updatetrangthai(Long id, OrderDTO dto) {
-		if(id!=null){
-			Order order=orderRepo.getById(id);
-			if(dto.getStatus()>=0){
-				order.setStatus(dto.getStatus());
-				orderRepo.save(order);
-			}else {
-				return;
-			}
+            orderRepo.save(order);
 
+            for (DatHangDto c : dto) {
+                OrderDetail orderDetail = new OrderDetail();
+                orderDetail.setPrice(Float.parseFloat(String.valueOf(c.getOutputprice())));
+                orderDetail.setQuantity(c.getQuantity());
+                orderDetail.setOrder(order);
+                orderDetail.setProduct(productRepository.getById(c.getId()));
+                orderDetailRepo.save(orderDetail);
+            }
+        }
+        return new ResponseEntity<Order>(order, HttpStatus.OK);
+    }
 
-		}else{
-			return;
-		}
+    @Override
+    public void updatetrangthai(Long id, OrderDTO dto) {
+        if (id != null) {
+            Order order = orderRepo.getById(id);
+            if (dto.getStatus() >= 0) {
+                order.setStatus(dto.getStatus());
+                orderRepo.save(order);
+            } else {
+                return;
+            }
 
 
-	}
-
-	@Override
-	public Page<OrderDTO> searchByPage(SearchDto dto) {
-		if (dto == null) {
-			return null;
-		}
-		int pageIndex = dto.getPageIndex();
-		int pageSize = dto.getPageSize();
-
-		if (pageIndex > 0) {
-			pageIndex--;
-		} else {
-			pageIndex = 0;
-		}
-
-		String whereClause = "";
-
-		String orderBy = " ORDER BY entity.createDate DESC";
-
-		String sqlCount = "select count(entity.id) from Order as entity where (1=1)   ";
-		String sql = "select new webbangiaydabong.dto.OrderDTO(o,true) from Order o group by o.id ";
+        } else {
+            return;
+        }
 
 
+    }
+
+    @Override
+    public Page<OrderDTO> searchByPage(SearchDto dto) {
+        if (dto == null) {
+            return null;
+        }
+        int pageIndex = dto.getPageIndex();
+        int pageSize = dto.getPageSize();
+
+        if (pageIndex > 0) {
+            pageIndex--;
+        } else {
+            pageIndex = 0;
+        }
+
+        String whereClause = "";
+
+        String orderBy = " ORDER BY entity.createDate DESC";
+
+        String sqlCount = "select count(entity.id) from Order as entity where (1=1)   ";
+        String sql = "select new webbangiaydabong.dto.OrderDTO(o,true) from Order o group by o.id ";
 
 
-		sqlCount += whereClause;
+        sqlCount += whereClause;
 
-		Query q = manager.createQuery(sql, OrderDTO.class);
-		Query qCount = manager.createQuery(sqlCount);
+        Query q = manager.createQuery(sql, OrderDTO.class);
+        Query qCount = manager.createQuery(sqlCount);
 
 
-		int startPosition = pageIndex * pageSize;
-		q.setFirstResult(startPosition);
-		q.setMaxResults(pageSize);
-		List<OrderDTO> entities = q.getResultList();
-		long count = (long) qCount.getSingleResult();
-		Pageable pageable = PageRequest.of(pageIndex, pageSize);
-		return new PageImpl<>(entities, pageable, count);
+        int startPosition = pageIndex * pageSize;
+        q.setFirstResult(startPosition);
+        q.setMaxResults(pageSize);
+        List<OrderDTO> entities = q.getResultList();
+        long count = (long) qCount.getSingleResult();
+        Pageable pageable = PageRequest.of(pageIndex, pageSize);
+        return new PageImpl<>(entities, pageable, count);
 
-	}
+    }
+
+    @Override
+    public List<OrderDetailDTO> getByOrderId(Long id) {
+        String sql="SELECT product.name as productName,orderdetail.quantity as quantity,orderdetail.price as price,image.photo as photo,category.name as category_name,brand.name as brand_name,order.status as status \n" +
+                "FROM category JOIN product ON category.id=product.category_id JOIN brand ON brand.id=product.hang_id  JOIN orderdetail ON product.id=orderdetail.product_id JOIN `order` ON orderdetail.order_id=`order`.id JOIN image ON image.product_id=product.id\n" +
+                "WHERE order.id=:order_id\n" +
+                "GROUP BY orderdetail.id";
+        Query query = manager.createNativeQuery(sql).unwrap(org.hibernate.query.Query.class).setResultTransformer(new AliasToBeanResultTransformer(OrderDetailDTO.class));
+if(id!=null){
+    query.setParameter("order_id",id);
+}
+List<OrderDetailDTO> dlstOrderDetailDTOS=  query.getResultList();
+        return dlstOrderDetailDTOS;
+    }
 }
