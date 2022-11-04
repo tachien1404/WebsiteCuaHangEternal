@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import webbangiaydabong.dto.OrderDTO;
+import webbangiaydabong.dto.OrderDetailDTO;
 import webbangiaydabong.dto.functiondto.DatHangDto;
 import webbangiaydabong.dto.functiondto.SearchDto;
 import webbangiaydabong.entity.Order;
@@ -41,5 +42,9 @@ public class OrderRestController {
 	public ResponseEntity<Page<OrderDTO>> searchByPage(@RequestBody SearchDto dto) {
 		Page<OrderDTO> result = orderService.searchByPage(dto);
 		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+	@GetMapping("/getOrderId/{id}")
+	public List<OrderDetailDTO> get(@PathVariable Long id){
+		return orderService.getByOrderId(id);
 	}
 }

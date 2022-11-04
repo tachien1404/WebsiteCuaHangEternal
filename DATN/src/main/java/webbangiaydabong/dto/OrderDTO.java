@@ -21,6 +21,8 @@ public class OrderDTO {
 	private Long thanh_toan_id;
 	private int promotion_id;
 	private String name_acount;
+	private String address;
+	private String sdt;
 	
 	public OrderDTO(Order entity, boolean onlyVanBang) {
 		this.id = entity.getId();
@@ -31,7 +33,8 @@ public class OrderDTO {
 		if (onlyVanBang && entity.getAccount() != null) {
 			this.name_acount = entity.getAccount().getFullname();
 		}
-
+		this.address=entity.getAccount().getAddress();
+this.sdt=entity.getAccount().getSdt();
 	}
 	public String getStatusName() {
 
