@@ -2,6 +2,7 @@ package webbangiaydabong.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import webbangiaydabong.dto.SizeDTO;
 import webbangiaydabong.entity.size;
 import webbangiaydabong.repository.SizeRepository;
 import webbangiaydabong.service.SizeService;
@@ -14,5 +15,25 @@ public class SizeServiceImpl implements SizeService {
     @Override
     public size findById(Long id) {
         return repository.findById(id).get();
+    }
+
+    @Override
+    public boolean checkvalue(Integer value) {
+        Long count=repository.countvalue(value);
+        if(count>0){
+            return true;
+        }
+        return false;
+
+    }
+
+    @Override
+    public SizeDTO save(SizeDTO dto) {
+       size size=new size();
+        if(dto.getValue()!=null){
+            size.setValue(dto.getValue());
+        }
+        repository.save(size);
+        return null;
     }
 }

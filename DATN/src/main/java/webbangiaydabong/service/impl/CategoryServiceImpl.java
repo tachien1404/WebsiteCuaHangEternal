@@ -54,9 +54,18 @@ public class CategoryServiceImpl implements CategoryService {
 		if(dto.getName()!=null){
 			cate.setName(dto.getName());
 		}
-		cate= categoryRepo.save(cate);
+		cate=categoryRepo.save(cate);
 		return new CategoryDTO(cate);
 
+	}
+
+	@Override
+	public boolean checkName(String name) {
+		Long count=categoryRepo.countName(name);
+		if(count>0){
+			return true;
+		}
+		return false;
 	}
 
 	@Override

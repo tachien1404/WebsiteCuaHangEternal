@@ -36,6 +36,15 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
+    public boolean checkName(String name) {
+       Long count=brandRepository.countName(name);
+        if(count>0){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
     public List<BrandDTO> getAllBrandDtos() {
         return brandRepository.getAllBrand();
     }

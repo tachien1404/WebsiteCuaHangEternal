@@ -9,10 +9,13 @@ import webbangiaydabong.entity.Brand;
 
 import java.util.List;
 
-public interface BrandRepository extends JpaRepository<Brand, Long>{
+public interface BrandRepository extends JpaRepository<Brand, Long> {
     @Query("select new webbangiaydabong.dto.BrandDTO(o) from Brand o ")
     List<BrandDTO> getAllBrand();
 
     @Query("select b FROM Brand b where b.delete =true ")
     List<Brand> getAll();
+
+    @Query(value = "SELECT COUNT(brand.id) FROM brand WHERE brand.name LIKE :name", nativeQuery = true)
+   Long countName(String name);
 }
