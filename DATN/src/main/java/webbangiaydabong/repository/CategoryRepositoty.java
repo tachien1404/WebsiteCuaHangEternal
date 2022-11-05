@@ -32,5 +32,6 @@ public interface CategoryRepositoty extends JpaRepository<Category, Long> {
             @Param("id") Long id
     );
 
-
+    @Query(value = "SELECT COUNT(category.id) FROM category WHERE category.name LIKE :name", nativeQuery = true)
+    Long countName(String name);
 }

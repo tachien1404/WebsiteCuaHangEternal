@@ -1,4 +1,5 @@
 package webbangiaydabong.entity;
+
 import java.util.Date;
 import java.util.List;
 
@@ -18,25 +19,27 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
-@Table(name="Orderdetail")
+@Table(name = "Orderdetail")
 @Getter
 @Setter
 public class OrderDetail {
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-private Long id;
-private float price;//giá sản phẩm 
-private Integer quantity;//số lượng bán đc
-@CreationTimestamp
-private Date createDate;//ngày đổi trả
-@ManyToOne
-@JoinColumn(name="product_id")
-private Product product;
-@ManyToOne(cascade = CascadeType.PERSIST)
-@JoinColumn(name="order_id")
-private Order order;
-@JsonIgnore
-@OneToMany(mappedBy = "orderDetail")
-private List<Exchange>danhSachExchange;
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private float price;//giá sản phẩm
+    private Integer quantity;//số lượng bán đc
+    @CreationTimestamp
+    private Date createDate;//ngày đổi trả
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "order_id")
+    private Order order;
+    @JsonIgnore
+    @OneToMany(mappedBy = "orderDetail")
+    private List<Exchange> danhSachExchange;
+    @ManyToOne
+    @JoinColumn(name = "S_C_Details_id")
+    private S_C_Details saimau;
 }
