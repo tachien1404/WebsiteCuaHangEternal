@@ -7,6 +7,8 @@ import webbangiaydabong.entity.size;
 import webbangiaydabong.repository.SizeRepository;
 import webbangiaydabong.service.SizeService;
 
+import java.util.List;
+
 @Service
 public class SizeServiceImpl implements SizeService {
 
@@ -18,6 +20,9 @@ public class SizeServiceImpl implements SizeService {
     }
 
     @Override
+    public List<size> findAll() {
+        return repository.findAll();
+
     public boolean checkvalue(Integer value) {
         Long count=repository.countvalue(value);
         if(count>0){

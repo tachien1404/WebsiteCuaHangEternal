@@ -46,12 +46,17 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public void delete(Long id) {
 		productRepo.deleteById(id);
-		
 	}
 
 	@Override
 	public Page<Product> findByKey(Pageable pageable, String name,Long id, Double inportprice, Double outputprice, Category category, Brand hang) {
 		return productRepo.findByKey(pageable, name,id, inportprice, outputprice, category, hang);
 	}
+
+	@Override
+	public List<Product> findByStatus() {
+		return productRepo.findByStatus();
+	}
+
 
 }

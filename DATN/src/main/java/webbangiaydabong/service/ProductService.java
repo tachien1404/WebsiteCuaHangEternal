@@ -26,5 +26,6 @@ public interface ProductService {
 							Category category,
 							Brand hang);
 
+	List<Product> findByStatus();
 
 }

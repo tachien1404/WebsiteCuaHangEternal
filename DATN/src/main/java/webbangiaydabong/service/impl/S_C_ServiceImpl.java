@@ -1,8 +1,13 @@
 package webbangiaydabong.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import webbangiaydabong.entity.Color;
+import webbangiaydabong.entity.Product;
 import webbangiaydabong.entity.S_C_Details;
+import webbangiaydabong.entity.size;
 import webbangiaydabong.repository.S_C_Repository;
 import webbangiaydabong.service.S_C_DetailService;
 
@@ -48,5 +53,10 @@ public class S_C_ServiceImpl implements S_C_DetailService {
     @Override
     public void delete(Long id) {
        repo.deleteById(id);
+    }
+
+    @Override
+    public Page<S_C_Details> findByKey(Pageable pageable, Long id, Product product, size size, Color mau, Integer quantity, Integer status) {
+        return repo.findByKey(pageable, id, product, size, mau, quantity, status);
     }
 }
