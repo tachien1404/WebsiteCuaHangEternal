@@ -10,4 +10,5 @@ public interface BrandService {
     BrandDTO saveOrUpdate(BrandDTO dto);
     List<BrandDTO>getAllBrandDtos();
     List<Brand>  getAll();
+    boolean checkName(String name);
 }
