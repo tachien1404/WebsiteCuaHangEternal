@@ -21,7 +21,7 @@ import org.hibernate.annotations.CreationTimestamp;
 @Table(name="Orderdetail")
 @Getter
 @Setter
-public class OrderDetail {
+public class   OrderDetail {
 @Id
 @GeneratedValue(strategy = GenerationType.IDENTITY)
 private Long id;

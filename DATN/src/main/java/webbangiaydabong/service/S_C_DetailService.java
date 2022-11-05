@@ -1,6 +1,8 @@
 package webbangiaydabong.service;
 
-import webbangiaydabong.entity.S_C_Details;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import webbangiaydabong.entity.*;
 
 import java.util.List;
 
@@ -16,4 +18,13 @@ public interface S_C_DetailService {
     S_C_Details update(S_C_Details sizeColorDetails);
 
     void delete(Long id);
+
+    Page<S_C_Details> findByKey(Pageable pageable,
+                            Long id,
+                            Product product,
+                            size size,
+                            Color mau,
+                            Integer quantity,
+                            Integer status);
+
 }

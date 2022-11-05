@@ -34,4 +34,7 @@ public interface ProductRepository extends JpaRepository<Product, Long>{
 			@Param("hang") Brand hang
 	);
 
+	@Query("select p FROM Product  p WHERE p.delete =true ")
+	List<Product> findByStatus();
+
 }
