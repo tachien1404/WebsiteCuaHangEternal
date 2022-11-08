@@ -22,9 +22,9 @@ public class SizeServiceImpl implements SizeService {
     @Override
     public List<size> findAll() {
         return repository.findAll();
-
+    }
     public boolean checkvalue(Integer value) {
-        Long count=repository.countvalue(value);
+        Integer count=repository.countvalue(value);
         if(count>0){
             return true;
         }

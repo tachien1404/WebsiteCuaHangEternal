@@ -25,9 +25,10 @@ public class ColorServiceImpl implements ColorService {
     @Override
     public List<Color> findAll() {
         return repository.findAll();
+    }
     @Override
     public boolean checkvalue(Integer value) {
-        Long count=repository.countvalue(value);
+        Integer count=repository.countvalue(value);
         if(count>0){
             return true;
         }

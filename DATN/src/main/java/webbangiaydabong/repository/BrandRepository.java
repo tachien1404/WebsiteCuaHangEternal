@@ -17,5 +17,5 @@ public interface BrandRepository extends JpaRepository<Brand, Long> {
     List<Brand> getAll();
 
     @Query(value = "SELECT COUNT(brand.id) FROM brand WHERE brand.name LIKE :name", nativeQuery = true)
-   Long countName(String name);
+   Integer countName(String name);
 }

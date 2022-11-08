@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.relational.core.sql.In;
 import org.springframework.data.repository.query.Param;
 import webbangiaydabong.dto.BrandDTO;
 import webbangiaydabong.dto.CategoryDTO;
@@ -33,5 +34,5 @@ public interface CategoryRepositoty extends JpaRepository<Category, Long> {
     );
 
     @Query(value = "SELECT COUNT(category.id) FROM category WHERE category.name LIKE :name", nativeQuery = true)
-    Long countName(String name);
+    Integer countName(String name);
 }

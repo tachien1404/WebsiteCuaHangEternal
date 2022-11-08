@@ -14,11 +14,13 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
+@Data
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "account")
 public class Account {
@@ -32,6 +34,7 @@ public class Account {
 	private String address;
 	private String sdt;
 	private String photo;
+	private boolean isActive;
 	@JsonIgnore
 	@OneToMany(mappedBy = "account")
 	Set<Order> danhSachOrder;

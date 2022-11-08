@@ -18,15 +18,12 @@ import org.springframework.web.multipart.MultipartFile;
 import webbangiaydabong.dto.ProductDTO;
 import webbangiaydabong.dto.ProductSearchDTO;
 import webbangiaydabong.dto.functiondto.SortByValue;
-import webbangiaydabong.entity.Brand;
-import webbangiaydabong.entity.Category;
-import webbangiaydabong.entity.Product;
-import webbangiaydabong.entity.ResponseObject;
+import webbangiaydabong.entity.*;
 import webbangiaydabong.service.*;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/rest/products")
+@RequestMapping("/api/public/rest/products")
 public class ProductRestController {
     @Autowired
     UploadService uploadService;
@@ -38,6 +35,13 @@ public class ProductRestController {
 
     @Autowired
     BrandService brandService;
+
+    @Autowired
+    SizeService sizeService;
+
+    @Autowired
+    ColorService colorService;
+
 
 
     @GetMapping()
@@ -172,7 +176,15 @@ public class ProductRestController {
         return brandService.getAll();
     }
 
+    @GetMapping("/getAllSize")
+    public List<size> getAllSize(){
+        return sizeService.findAll();
+    }
 
+    @GetMapping("/getColor")
+    public List<Color> getColor(){
+        return colorService.findAll();
+    }
 
 
 }

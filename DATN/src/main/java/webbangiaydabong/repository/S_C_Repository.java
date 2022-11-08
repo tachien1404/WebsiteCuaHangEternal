@@ -39,4 +39,13 @@ public interface S_C_Repository extends JpaRepository<S_C_Details,Long> {
             @Param("status") Integer status
     );
 
+    @Query("select sc FROM S_C_Details sc WHERE" +
+            "(sc.product  =:product or :product is null)"+
+            "and   (sc.size  =:size or :size is null)"+
+            "and   (sc.mau  =:mau or :mau is null)")
+    List<S_C_Details> findQuantity(  @Param("product") Product product,
+                                     @Param("size") size size,
+                                     @Param("mau") Color mau);
+
+
 }

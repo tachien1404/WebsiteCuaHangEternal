@@ -37,7 +37,7 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     public boolean checkName(String name) {
-       Long count=brandRepository.countName(name);
+       Integer count=brandRepository.countName(name);
         if(count>0){
             return true;
         }
