@@ -61,7 +61,7 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Override
 	public boolean checkName(String name) {
-		Long count=categoryRepo.countName(name);
+		Integer count=categoryRepo.countName(name);
 		if(count>0){
 			return true;
 		}

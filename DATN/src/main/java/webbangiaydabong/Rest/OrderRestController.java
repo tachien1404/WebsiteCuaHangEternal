@@ -20,7 +20,6 @@ import webbangiaydabong.service.OrderService;
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/api/order")
-	@CrossOrigin("*")
 
 public class OrderRestController {
 	@Autowired

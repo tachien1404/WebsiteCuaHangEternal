@@ -1,4 +1,5 @@
 package webbangiaydabong.entity;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -6,6 +7,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name ="sizecolordetals")
+@Data
 @Getter
 @Setter
 public class S_C_Details {

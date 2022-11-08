@@ -8,7 +8,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import webbangiaydabong.dto.FindQuantity;
 import webbangiaydabong.dto.ProductSearchDTO;
 import webbangiaydabong.dto.S_C_DetailDTO;
 import webbangiaydabong.dto.S_C_DetailSearch;
@@ -25,7 +28,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/rest/s_c_details")
+@RequestMapping("/api/public/rest/s_c_details")
 public class S_C_RestController {
     @Autowired
     S_C_DetailService service;
@@ -40,52 +43,52 @@ public class S_C_RestController {
     ColorService colorService;
 
     @GetMapping
-    public List<S_C_Details> getAll(){
+    public List<S_C_Details> getAll() {
         return service.findAll();
     }
 
     @GetMapping("/getAllColor")
-    public List<Color> getAllColor(){
+    public List<Color> getAllColor() {
         return colorService.findAll();
     }
 
     @GetMapping("/getAllSize")
-    public List<size> getAllSize(){
+    public List<size> getAllSize() {
         return sizeService.findAll();
     }
 
     @GetMapping("/getAllProduct")
-    public List<Product> getAllProduct(){
+    public List<Product> getAllProduct() {
         return productService.findByStatus();
     }
 
     @GetMapping("/s_c")
     public S_C_Details getSC(@RequestParam("product_id") Long id, @RequestParam("size_id") Long sid,
-                              @RequestParam("color_id")  Long cid) {
-        return service.findBySizeColor(id,sid,cid);
+                             @RequestParam("color_id") Long cid) {
+        return service.findBySizeColor(id, sid, cid);
     }
 
     @GetMapping("/s")
     public List<S_C_Details> getS(@RequestParam("product_id") Long id, @RequestParam("size_id") Long sid) {
-        return service.findBySize(id,sid);
+        return service.findBySize(id, sid);
     }
 
     @GetMapping("/c")
-    public List<S_C_Details> getC(@RequestParam("product_id") Long id,@RequestParam("color_id")  Long cid) {
+    public List<S_C_Details> getC(@RequestParam("product_id") Long id, @RequestParam("color_id") Long cid) {
         return service.findByColor(id, cid);
     }
 
     @PostMapping()
     public ResponseEntity<ResponseObject> create(@RequestBody S_C_Details scDetails) {
-        try{
-            if(scDetails.getQuantity() > 0){
+        try {
+            if (scDetails.getQuantity() > 0) {
                 scDetails.setStatus(1);
-            }else {
+            } else {
                 scDetails.setStatus(0);
             }
             service.create(scDetails);
             return ResponseEntity.ok().body(new ResponseObject(HttpStatus.OK, "Thêm mới thành công", ""));
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
                     new ResponseObject(HttpStatus.BAD_REQUEST, "Thêm mới thất bại",
@@ -106,37 +109,49 @@ public class S_C_RestController {
     @PutMapping("/sortByKey")
     public ResponseEntity<ResponseObject> sortByKey(@RequestParam int page,
                                                     @RequestParam int size,
-                                                    @RequestBody S_C_DetailSearch search) {
+                                                    @RequestBody S_C_DetailSearch search ) {
         try {
-            page = page <0? 0:page;
+            page = page < 0 ? 0 : page;
             Pageable pageable;
             List<Sort.Order> orders = new ArrayList<>();
             List<SortByValue> sortByValueList = search.getSortByValues();
             System.out.println(sortByValueList);
-            if(sortByValueList.isEmpty()){
-                orders.add(new Sort.Order(Sort.Direction.ASC,"id"){
+            if (sortByValueList.isEmpty()) {
+                orders.add(new Sort.Order(Sort.Direction.ASC, "id") {
                 });
-            }else {
-                sortByValueList.forEach(value ->{
-                    orders.add(new Sort.Order(getSortDirection(value.getType()),value.getName()));
+            } else {
+                sortByValueList.forEach(value -> {
+                    orders.add(new Sort.Order(getSortDirection(value.getType()), value.getName()));
                 });
             }
 
-            pageable = PageRequest.of(page,size,Sort.by(orders));
+            pageable = PageRequest.of(page, size, Sort.by(orders));
             Page<S_C_Details> s_c_detailsPage;
-            s_c_detailsPage = service.findByKey(pageable,search.getId(),search.getProduct(),
-                    search.getSize(),search.getMau(),search.getQuantity(),search.getStatus());
+            s_c_detailsPage = service.findByKey(pageable, search.getId(), search.getProduct(),
+                    search.getSize(), search.getMau(), search.getQuantity(), search.getStatus());
             return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject(HttpStatus.OK,"Tìm thấy thành công",s_c_detailsPage)
+                    new ResponseObject(HttpStatus.OK, "Tìm thấy thành công", s_c_detailsPage)
             );
 
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
                     new ResponseObject(HttpStatus.BAD_REQUEST, "Không tìm thấy",
                             ""));
         }
-    };
+    }
+
+
+    @PutMapping("/findQuantity")
+    public ResponseEntity<ResponseObject> findQuantity(@RequestBody FindQuantity search) {
+        int quantity = 0;
+        List<S_C_Details> list = service.findQuantity(search.getProduct(), search.getSize(), search.getMau());
+        for (S_C_Details x : list) {
+            quantity += x.getQuantity();
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject(HttpStatus.OK, "Tìm thấy thành công",quantity ));
+    }
 
 
 }

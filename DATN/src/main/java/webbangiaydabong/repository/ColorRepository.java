@@ -7,6 +7,6 @@ import webbangiaydabong.entity.Color;
 
 public interface ColorRepository extends JpaRepository<Color, Long>{
     @Query(value = "SELECT count(color.id) FROM color WHERE value=:value",nativeQuery = true)
-    Long countvalue(Integer value);
+    Integer countvalue(Integer value);
 
 }

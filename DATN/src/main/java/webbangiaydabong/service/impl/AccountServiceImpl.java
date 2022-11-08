@@ -38,8 +38,11 @@ public class AccountServiceImpl implements AccountService {
 		acc=accountRepo.save(acc);
 		return new AccountDTO(acc);
 	}
-	
-	
-	
+
+	@Override
+	public Account findByEmail(String email) {
+		return accountRepo.findByEmail(email);
+	}
+
 
 }
