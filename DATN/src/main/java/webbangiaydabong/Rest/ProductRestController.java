@@ -1,5 +1,6 @@
 package webbangiaydabong.Rest;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -117,7 +118,7 @@ public class ProductRestController {
             uploadService.savelist(list);
             return new ResponseEntity<>("Import success!", HttpStatus.OK);
         } catch (Exception e) {
-            System.out.println(e.getMessage() + "no");
+            System.out.println(e.getMessage() );
             return new ResponseEntity<>("Import failed!", HttpStatus.BAD_REQUEST);
         }
     }
@@ -152,7 +153,7 @@ public class ProductRestController {
 
 			pageable = PageRequest.of(page,size,Sort.by(orders));
 			Page<Product> productPage;
-			productPage = productService.findByKey(pageable,dto.getName(),dto.getId(),dto.getInportprice(),
+			productPage = productService.findByKey(pageable,dto.getName(),dto.getId(),
 					                              dto.getOutputprice(),dto.getCategory(),dto.getHang());
 			return ResponseEntity.status(HttpStatus.OK).body(
 					new ResponseObject(HttpStatus.OK,"Tìm thấy thành công",productPage)

@@ -48,7 +48,7 @@ private void createColor(){
             if(sizeService.checkvalue(dto.getValue())==false){
                 sizeService.save(dto);
             }
-        }         sizeService.save(dto);
+        }
 
     }
     private void createCategory() {

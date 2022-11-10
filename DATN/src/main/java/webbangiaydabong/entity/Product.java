@@ -1,5 +1,6 @@
 package webbangiaydabong.entity;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -35,8 +36,8 @@ public class Product {
 	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date createDate;// ngày tạo
 
-	private Double inportprice;// giá nhập
-	private Double outputprice;// giá xuất
+
+	private float outputprice;// giá xuất
 	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date updatedate;// ngày sửa sẳn phẩm
 	private Integer status;

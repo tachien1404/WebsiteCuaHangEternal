@@ -21,7 +21,7 @@ public interface ProductService {
 	Page<Product> findByKey(Pageable pageable,
 							String name,
 							Long id,
-							Double inportprice,
+
 							Double outputprice,
 							Category category,
 							Brand hang);

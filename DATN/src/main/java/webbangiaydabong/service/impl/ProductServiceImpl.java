@@ -49,8 +49,8 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public Page<Product> findByKey(Pageable pageable, String name,Long id, Double inportprice, Double outputprice, Category category, Brand hang) {
-		return productRepo.findByKey(pageable, name,id, inportprice, outputprice, category, hang);
+	public Page<Product> findByKey(Pageable pageable, String name,Long id,  Double outputprice, Category category, Brand hang) {
+		return productRepo.findByKey(pageable, name,id,outputprice, category, hang);
 	}
 
 	@Override
