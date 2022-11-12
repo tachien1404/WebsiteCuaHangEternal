@@ -7,7 +7,8 @@ import webbangiaydabong.entity.Account;
 
 public interface AccountRepository extends JpaRepository<Account, Long>{
 
-    @Query("select a from Account a where a.email = ?1")
+    Account findByUserName(String userName);
+
     Account findByEmail(String email);
 
 }
