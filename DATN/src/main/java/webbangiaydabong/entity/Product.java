@@ -31,7 +31,7 @@ public class Product {
 	private Long id;
 	private String name;
 	private String photo;
-	private Integer quantity;
+
 
 	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date createDate;// ngày tạo

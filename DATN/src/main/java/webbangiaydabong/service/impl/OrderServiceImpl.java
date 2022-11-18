@@ -223,15 +223,21 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderDetailDTO> getByOrderId(Long id) {
-        String sql="SELECT product.name as productName,orderdetail.quantity as quantity,orderdetail.price as price,image.photo as photo,category.name as category_name,brand.name as brand_name,order.status as status \n" +
-                "FROM category JOIN product ON category.id=product.category_id JOIN brand ON brand.id=product.hang_id  JOIN orderdetail ON product.id=orderdetail.product_id JOIN `order` ON orderdetail.order_id=`order`.id JOIN image ON image.product_id=product.id\n" +
+        String sql = "SELECT product.name as productName,orderdetail.quantity as quantity,orderdetail.price as price,product.photo as photo,category.name as category_name,brand.name as brand_name,order.status as status \n" +
+                "FROM category JOIN product ON category.id=product.category_id JOIN brand ON brand.id=product.hang_id  JOIN orderdetail ON product.id=orderdetail.product_id JOIN `order` ON orderdetail.order_id=`order`.id \n" +
                 "WHERE order.id=:order_id\n" +
                 "GROUP BY orderdetail.id";
         Query query = manager.createNativeQuery(sql).unwrap(org.hibernate.query.Query.class).setResultTransformer(new AliasToBeanResultTransformer(OrderDetailDTO.class));
-if(id!=null){
-    query.setParameter("order_id",id);
-}
-List<OrderDetailDTO> dlstOrderDetailDTOS=  query.getResultList();
+        if (id != null) {
+            query.setParameter("order_id", id);
+        }
+        List<OrderDetailDTO> dlstOrderDetailDTOS = query.getResultList();
         return dlstOrderDetailDTOS;
+    }
+
+    @Override
+    public void updatetat(Integer status) {
+        orderRepo.update(status);
+
     }
 }

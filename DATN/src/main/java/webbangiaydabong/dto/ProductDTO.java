@@ -20,7 +20,7 @@ public class ProductDTO {
     private Long id;
     private String name;
 
-    private Integer quantity;
+
     private Date createDate;
 
 
@@ -41,7 +41,6 @@ public class ProductDTO {
 
             this.name = product.getName();
             this.outputprice = product.getOutputprice();
-            this.quantity = product.getQuantity();
             this.status = product.getStatus();
             this.updatedate = product.getUpdatedate();
         }

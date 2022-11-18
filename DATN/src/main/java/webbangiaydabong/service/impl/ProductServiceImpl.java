@@ -12,51 +12,55 @@ import webbangiaydabong.entity.Category;
 import webbangiaydabong.entity.Product;
 import webbangiaydabong.repository.ProductRepository;
 import webbangiaydabong.service.ProductService;
+
+import javax.persistence.Query;
+
 @Service
 public class ProductServiceImpl implements ProductService {
 
-	@Autowired
-	ProductRepository productRepo;
+    @Autowired
+    ProductRepository productRepo;
 
-	@Override
-	public List<Product> findAll() {
-		return productRepo.findByStatus();
-	}
+    @Override
+    public List<Product> findAll() {
+        return productRepo.findByStatus();
+    }
 
-	@Override
-	public List<Product> findByCategoryId(String categoryId) {
-		return productRepo.finByCategoryId(categoryId);
-	}
+    @Override
+    public List<Product> findByCategoryId(String categoryId) {
+        return productRepo.finByCategoryId(categoryId);
+    }
 
-	@Override
-	public Product findById(Long id) {
-		return productRepo.findById(id).get();
-	}
+    @Override
+    public Product findById(Long id) {
+        return productRepo.findById(id).get();
+    }
 
-	@Override
-	public Product create(Product product) {
-		return productRepo.save(product);
-	}
+    @Override
+    public Product create(Product product) {
+        return productRepo.save(product);
+    }
 
-	@Override
-	public Product update(Product product) {
-		return productRepo.save(product);
-	}
+    @Override
+    public Product update(Product product) {
+        return productRepo.save(product);
+    }
 
-	@Override
-	public void delete(Long id) {
-		productRepo.deleteById(id);
-	}
+    @Override
+    public void delete(Long id) {
+        productRepo.deleteById(id);
 
-	@Override
-	public Page<Product> findByKey(Pageable pageable, String name,Long id,  Double outputprice, Category category, Brand hang) {
-		return productRepo.findByKey(pageable, name,id,outputprice, category, hang);
-	}
+    }
 
-	@Override
-	public List<Product> findByStatus() {
-		return productRepo.findByStatus();
-	}
+    @Override
+    public Page<Product> findByKey(Pageable pageable, String name, Long id, Double outputprice, Category category, Brand hang) {
+        return productRepo.findByKey(pageable, name, id, outputprice, category, hang);
+    }
+
+    @Override
+    public List<Product> findByStatus() {
+        return productRepo.findByStatus();
+    }
 
 
 }

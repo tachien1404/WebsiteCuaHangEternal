@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/api/brand")
+@RequestMapping("/api/public/brand")
 public class BrandRestController {
     @Autowired
     BrandService brandService;
@@ -23,6 +23,5 @@ public class BrandRestController {
     @GetMapping("/getAll")
     public List<BrandDTO>getAll(){
        return brandService.getAllBrandDtos();
-
     }
 }

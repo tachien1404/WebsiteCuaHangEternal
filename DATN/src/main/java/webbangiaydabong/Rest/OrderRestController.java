@@ -19,7 +19,7 @@ import webbangiaydabong.service.OrderService;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/api/order")
+@RequestMapping("/api/public/order")
 
 public class OrderRestController {
 	@Autowired
@@ -37,6 +37,13 @@ public class OrderRestController {
 	@PutMapping("/trangthai/{id}")
 	public void update(@PathVariable ("id") Long id,@RequestBody OrderDTO dto){
 		orderService.updatetrangthai(id,dto);
+	}
+	@PostMapping  ("/trangthaidon/{status}")
+	public void updatetat(@PathVariable Integer status){
+
+			orderService.updatetat(status);
+
+
 	}
 	@RequestMapping(value = "/search-by-page", method = RequestMethod.POST)
 	public ResponseEntity<Page<OrderDTO>> searchByPage(@RequestBody SearchDto dto) {

@@ -29,4 +29,5 @@ public interface OrderService {
 	void updatetrangthai(Long id, OrderDTO dto);
 	Page<OrderDTO>searchByPage(SearchDto dto);
     List<OrderDetailDTO> getByOrderId(Long id);
+   void updatetat(Integer status);
 }
