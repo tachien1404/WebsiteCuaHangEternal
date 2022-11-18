@@ -16,7 +16,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.*;
 
-@Data
 @Getter
 @Setter
 @NoArgsConstructor
@@ -27,6 +26,7 @@ public class Account {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	private String userName;
 	private String email;
 	private String fullname;
 	private String password;
