@@ -11,12 +11,14 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
 @Getter
 @Setter
 @Entity
 @Table(name="color")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Color {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

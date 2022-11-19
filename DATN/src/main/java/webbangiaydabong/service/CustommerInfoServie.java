@@ -8,9 +8,8 @@ public interface CustommerInfoServie {
 List<CustommerInfo> findAll();
 	
 	CustommerInfo findById(Long id);
-	
-
-	
-
 	CustommerInfoDTO CRUD(CustommerInfoDTO CustomerIn);
+	List<CustommerInfo> findAllByAccount(String userName);
+	CustommerInfo create(CustommerInfo custommerInfo);
+	void delete(Long id);
 }

@@ -16,14 +16,13 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
-@Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "product")
 public class Product {
 	@Id
@@ -31,7 +30,7 @@ public class Product {
 	private Long id;
 	private String name;
 	private String photo;
-
+	private Integer quantity;
 
 	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date createDate;// ngày tạo
@@ -69,4 +68,5 @@ public class Product {
 	@JsonIgnore
 	@OneToMany(mappedBy = "product")
 	private List<Exchange> danhSachExchange;
+
 }

@@ -23,8 +23,8 @@ import webbangiaydabong.entity.*;
 import webbangiaydabong.service.*;
 
 @RestController
-@CrossOrigin("*")
-@RequestMapping("/api/public/products")
+@CrossOrigin("*" )
+@RequestMapping("/api/public/rest/products")
 public class ProductRestController {
     @Autowired
     UploadService uploadService;

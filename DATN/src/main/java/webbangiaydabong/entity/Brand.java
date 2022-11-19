@@ -9,13 +9,14 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @Entity
 @Table(name="brand")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Brand {
 @Id
 @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,4 +26,5 @@ private boolean delete;
 @JsonIgnore
 @OneToMany(mappedBy = "hang")
 private Set<Product>danhSachProduct;
+
 }

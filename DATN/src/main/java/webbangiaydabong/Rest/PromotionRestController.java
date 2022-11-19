@@ -24,7 +24,7 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/public/promotion")
+@RequestMapping("/rest/promotion")
 public class PromotionRestController {
 
     @Autowired

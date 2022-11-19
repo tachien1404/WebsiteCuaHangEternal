@@ -17,7 +17,7 @@ import webbangiaydabong.entity.CustommerInfo;
 import webbangiaydabong.service.CustommerInfoServie;
 
 @RestController
-@RequestMapping("/api/public/custommerinfo")
+@RequestMapping("/api/custommerinfo")
 public class CustommerInfoRescontroller {
 	@Autowired
 	CustommerInfoServie Cuservice;

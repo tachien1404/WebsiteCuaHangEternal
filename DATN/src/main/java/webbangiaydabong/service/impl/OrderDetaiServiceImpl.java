@@ -17,4 +17,19 @@ public class OrderDetaiServiceImpl implements OrderDetaiService {
     public List<OrderDetail> findByIDOrder(Integer id) {
         return orderDetailRepo.findOrderDetailByOrder(id);
     }
+
+    @Override
+    public List<OrderDetail> saveAll(List<OrderDetail> listDetails) {
+        return orderDetailRepo.saveAll(listDetails);
+    }
+
+    @Override
+    public OrderDetail create(OrderDetail orderDetail) {
+        return  orderDetailRepo.save(orderDetail);
+    }
+
+    @Override
+    public List<OrderDetail> findByOder(Long id) {
+        return orderDetailRepo.findOrderDetailByOrder(id);
+    }
 }

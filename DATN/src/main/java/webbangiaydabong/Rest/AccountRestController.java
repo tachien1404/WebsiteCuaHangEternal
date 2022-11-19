@@ -12,7 +12,7 @@ import webbangiaydabong.dto.AccountDTO;
 import webbangiaydabong.service.AccountService;
 
 @RestController
-@RequestMapping("api/public/account/")
+@RequestMapping("/api/account/")
 public class AccountRestController {
 @Autowired
 AccountService accountService;

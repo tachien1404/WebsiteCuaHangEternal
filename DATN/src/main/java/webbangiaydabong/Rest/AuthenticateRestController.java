@@ -15,6 +15,7 @@ import webbangiaydabong.Rest.vm.LoginVM;
 import webbangiaydabong.core.Constants;
 import webbangiaydabong.dto.AccountDTO;
 import webbangiaydabong.entity.Account;
+import webbangiaydabong.entity.ResponseObject;
 import webbangiaydabong.security.jwt.JWTFilter;
 import webbangiaydabong.security.jwt.TokenProvider;
 import webbangiaydabong.service.AccountService;
@@ -41,8 +42,6 @@ public class AuthenticateRestController {
     TokenProvider tokenProvider;
 
 
-
-
     @PostMapping("/signup")
     public ResponseEntity<Account> signup(@Valid @RequestBody AccountDTO dto) {
         return ResponseEntity.ok().body(authenticateService.signup(dto));
@@ -50,23 +49,25 @@ public class AuthenticateRestController {
 
     @PostMapping("/login")
     public ResponseEntity<?> authenticateAdmin(@Valid @RequestBody LoginVM loginVM) {
-//		Tạo chuỗi authentication từ username và password (object LoginRequest
+            //		Tạo chuỗi authentication từ username và password (object LoginRequest
 //		- file này chỉ là 1 class bình thường, chứa 2 trường username và password)
-        UsernamePasswordAuthenticationToken authenticationString = new UsernamePasswordAuthenticationToken(
-                loginVM.getUserName(),
-                loginVM.getPassword()
-        );
-        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationString);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = tokenProvider.createToken(authentication, loginVM.getRememberMe());
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add(JWTFilter.AUTHORIZATION_HEADER, String.format("Bearer %s", jwt));
-        return new ResponseEntity<>(Collections.singletonMap("token", jwt), httpHeaders, HttpStatus.OK); //Trả về chuỗi jwt(authentication string)
+            UsernamePasswordAuthenticationToken authenticationString = new UsernamePasswordAuthenticationToken(
+                    loginVM.getUserName(),
+                    loginVM.getPassword()
+            );
+            Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationString);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            String jwt = tokenProvider.createToken(authentication, loginVM.getRememberMe());
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.add(JWTFilter.AUTHORIZATION_HEADER, String.format("Bearer %s", jwt));
+            return new ResponseEntity<>(Collections.singletonMap("token", jwt), httpHeaders, HttpStatus.OK); //Trả về chuỗi jwt(authentication string)
 
 //        User userLogin = userService.findUserByUserName(adminLoginVM.getUserName());
 //        return ResponseEntity.ok().body(new JWTTokenResponse(jwt, userLogin.getUserName())); //Trả về chuỗi jwt(authentication string)
 
+
     }
+
 
 
 
