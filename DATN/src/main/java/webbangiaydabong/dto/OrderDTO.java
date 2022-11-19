@@ -23,7 +23,7 @@ public class OrderDTO {
 	private String name_acount;
 	private String address;
 	private String sdt;
-	private Boolean checked=false;
+	
 	public OrderDTO(Order entity, boolean onlyVanBang) {
 		this.id = entity.getId();
 		this.create_date=entity.getCreate_date();
@@ -32,7 +32,6 @@ public class OrderDTO {
 		this.note=entity.getNote();
 		if (onlyVanBang && entity.getAccount() != null) {
 			this.name_acount = entity.getAccount().getFullname();
-			this.sdt=entity.getAccount().getSdt();
 		}
 		this.address=entity.getAccount().getAddress();
 this.sdt=entity.getAccount().getSdt();

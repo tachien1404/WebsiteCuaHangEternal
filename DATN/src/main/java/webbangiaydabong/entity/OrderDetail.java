@@ -13,15 +13,17 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Table(name = "Orderdetail")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class OrderDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,11 +31,12 @@ public class OrderDetail {
     private float price;//giá sản phẩm
     private Integer quantity;//số lượng bán đc
     @CreationTimestamp
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date createDate;//ngày đổi trả
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "order_id")
     private Order order;
     @JsonIgnore

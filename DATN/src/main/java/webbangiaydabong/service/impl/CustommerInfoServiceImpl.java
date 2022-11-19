@@ -23,9 +23,6 @@ public class CustommerInfoServiceImpl implements CustommerInfoServie {
 		return Cusrepo.findAll();
 	}
 
-	
-	
-
 	@Override
 	public CustommerInfoDTO CRUD(CustommerInfoDTO CustomerIn) {
 		CustommerInfo entity = null;
@@ -45,13 +42,25 @@ public class CustommerInfoServiceImpl implements CustommerInfoServie {
 		 return CustomerIn;
 	}
 
+	@Override
+	public List<CustommerInfo> findAllByAccount(String userName) {
+		return Cusrepo.findCustommerInfoByUser(userName);
+	}
 
+	@Override
+	public CustommerInfo create(CustommerInfo custommerInfo) {
+		return Cusrepo.save(custommerInfo);
+	}
+
+	@Override
+	public void delete(Long id) {
+    Cusrepo.deleteById(id);
+	}
 
 
 	@Override
 	public CustommerInfo findById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return Cusrepo.findById(id).get();
 	}
 
 }

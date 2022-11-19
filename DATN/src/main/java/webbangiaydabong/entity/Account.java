@@ -46,6 +46,7 @@ public class Account {
 	@JsonIgnore
 	@OneToMany(mappedBy = "account")
 	private Set<Promotion> danhSachkhuyenmai;
+	@JsonIgnore
 @OneToMany(mappedBy = "account")
 Set<CustommerInfo>danhSachDiaChiGiaoHang;
 }
