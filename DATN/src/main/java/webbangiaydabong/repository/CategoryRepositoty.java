@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.relational.core.sql.In;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 import webbangiaydabong.dto.BrandDTO;
 import webbangiaydabong.dto.CategoryDTO;
 import webbangiaydabong.entity.Brand;
@@ -15,7 +16,7 @@ import webbangiaydabong.entity.Category;
 import webbangiaydabong.entity.Product;
 
 import java.util.List;
-
+@Repository
 public interface CategoryRepositoty extends JpaRepository<Category, Long> {
     @Query("select new webbangiaydabong.dto.CategoryDTO(o) from Category o ")
     List<CategoryDTO> getAllCategory();

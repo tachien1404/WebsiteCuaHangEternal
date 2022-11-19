@@ -23,14 +23,8 @@ import webbangiaydabong.dto.OrderDTO;
 import webbangiaydabong.dto.OrderDetailDTO;
 import webbangiaydabong.dto.functiondto.DatHangDto;
 import webbangiaydabong.dto.functiondto.SearchDto;
-import webbangiaydabong.entity.Account;
-import webbangiaydabong.entity.Order;
-import webbangiaydabong.entity.OrderDetail;
-import webbangiaydabong.entity.Product;
-import webbangiaydabong.repository.AccountRepository;
-import webbangiaydabong.repository.OrderDetailRepository;
-import webbangiaydabong.repository.OrderRepository;
-import webbangiaydabong.repository.ProductRepository;
+import webbangiaydabong.entity.*;
+import webbangiaydabong.repository.*;
 import webbangiaydabong.service.OrderService;
 
 import javax.persistence.EntityManager;
@@ -45,10 +39,12 @@ public class OrderServiceImpl implements OrderService {
     OrderRepository orderRepo;
     @Autowired
     ProductRepository productRepository;
-    @Autowired
-    OrderDetailRepository orderDetailRepo;
+   @Autowired
+    S_C_Repository s_c_repository;
     @Autowired
     AccountRepository accountRepository;
+    @Autowired
+    OrderDetailRepository orderDetailRepository;
 
     @Override
     public Order create(JsonNode orderData) {
@@ -59,7 +55,7 @@ public class OrderServiceImpl implements OrderService {
         };
         List<OrderDetail> details = mapper.convertValue(orderData.get("danhSachOrder"), type).stream()
                 .peek(d -> d.setOrder(order)).collect(Collectors.toList());
-        orderDetailRepo.saveAll(details);
+        orderDetailRepository.saveAll(details);
         return order;
     }
 
@@ -158,7 +154,7 @@ public class OrderServiceImpl implements OrderService {
                 orderDetail.setQuantity(c.getQuantity());
                 orderDetail.setOrder(order);
                 orderDetail.setProduct(productRepository.getById(c.getId()));
-                orderDetailRepo.save(orderDetail);
+                orderDetailRepository.save(orderDetail);
             }
         }
         return new ResponseEntity<Order>(order, HttpStatus.OK);
@@ -168,11 +164,19 @@ public class OrderServiceImpl implements OrderService {
     public void updatetrangthai(Long id, OrderDTO dto) {
         if (id != null) {
             Order order = orderRepo.getById(id);
+            List<OrderDetail> lstOrderDetails = orderDetailRepository.findOrderDetailByOrder(id);
             if (dto.getStatus() >= 0) {
                 order.setStatus(dto.getStatus());
                 orderRepo.save(order);
-            } else {
-                return;
+            } else if(dto.getStatus()>=0&&dto.getStatus()==3){
+                for(OrderDetail x:lstOrderDetails){
+                    S_C_Details sc=s_c_repository.findById(x.getSaimau().getId()).get();
+                    if(sc!=null){
+                       Integer quantity= sc.getQuantity() + x.getQuantity();
+                       sc.setQuantity(quantity);
+                       s_c_repository.save(sc);
+                    }
+                }
             }
 
 
@@ -204,16 +208,16 @@ public class OrderServiceImpl implements OrderService {
         String sqlCount = "select count(entity.id) from Order as entity where (1=1)   ";
         String sql = "select new webbangiaydabong.dto.OrderDTO(o,true) from Order o  ";
 
-if(dto.getKeyword()!=null){
-    whereClause+=" AND (o.account.fullname like :keyword ) ";
-}
-        sql+=whereClause+orderBy;
+        if (dto.getKeyword() != null) {
+            whereClause += " AND (o.account.fullname like :keyword ) ";
+        }
+        sql += whereClause + orderBy;
 
         Query q = manager.createQuery(sql, OrderDTO.class);
         Query qCount = manager.createQuery(sqlCount);
-if(dto.getKeyword()!=null){
-    q.setParameter("keyword",dto.getKeyword().trim());
-}
+        if (dto.getKeyword() != null) {
+            q.setParameter("keyword", dto.getKeyword().trim());
+        }
 
         int startPosition = pageIndex * pageSize;
         q.setFirstResult(startPosition);
@@ -227,15 +231,15 @@ if(dto.getKeyword()!=null){
 
     @Override
     public List<OrderDetailDTO> getByOrderId(Long id) {
-        String sql="SELECT product.name as productName,orderdetail.quantity as quantity,orderdetail.price as price,image.photo as photo,category.name as category_name,brand.name as brand_name,order.status as status \n" +
+        String sql = "SELECT product.name as productName,orderdetail.quantity as quantity,orderdetail.price as price,image.photo as photo,category.name as category_name,brand.name as brand_name,order.status as status \n" +
                 "FROM category JOIN product ON category.id=product.category_id JOIN brand ON brand.id=product.hang_id  JOIN orderdetail ON product.id=orderdetail.product_id JOIN `order` ON orderdetail.order_id=`order`.id JOIN image ON image.product_id=product.id\n" +
                 "WHERE order.id=:order_id\n" +
                 "GROUP BY orderdetail.id";
         Query query = manager.createNativeQuery(sql).unwrap(org.hibernate.query.Query.class).setResultTransformer(new AliasToBeanResultTransformer(OrderDetailDTO.class));
-if(id!=null){
-    query.setParameter("order_id",id);
-}
-List<OrderDetailDTO> dlstOrderDetailDTOS=  query.getResultList();
+        if (id != null) {
+            query.setParameter("order_id", id);
+        }
+        List<OrderDetailDTO> dlstOrderDetailDTOS = query.getResultList();
         return dlstOrderDetailDTOS;
     }
 

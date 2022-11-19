@@ -7,13 +7,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 import webbangiaydabong.entity.Brand;
 import webbangiaydabong.entity.Category;
 import webbangiaydabong.entity.Product;
 import webbangiaydabong.entity.Promotion;
 
 import java.util.Date;
-
+@Repository
 public interface PromotionRepository extends JpaRepository<Promotion,Long>{
     @Query("select p FROM Promotion p WHERE" +
             "(lower(p.name)  like '%' ||  lower(:name) || '%' or :name is null)" +

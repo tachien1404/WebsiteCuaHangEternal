@@ -6,10 +6,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.relational.core.sql.In;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 import webbangiaydabong.entity.*;
 
 import java.util.List;
-
+@Repository
 public interface S_C_Repository extends JpaRepository<S_C_Details,Long> {
 
     @Query("select sz FROM S_C_Details sz WHERE sz.product.id =?1 and sz.size.id =?2 and sz.mau.id =?3")
