@@ -197,19 +197,23 @@ public class OrderServiceImpl implements OrderService {
             pageIndex = 0;
         }
 
-        String whereClause = "";
+        String whereClause = "where (1=1)";
 
-        String orderBy = " ORDER BY entity.createDate DESC";
+        String orderBy = " ORDER BY o.id ";
 
         String sqlCount = "select count(entity.id) from Order as entity where (1=1)   ";
-        String sql = "select new webbangiaydabong.dto.OrderDTO(o,true) from Order o group by o.id ";
+        String sql = "select new webbangiaydabong.dto.OrderDTO(o,true) from Order o  ";
 
-
-        sqlCount += whereClause;
+if(dto.getKeyword()!=null){
+    whereClause+=" AND (o.account.fullname like :keyword ) ";
+}
+        sql+=whereClause+orderBy;
 
         Query q = manager.createQuery(sql, OrderDTO.class);
         Query qCount = manager.createQuery(sqlCount);
-
+if(dto.getKeyword()!=null){
+    q.setParameter("keyword",dto.getKeyword().trim());
+}
 
         int startPosition = pageIndex * pageSize;
         q.setFirstResult(startPosition);
