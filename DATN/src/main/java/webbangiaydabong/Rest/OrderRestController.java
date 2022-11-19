@@ -81,8 +81,8 @@ public class OrderRestController {
 			order.setPrice(price);
 			order.setStatus(0);
 
-			Account account = accountService.findByUserName(userName);
-			order.setAccount(account);
+//			Account account = accountService.findByUsernameandEmail(userName);
+//			order.setAccount(account);
 
 			CustommerInfo custommerInfo = custommerInfoServie.findById(id);
 			order.setDiaChi(custommerInfo);

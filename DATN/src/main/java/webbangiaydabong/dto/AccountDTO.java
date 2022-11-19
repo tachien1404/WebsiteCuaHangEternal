@@ -14,6 +14,7 @@ public class AccountDTO {
 	private Long id;
 	private String email;
 	private String fullname;
+	private String username;
 	private String password;
 	private Date birthday;
 	private String address;
@@ -28,6 +29,7 @@ public class AccountDTO {
 		this.id = acc.getId();
 		this.password = acc.getPassword();
 		this.photo = acc.getPhoto();
+		this.username=acc.getUsername();
 		this.sdt = acc.getPhoto();
 	}
 

@@ -20,6 +20,6 @@ public interface OrderRepository extends JpaRepository<Order, Long>{
 	@Query("select new webbangiaydabong.dto.OrderDTO(o,true) from Order o where status =:status")
 	List<OrderDTO> getAllByStatus(Integer status);
 
-	@Query("select o from Order o where o.account.userName=?1")
+	@Query("select o from Order o where o.account.username=?1")
 	List<Order> findALlOrderByAccount(String userName);
 }

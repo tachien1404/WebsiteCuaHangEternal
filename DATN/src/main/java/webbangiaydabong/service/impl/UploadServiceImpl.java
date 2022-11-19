@@ -2,6 +2,7 @@ package webbangiaydabong.service.impl;
 
 import javax.servlet.ServletContext;
 import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -17,6 +18,9 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 
 import webbangiaydabong.dto.BrandDTO;
 import webbangiaydabong.dto.CategoryDTO;
@@ -180,4 +184,24 @@ public class UploadServiceImpl implements UploadService {
         return list;
 
     }
+    
+    Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
+            "cloud_name", "dldhacdx7",
+            "api_key", "552995514935254",
+            "api_secret", "SC_gB7XSr0p9zsP8LaBsisPpjtU"));
+
+	@Override
+	public void save(String folder,String fileName, MultipartFile multipartFile) throws IllegalStateException, IOException {
+		if(multipartFile!=null){
+			fileName = multipartFile.getOriginalFilename();
+            File convFile = new File(System.getProperty("java.io.tmpdir")+"/"+"imageTmp");
+            multipartFile.transferTo(convFile);
+            cloudinary.uploader().upload(convFile,
+            ObjectUtils.asMap(
+                "public_id", fileName.substring(0, fileName.lastIndexOf('.')),
+                "folder", "IMAGE/"+folder+"/"));
+		}
+	}
+	
+	
 }

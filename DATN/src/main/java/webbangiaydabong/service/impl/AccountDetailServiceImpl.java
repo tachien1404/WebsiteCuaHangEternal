@@ -28,7 +28,7 @@ public class AccountDetailServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Account account = accountRepository.findByUserName(username);
+        Account account = accountRepository.findByUsername(username);
 
         if (account == null) {
             throw new UsernameNotFoundException("username not found");
@@ -41,6 +41,6 @@ public class AccountDetailServiceImpl implements UserDetailsService {
         List<GrantedAuthority> grantedAuthorities
                 = account.getAuthorities().stream().map(authority -> new SimpleGrantedAuthority(authority.getRole().getName())).collect(Collectors.toList());
 
-        return new org.springframework.security.core.userdetails.User(account.getUserName(), account.getPassword(), grantedAuthorities);
+        return new org.springframework.security.core.userdetails.User(account.getUsername(), account.getPassword(), grantedAuthorities);
     }
 }
