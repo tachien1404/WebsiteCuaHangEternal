@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface CustommerInfoRepository extends JpaRepository<CustommerInfo, Long>{
 
-    @Query("select c from CustommerInfo c where c.account.userName =?1")
+    @Query("select c from CustommerInfo c where c.account.username =?1")
     List<CustommerInfo> findCustommerInfoByUser(String userName);
 }
