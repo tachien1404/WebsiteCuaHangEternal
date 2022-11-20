@@ -180,4 +180,27 @@ public class UploadServiceImpl implements UploadService {
         return list;
 
     }
+<<<<<<< Updated upstream
+=======
+    
+    Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
+            "cloud_name", "productenternal",
+            "api_key", "552995514935254",
+            "api_secret", "SC_gB7XSr0p9zsP8LaBsisPpjtU"));
+
+	@Override
+	public void save(String folder,String fileName, MultipartFile multipartFile) throws IllegalStateException, IOException {
+		if(multipartFile!=null){
+			fileName = multipartFile.getOriginalFilename();
+            File convFile = new File(System.getProperty("java.io.tmpdir")+"/"+"imageTmp");
+            multipartFile.transferTo(convFile);
+            cloudinary.uploader().upload(convFile,
+            ObjectUtils.asMap(
+                "public_id", fileName.substring(0, fileName.lastIndexOf('.')),
+                "folder", "IMAGE/"+folder+"/"));
+		}
+	}
+	
+	
+>>>>>>> Stashed changes
 }

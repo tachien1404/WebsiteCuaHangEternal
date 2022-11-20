@@ -1,7 +1,17 @@
 package webbangiaydabong.service.impl;
 
+<<<<<<< Updated upstream
+=======
+import java.util.List;
+
+import org.hibernate.engine.jdbc.Size;
+>>>>>>> Stashed changes
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 
 import webbangiaydabong.dto.AccountDTO;
 import webbangiaydabong.entity.Account;
@@ -44,10 +54,73 @@ public class AccountServiceImpl implements AccountService {
 		return accountRepo.findByEmail(email);
 	}
 
+<<<<<<< Updated upstream
 	@Override
 	public Account findByUserName(String userName) {
 		return accountRepo.findByUserName(userName);
+=======
+	
+
+	@Override
+	public AccountDTO update(long id, AccountDTO dto) {
+		Account acc = accountRepo.findById(id).get();
+		acc.setAddress(dto.getAddress());
+		acc.setBirthday(dto.getBirthday());
+		acc.setEmail(dto.getEmail());
+		acc.setUsername(dto.getUsername());
+		acc.setFullname(dto.getFullname());
+		acc.setPassword(dto.getPassword());
+		acc.setSdt(dto.getSdt());
+		acc.setPhoto(dto.getPhoto());
+		acc=accountRepo.save(acc);
+		return new AccountDTO(acc);
+	}
+
+	@Override
+	public void delete(long id) {
+		Account acc = accountRepo.findById(id).get();
+		accountRepo.delete(acc);
+	}
+
+	@Override
+	public List<Account> getAll(int page) {
+		Pageable pageable = PageRequest.of(page, 5);
+		Page<Account> accountspage = accountRepo.findAll(pageable);
+		List<Account> accounts = accountspage.getContent();
+		return accounts;
+>>>>>>> Stashed changes
 	}
 
 
+<<<<<<< Updated upstream
+=======
+	@Override
+	public AccountDTO create(AccountDTO dto) {
+		if (accountRepo.existsByUsername(dto.getUsername())) {
+			return null;
+		}
+		if (accountRepo.existsByEmail(dto.getEmail())) {
+			return null;
+		}
+		Account acc= new Account();
+		acc.setAddress(dto.getAddress());
+		acc.setUsername(dto.getUsername());
+		acc.setBirthday(dto.getBirthday());
+		acc.setEmail(dto.getEmail());
+		acc.setFullname(dto.getFullname());
+		acc.setPassword(dto.getPassword());
+		acc.setSdt(dto.getSdt());
+		acc.setPhoto(dto.getPhoto());
+		acc=accountRepo.save(acc);
+		return new AccountDTO(acc);
+	}
+
+	@Override
+	public List<Account> search(String keywork) {
+		List<Account> accounts = accountRepo.findByEmailLike(keywork);
+		return accounts;
+	}
+
+	
+>>>>>>> Stashed changes
 }
