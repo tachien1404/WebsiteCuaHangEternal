@@ -249,4 +249,9 @@ List<OrderDetailDTO> dlstOrderDetailDTOS=  query.getResultList();
         return orderRepo.findALlOrderByAccount(userName);
     }
 
+    @Override
+    public Order getById(Long id) {
+        return orderRepo.findById(id).get();
+    }
+
 }

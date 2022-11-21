@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -120,11 +121,30 @@ public class OrderRestController {
 	@GetMapping("/showHistory")
 	public ResponseEntity<ResponseObject> showHistory(@RequestParam("userName") String userName){
 		List<Order> listOrder = orderService.showHistoryByAccount(userName);
-		List<OrderDetail> orderDetailList = new ArrayList<>();
-		for (Order o:listOrder) {
-			List<OrderDetail> listFind = orderDetaiService.findByOder(o.getId());
-			orderDetailList.addAll(listFind);
-		}
+		return ResponseEntity.ok().body(new ResponseObject(HttpStatus.OK, "Thành công", listOrder));
+	}
+
+	@GetMapping("/orderDeails/{id}")
+	public ResponseEntity<ResponseObject> showHistory(@PathVariable("id") Long id){
+		List<OrderDetail> orderDetailList = orderDetaiService.findByOder(id);
 		return ResponseEntity.ok().body(new ResponseObject(HttpStatus.OK, "Thành công", orderDetailList));
+	}
+
+	@PostMapping("/huyDon/{id}")
+	public ResponseEntity<ResponseObject> huyDon(@PathVariable("id") Long id,@RequestBody String note){
+		Order order = orderService.getById(id);
+		if(order.getStatus()==0){
+			List<OrderDetail> orderDetailList = orderDetaiService.findByOder(id);
+			for (OrderDetail o: orderDetailList ) {
+				S_C_Details sc = s_c_detailService.findBySizeColor(o.getSaimau().getProduct().getId(),o.getSaimau().getSize().getId(),
+						o.getSaimau().getMau().getId());
+				sc.setQuantity(sc.getQuantity()+o.getQuantity());
+				s_c_detailService.update(sc);
+			}
+			order.setNote(note);
+			order.setStatus(3);
+			orderService.saveOder(order);
+		}
+		return ResponseEntity.ok().body(new ResponseObject(HttpStatus.OK, "Hủy đơn thành công",""));
 	}
 }
