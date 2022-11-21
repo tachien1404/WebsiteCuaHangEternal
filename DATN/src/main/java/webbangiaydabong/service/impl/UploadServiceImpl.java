@@ -184,13 +184,14 @@ public class UploadServiceImpl implements UploadService {
         return list;
 
     }
-    
+
     Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
-            "cloud_name", "dldhacdx7",
+            "cloud_name", "productenternal",
             "api_key", "552995514935254",
             "api_secret", "SC_gB7XSr0p9zsP8LaBsisPpjtU"));
 
-	@Override
+
+    @Override
 	public void save(String folder,String fileName, MultipartFile multipartFile) throws IllegalStateException, IOException {
 		if(multipartFile!=null){
 			fileName = multipartFile.getOriginalFilename();
