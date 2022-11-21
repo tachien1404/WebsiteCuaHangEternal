@@ -28,7 +28,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("*")
-        @RequestMapping("/api/public/rest/s_c_details")
+        @RequestMapping("/api/public/s_c_details")
 public class S_C_RestController {
     @Autowired
     S_C_DetailService service;

@@ -31,5 +31,5 @@ public interface OrderService {
     List<OrderDetailDTO> getByOrderId(Long id);
     Order saveOder(Order order);
     List<Order> showHistoryByAccount(String userName);
-
+    Order getById(Long id);
 }

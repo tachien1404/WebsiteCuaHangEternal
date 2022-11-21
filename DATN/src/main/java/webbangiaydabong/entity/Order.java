@@ -15,7 +15,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -24,12 +26,13 @@ import org.hibernate.annotations.CreationTimestamp;
 @Table(name = "order")
 @Getter
 @Setter
-
+@Data
 public class Order {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@CreationTimestamp
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date create_date;// ngày tạo hóa đơn
 	private Double price;// tổng tiền
 	private String note;
