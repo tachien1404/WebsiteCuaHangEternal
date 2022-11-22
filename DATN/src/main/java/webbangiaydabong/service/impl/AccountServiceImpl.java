@@ -115,5 +115,10 @@ public class AccountServiceImpl implements AccountService {
 		return accounts;
 	}
 
+	@Override
+	public Account findByUserName(String userName) {
+		return accountRepo.findByUsername(userName);
+	}
+
 
 }
