@@ -186,7 +186,7 @@ public class UploadServiceImpl implements UploadService {
     }
     
     Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
-            "cloud_name", "dldhacdx7",
+            "cloud_name", "productenternal",
             "api_key", "552995514935254",
             "api_secret", "SC_gB7XSr0p9zsP8LaBsisPpjtU"));
 

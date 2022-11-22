@@ -1,9 +1,17 @@
 package webbangiaydabong.service.impl;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
+import org.hibernate.engine.jdbc.Size;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
 
 import webbangiaydabong.dto.AccountDTO;
 import webbangiaydabong.entity.Account;
@@ -47,10 +55,7 @@ public class AccountServiceImpl implements AccountService {
 		return accountRepo.findByEmail(email);
 	}
 
-	@Override
-	public Account findByUsernameandEmail(String email, String username) {
-		return null;
-	}
+	
 
 	@Override
 	public AccountDTO update(long id, AccountDTO dto) {
@@ -74,8 +79,11 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
-	public List<Account> getAll() {
-		return accountRepo.findAll();
+	public List<Account> getAll(int page) {
+		Pageable pageable = PageRequest.of(page, 5 , Sort.by("id").descending());
+		Page<Account> accountspage = accountRepo.findAll(pageable);
+		List<Account> accounts = accountspage.getContent();
+		return accounts;
 	}
 
 	@Override
@@ -109,4 +117,6 @@ public class AccountServiceImpl implements AccountService {
 		List<Account> accounts = accountRepo.findByEmailLike(keywork);
 		return accounts;
 	}
+
+	
 }

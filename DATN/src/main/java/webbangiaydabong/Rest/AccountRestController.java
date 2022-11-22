@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -22,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import webbangiaydabong.dto.AccountDTO;
 import webbangiaydabong.entity.Account;
+import webbangiaydabong.repository.AccountRepository;
 import webbangiaydabong.service.AccountService;
 import webbangiaydabong.service.UploadService;
 
@@ -30,6 +32,9 @@ import webbangiaydabong.service.UploadService;
 public class AccountRestController {
 @Autowired
 AccountService accountService;
+
+@Autowired
+AccountRepository repository;
 
 @Autowired
 UploadService uploadService;
@@ -65,8 +70,8 @@ public ResponseEntity<?> delete(@PathVariable("id") long id) {
 }
 
 @GetMapping("/")
-public ResponseEntity<?> getAll(){
-	List<Account> accounts = accountService.getAll();
+public ResponseEntity<?> getAll(@RequestParam("page")int page ){
+	List<Account> accounts = accountService.getAll(page);
 	return new ResponseEntity<>(accounts, HttpStatus.OK);
 }
 
@@ -81,6 +86,11 @@ public ResponseEntity<?> search(@RequestParam("email") String keywork){
 	List<Account> accounts = accountService.search(keywork);
 	return new ResponseEntity<>(accounts, HttpStatus.OK);
 } 
+
+@GetMapping("/size")
+public ResponseEntity<?> get(){
+	return new ResponseEntity<>(repository.findAll().size(), HttpStatus.OK);
+}
 
 @PostMapping("/image")
 public HttpStatus upload(@RequestParam("file") MultipartFile multipartFile){
