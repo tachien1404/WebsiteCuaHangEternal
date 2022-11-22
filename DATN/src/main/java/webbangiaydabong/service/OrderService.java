@@ -19,13 +19,13 @@ import webbangiaydabong.entity.OrderDetail;
 
 public interface OrderService {
 
-	Order create(JsonNode orderData);
+
 	Object finById(Long id);
 	List<Order> findByUserId(Long id);
-	OrderDTO save(DatHangDto dto);
-	List<OrderDTO>order(OrderDTO dto);
+
+
 	List<OrderDTO>getAllByStatus(Integer status);
-	ResponseEntity add(List<DatHangDto> dto);
+
 	void updatetrangthai(Long id, OrderDTO dto);
 	Page<OrderDTO>searchByPage(SearchDto dto);
     List<OrderDetailDTO> getByOrderId(Long id);

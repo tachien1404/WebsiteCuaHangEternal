@@ -44,11 +44,7 @@ public class OrderRestController {
 	@Autowired
 	CartService cartService;
 
-	@PostMapping("/dathang")
-	public ResponseEntity<Order> dathang(@RequestBody List<DatHangDto> dto) {
 
-		return orderService.add(dto);
-	}
 	@GetMapping("/getAllbystatus/{status}")
 	public List<OrderDTO>getAllbyStatus(@PathVariable Integer status){
 		return orderService.getAllByStatus(status);
