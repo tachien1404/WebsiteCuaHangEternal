@@ -3,6 +3,8 @@ package webbangiaydabong.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import webbangiaydabong.dto.CustommerInfoDTO;
@@ -55,6 +57,16 @@ public class CustommerInfoServiceImpl implements CustommerInfoServie {
 	@Override
 	public void delete(Long id) {
     Cusrepo.deleteById(id);
+	}
+
+	@Override
+	public Page<CustommerInfo> findByKey(Pageable pageable, String name, String sdt, String address, Account account) {
+		return Cusrepo.findByKey(pageable, name, sdt, address, account);
+	}
+
+	@Override
+	public List<CustommerInfo> findByActive(String userName) {
+		return Cusrepo.findByActive(userName);
 	}
 
 

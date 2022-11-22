@@ -24,30 +24,30 @@ import lombok.*;
 @Entity
 @Table(name = "account")
 public class Account {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	private String username;
-	private String email;
-	private String fullname;
-	private String password;
-	private Date birthday;
-	private String address;
-	private String sdt;
-	private String photo;
-	private boolean isActive;
-	@JsonIgnore
-	@OneToMany(mappedBy = "account")
-	Set<Order> danhSachOrder;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String username;
+    private String email;
+    private String fullname;
+    private String password;
+    private Date birthday;
+    private String address;
+    private String sdt;
+    private String photo;
+    private boolean isActive;
+    @JsonIgnore
+    @OneToMany(mappedBy = "account")
+    Set<Order> danhSachOrder;
 
-	@JsonIgnore
-	@OneToMany(mappedBy = "account", fetch = FetchType.EAGER)
-	Set<Authority> authorities;
+    @JsonIgnore
+    @OneToMany(mappedBy = "account", fetch = FetchType.EAGER)
+    Set<Authority> authorities;
 
-	@JsonIgnore
-	@OneToMany(mappedBy = "account")
-	private Set<Promotion> danhSachkhuyenmai;
-	@JsonIgnore
-@OneToMany(mappedBy = "account")
-Set<CustommerInfo>danhSachDiaChiGiaoHang;
+    @JsonIgnore
+    @OneToMany(mappedBy = "account")
+    private Set<Promotion> danhSachkhuyenmai;
+    @JsonIgnore
+    @OneToMany(mappedBy = "account")
+    Set<CustommerInfo> danhSachDiaChiGiaoHang;
 }

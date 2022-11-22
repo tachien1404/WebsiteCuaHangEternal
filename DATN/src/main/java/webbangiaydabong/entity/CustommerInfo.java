@@ -26,10 +26,10 @@ public class CustommerInfo {
 		private String sdt;
 		private String name;
 		private String address;
-		@JsonIgnore
 		@ManyToOne
 		@JoinColumn(name = "account_id")
 		private Account account;
+		private boolean active;
 		@JsonIgnore
 		@OneToMany(mappedBy = "diaChi")
 		private Set<Order> danhSachOrder;
