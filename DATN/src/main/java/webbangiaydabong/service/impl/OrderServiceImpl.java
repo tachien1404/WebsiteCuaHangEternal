@@ -50,18 +50,6 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     AccountRepository accountRepository;
 
-    @Override
-    public Order create(JsonNode orderData) {
-        ObjectMapper mapper = new ObjectMapper();
-        Order order = mapper.convertValue(orderData, Order.class);
-        orderRepo.save(order);
-        TypeReference<List<OrderDetail>> type = new TypeReference<List<OrderDetail>>() {
-        };
-        List<OrderDetail> details = mapper.convertValue(orderData.get("danhSachOrder"), type).stream()
-                .peek(d -> d.setOrder(order)).collect(Collectors.toList());
-        orderDetailRepo.saveAll(details);
-        return order;
-    }
 
     @Override
     public Object finById(Long id) {
@@ -73,63 +61,6 @@ public class OrderServiceImpl implements OrderService {
         return orderRepo.findByUserId(id);
     }
 
-    @Override
-    public OrderDTO save(DatHangDto dto) {
-//		Order order = new Order();
-//		if (dto.getTongtien() > 0) {
-//			order.setPrice(dto.getTongtien());
-//		}
-//		if (dto.getAccount_id() != null) {
-//			Account acc = accountRepository.getOne(dto.getAccount_id());
-//			order.setAccount(acc);
-//		}
-//		if (dto.getNote() != null) {
-//			order.setNote(dto.getNote());
-//		}
-//		if (dto.getStatus()<0) {
-//			order.setStatus(0);
-//		}
-//		if (dto.getChitiethoadon() != null) {
-//			Iterator<OrderDetailDTO> iters = dto.getChitiethoadon().iterator();
-//			HashSet<OrderDetail> orderdetais = new HashSet<OrderDetail>();
-//			while (iters.hasNext()) {
-//				OrderDetailDTO detailDTO = iters.next();
-//				OrderDetail orderDetail = new OrderDetail();
-//				if (detailDTO.getCreateDate() != null) {
-//					orderDetail.setCreateDate(detailDTO.getCreateDate());
-//				}
-//				if (detailDTO.getPrice() > 0) {
-//					orderDetail.setPrice(detailDTO.getPrice());
-//				}
-//				if (detailDTO.getQuantity() > 0) {
-//					orderDetail.setQuantity(detailDTO.getQuantity());
-//				}
-//				if (detailDTO.getProduct_id() != null) {
-//					Product product = productRepository.getOne(detailDTO.getProduct_id());
-//					orderDetail.setProduct(product);
-//				}
-//				if (orderDetail != null) {
-//					orderDetail.setOrder(order);
-//				}
-//				orderdetais.add(orderDetail);
-//				orderDetailRepo.save(orderDetail);
-//			}
-//			if (order.getDanhSachOrder() != null) {
-//				order.getDanhSachOrder().clear();
-//				order.getDanhSachOrder().addAll(orderdetais);
-//			} else {
-//				order.setDanhSachOrder(orderdetais);
-//			}
-//		}
-//		order = orderRepo.save(order);
-        return null;
-    }
-
-    @Override
-    public List<OrderDTO> order(OrderDTO dto) {
-
-        return null;
-    }
 
     @Override
     public List<OrderDTO> getAllByStatus(Integer status) {
@@ -137,32 +68,32 @@ public class OrderServiceImpl implements OrderService {
 
     }
 
-    @Override
-    public ResponseEntity add(List<DatHangDto> dto) {
-        System.out.println(dto.toString());
-
-        Order order = new Order();
-        if (!dto.isEmpty()) {
-            float total = 0;
-            for (DatHangDto tong : dto) {
-                total += tong.getTotal();
-            }
-            order.setPrice((double) total);
-            order.setStatus(0);
-
-            orderRepo.save(order);
-
-            for (DatHangDto c : dto) {
-                OrderDetail orderDetail = new OrderDetail();
-                orderDetail.setPrice(Float.parseFloat(String.valueOf(c.getOutputprice())));
-                orderDetail.setQuantity(c.getQuantity());
-                orderDetail.setOrder(order);
-                orderDetail.setProduct(productRepository.getById(c.getId()));
-                orderDetailRepo.save(orderDetail);
-            }
-        }
-        return new ResponseEntity<Order>(order, HttpStatus.OK);
-    }
+//    @Override
+//    public ResponseEntity add(List<DatHangDto> dto) {
+//        System.out.println(dto.toString());
+//
+//        Order order = new Order();
+//        if (!dto.isEmpty()) {
+//            float total = 0;
+//            for (DatHangDto tong : dto) {
+//                total += tong.getTotal();
+//            }
+//            order.setPrice((double) total);
+//            order.setStatus(0);
+//
+//            orderRepo.save(order);
+//
+//            for (DatHangDto c : dto) {
+//                OrderDetail orderDetail = new OrderDetail();
+//                orderDetail.setPrice(Float.parseFloat(String.valueOf(c.getOutputprice())));
+//                orderDetail.setQuantity(c.getQuantity());
+//                orderDetail.setOrder(order);
+//                orderDetail.setProduct(productRepository.getById(c.getId()));
+//                orderDetailRepo.save(orderDetail);
+//            }
+//        }
+//        return new ResponseEntity<Order>(order, HttpStatus.OK);
+//    }
 
     @Override
     public void updatetrangthai(Long id, OrderDTO dto) {
@@ -204,16 +135,16 @@ public class OrderServiceImpl implements OrderService {
         String sqlCount = "select count(entity.id) from Order as entity where (1=1)   ";
         String sql = "select new webbangiaydabong.dto.OrderDTO(o,true) from Order o  ";
 
-if(dto.getKeyword()!=null){
-    whereClause+=" AND (o.account.fullname like :keyword ) ";
-}
-        sql+=whereClause+orderBy;
+        if (dto.getKeyword() != null) {
+            whereClause += " AND (o.account.fullname like :keyword ) ";
+        }
+        sql += whereClause + orderBy;
 
         Query q = manager.createQuery(sql, OrderDTO.class);
         Query qCount = manager.createQuery(sqlCount);
-if(dto.getKeyword()!=null){
-    q.setParameter("keyword",dto.getKeyword().trim());
-}
+        if (dto.getKeyword() != null) {
+            q.setParameter("keyword", dto.getKeyword().trim());
+        }
 
         int startPosition = pageIndex * pageSize;
         q.setFirstResult(startPosition);
@@ -227,15 +158,15 @@ if(dto.getKeyword()!=null){
 
     @Override
     public List<OrderDetailDTO> getByOrderId(Long id) {
-        String sql="SELECT product.name as productName,orderdetail.quantity as quantity,orderdetail.price as price,image.photo as photo,category.name as category_name,brand.name as brand_name,order.status as status \n" +
+        String sql = "SELECT product.name as productName,orderdetail.quantity as quantity,orderdetail.price as price,product.photo as photo,category.name as category_name,brand.name as brand_name,order.status as status \n" +
                 "FROM category JOIN product ON category.id=product.category_id JOIN brand ON brand.id=product.hang_id  JOIN orderdetail ON product.id=orderdetail.product_id JOIN `order` ON orderdetail.order_id=`order`.id JOIN image ON image.product_id=product.id\n" +
                 "WHERE order.id=:order_id\n" +
                 "GROUP BY orderdetail.id";
         Query query = manager.createNativeQuery(sql).unwrap(org.hibernate.query.Query.class).setResultTransformer(new AliasToBeanResultTransformer(OrderDetailDTO.class));
-if(id!=null){
-    query.setParameter("order_id",id);
-}
-List<OrderDetailDTO> dlstOrderDetailDTOS=  query.getResultList();
+        if (id != null) {
+            query.setParameter("order_id", id);
+        }
+        List<OrderDetailDTO> dlstOrderDetailDTOS = query.getResultList();
         return dlstOrderDetailDTOS;
     }
 
