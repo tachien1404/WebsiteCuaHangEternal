@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface OrderDetaiService {
 //	OrderDetailDTO save(DatHangDto dto);
-	List<OrderDetail> findByIDOrder(Integer id);
+	List<OrderDetail> findByIDOrder(Long id);
 	List<OrderDetail> saveAll(List<OrderDetail> listDetails);
 	OrderDetail create(OrderDetail orderDetail);
 	List<OrderDetail> findByOder(Long id);
