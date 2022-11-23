@@ -21,7 +21,7 @@ public class OrderDetailRestController {
     OrderService orderService;
 
     @GetMapping("{id}")
-    public ResponseEntity<?> getOne(@PathVariable("id")Integer id){
+    public ResponseEntity<?> getOne(@PathVariable("id")Long id){
         List<OrderDetail> detailList = orderDetaiService.findByIDOrder(id);
         return new ResponseEntity<>(detailList, HttpStatus.OK);
     }

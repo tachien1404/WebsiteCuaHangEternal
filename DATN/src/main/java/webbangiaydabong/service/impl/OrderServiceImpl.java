@@ -23,14 +23,8 @@ import webbangiaydabong.dto.OrderDTO;
 import webbangiaydabong.dto.OrderDetailDTO;
 import webbangiaydabong.dto.functiondto.DatHangDto;
 import webbangiaydabong.dto.functiondto.SearchDto;
-import webbangiaydabong.entity.Account;
-import webbangiaydabong.entity.Order;
-import webbangiaydabong.entity.OrderDetail;
-import webbangiaydabong.entity.Product;
-import webbangiaydabong.repository.AccountRepository;
-import webbangiaydabong.repository.OrderDetailRepository;
-import webbangiaydabong.repository.OrderRepository;
-import webbangiaydabong.repository.ProductRepository;
+import webbangiaydabong.entity.*;
+import webbangiaydabong.repository.*;
 import webbangiaydabong.service.OrderService;
 
 import javax.persistence.EntityManager;
@@ -49,7 +43,8 @@ public class OrderServiceImpl implements OrderService {
     OrderDetailRepository orderDetailRepo;
     @Autowired
     AccountRepository accountRepository;
-
+    @Autowired
+    S_C_Repository s_c_repository;
 
     @Override
     public Object finById(Long id) {
@@ -99,13 +94,13 @@ public class OrderServiceImpl implements OrderService {
     public void updatetrangthai(Long id, OrderDTO dto) {
         if (id != null) {
             Order order = orderRepo.getById(id);
-            if (dto.getStatus() >= 0) {
+            List<OrderDetail> lstOrderDetails = orderDetailRepo.findOrderDetailByOrder(id);
+
+              if (dto.getStatus() >= 0) {
                 order.setStatus(dto.getStatus());
                 orderRepo.save(order);
-            } else {
-                return;
             }
-
+return;
 
         } else {
             return;
