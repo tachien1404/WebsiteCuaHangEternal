@@ -64,4 +64,18 @@ public class CartRestController {
                             "Xóa giỏ hàng thất bại", ""));
         }
     }
+
+    @PutMapping()
+    public ResponseEntity<?> update(@RequestBody Cart cart){
+        System.out.println(cart);
+        Cart find =cartService.findBySizeColorAndUser(cart.getProduct().getId(),cart.getSize().getId(),
+                cart.getMau().getId(),cart.getUserName());
+        if(find!=null){
+            find.setQuantity(cart.getQuantity());
+            cartService.creat(find);
+            return ResponseEntity.ok().body(new ResponseObject(HttpStatus.OK, "Cập nhật thành công", ""));
+        }
+        cartService.creat(cart);
+        return ResponseEntity.ok().body(new ResponseObject(HttpStatus.OK, "Cập nhật thất bại", ""));
+    }
 }

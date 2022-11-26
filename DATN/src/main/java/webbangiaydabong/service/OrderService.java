@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
+import io.swagger.models.auth.In;
 import org.hibernate.validator.cfg.defs.NormalizedDef;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -32,4 +33,5 @@ public interface OrderService {
     Order saveOder(Order order);
     List<Order> showHistoryByAccount(String userName);
     Order getById(Long id);
+    List<Order> getByStatus(String userName,Integer status);
 }

@@ -22,4 +22,7 @@ public interface OrderRepository extends JpaRepository<Order, Long>{
 
 	@Query("select o from Order o where o.account.username=?1")
 	List<Order> findALlOrderByAccount(String userName);
+
+	@Query("select o from Order o where o.account.username=?1 and o.status=?2")
+	List<Order> findAllByStatus(String userName,Integer status);
 }

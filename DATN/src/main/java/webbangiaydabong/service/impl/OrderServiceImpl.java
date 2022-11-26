@@ -180,4 +180,9 @@ return;
         return orderRepo.findById(id).get();
     }
 
+    @Override
+    public List<Order> getByStatus(String userName,Integer status) {
+        return orderRepo.findAllByStatus(userName,status);
+    }
+
 }
