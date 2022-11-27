@@ -23,18 +23,26 @@ public class OrderDTO {
 	private String name_acount;
 	private String address;
 	private String sdt;
-	
+	private String email;
+	private String sdtinfo;
+	private String nameinfo;
 	public OrderDTO(Order entity, boolean onlyVanBang) {
 		this.id = entity.getId();
-		this.create_date=entity.getCreate_date();
-		this.price=entity.getPrice();
-		this.status=entity.getStatus();
-		this.note=entity.getNote();
+		this.create_date = entity.getCreate_date();
+		this.price = entity.getPrice();
+		this.status = entity.getStatus();
+		this.note = entity.getNote();
 		if (onlyVanBang && entity.getAccount() != null) {
+			this.account_id=entity.getAccount().getId();
 			this.name_acount = entity.getAccount().getFullname();
+			this.sdt = entity.getAccount().getSdt();
+			this.email = entity.getAccount().getEmail();
 		}
-		this.address=entity.getAccount().getAddress();
-this.sdt=entity.getAccount().getSdt();
+		if (entity.getDiaChi() != null) {
+			this.address = entity.getDiaChi().getAddress();
+			this.sdtinfo = entity.getDiaChi().getSdt();
+			this.nameinfo=entity.getDiaChi().getName();
+		}
 	}
 	public String getStatusName() {
 

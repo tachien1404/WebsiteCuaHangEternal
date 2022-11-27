@@ -138,7 +138,7 @@ return;
         Query q = manager.createQuery(sql, OrderDTO.class);
         Query qCount = manager.createQuery(sqlCount);
         if (dto.getKeyword() != null) {
-            q.setParameter("keyword", dto.getKeyword().trim());
+            q.setParameter("keyword", '%'+dto.getKeyword().trim()+'%');
         }
 
         int startPosition = pageIndex * pageSize;
@@ -153,9 +153,9 @@ return;
 
     @Override
     public List<OrderDetailDTO> getByOrderId(Long id) {
-        String sql = "SELECT product.name as productName,orderdetail.quantity as quantity,orderdetail.price as price,product.photo as photo,category.name as category_name,brand.name as brand_name,order.status as status \n" +
-                "FROM category JOIN product ON category.id=product.category_id JOIN brand ON brand.id=product.hang_id  JOIN orderdetail ON product.id=orderdetail.product_id JOIN `order` ON orderdetail.order_id=`order`.id JOIN image ON image.product_id=product.id\n" +
-                "WHERE order.id=:order_id\n" +
+        String sql = "SELECT `order`.id as order_id,orderdetail.id as id,product.name as productName,orderdetail.quantity as quantity,orderdetail.price as price,product.photo as photo,category.name as category_name,brand.name as brand_name,`order`.status as status\n" +
+                "FROM category JOIN product ON category.id=product.category_id JOIN brand ON brand.id=product.hang_id  JOIN orderdetail ON product.id=orderdetail.product_id JOIN `order` ON orderdetail.order_id=`order`.id\n" +
+                "WHERE `order`.id=:order_id\n" +
                 "GROUP BY orderdetail.id";
         Query query = manager.createNativeQuery(sql).unwrap(org.hibernate.query.Query.class).setResultTransformer(new AliasToBeanResultTransformer(OrderDetailDTO.class));
         if (id != null) {
@@ -181,6 +181,14 @@ return;
     }
 
     @Override
+    public OrderDTO getOrderbyid(Long id) {
+        OrderDTO dto=orderRepo.getOrderbyid(id);
+        if(dto!=null){
+            return  dto;
+        }
+        return null;
+    }
+
     public List<Order> getByStatus(String userName,Integer status) {
         return orderRepo.findAllByStatusAndUser(userName,status);
     }
@@ -189,5 +197,6 @@ return;
     public List<Order> report(Integer status) {
         return orderRepo.findAllByStatus(status);
     }
+
 
 }
