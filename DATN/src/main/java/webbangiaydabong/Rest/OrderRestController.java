@@ -147,4 +147,59 @@ public class OrderRestController {
 		}
 		return ResponseEntity.ok().body(new ResponseObject(HttpStatus.OK, "Hủy đơn thành công",""));
 	}
+
+	@PostMapping("/buyNow")
+	public ResponseEntity<ResponseObject> buyNow( @RequestParam("id") Long id,
+												   @RequestParam("userName") String userName,
+												  @RequestBody Cart cart){
+
+		try {
+			Order order = new Order();
+			Date date = new Date();
+			double price =0;
+				price=(cart.getProduct().getOutputprice() * cart.getQuantity());
+			order.setPrice(price);
+			order.setStatus(0);
+
+			Account account = accountService.findByUserName(userName);
+			order.setAccount(account);
+
+			CustommerInfo custommerInfo = custommerInfoServie.findById(id);
+			order.setDiaChi(custommerInfo);
+			Order orderdb =	orderService.saveOder(order);
+
+//------------OrdderDetail----------------
+
+				OrderDetail orderDetail = new OrderDetail();
+				orderDetail.setPrice(cart.getProduct().getOutputprice());
+				orderDetail.setQuantity(cart.getQuantity());
+				orderDetail.setCreateDate(date);
+				orderDetail.setProduct(cart.getProduct());
+				orderDetail.setOrder(orderdb);
+				S_C_Details s_c_details =s_c_detailService.findBySizeColor(cart.getProduct().getId(),cart.getSize().getId(),cart.getMau().getId());
+				orderDetail.setSaimau(s_c_details);
+				orderDetaiService.create(orderDetail);
+
+//				Cập nhật số lượng
+				int sl = s_c_details.getQuantity() -cart.getQuantity();
+				s_c_details.setQuantity(sl);
+				s_c_detailService.update(s_c_details);
+
+
+			cartService.deleteAllByUserName(userName);
+			return ResponseEntity.ok().body(new ResponseObject(HttpStatus.OK, "Đặt hàng thành công", ""));
+		}catch (Exception e){
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+					new ResponseObject(HttpStatus.BAD_REQUEST,
+							"Đặt hàng thất bại", ""));
+		}
+
+	}
+
+	@GetMapping("/getByStatus")
+	public List<Order> showHistory(@RequestParam("userName") String userName
+			,@RequestParam("status") Integer status){
+		return orderService.getByStatus(userName,status);
+	}
 }

@@ -188,4 +188,10 @@ return;
         }
         return null;
     }
+
+    public List<Order> getByStatus(String userName,Integer status) {
+        return orderRepo.findAllByStatus(userName,status);
+    }
+
+
 }
