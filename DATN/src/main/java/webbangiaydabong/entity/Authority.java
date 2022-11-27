@@ -13,9 +13,9 @@ import javax.persistence.Table;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
 @Getter
 @Setter
-@Entity
 @Table(name="authorities")
 public class Authority {
 	@Id 
@@ -27,4 +27,5 @@ public class Authority {
 	@ManyToOne  
 	@JoinColumn(name = "role_id")
 	private Roles role;
+
 }

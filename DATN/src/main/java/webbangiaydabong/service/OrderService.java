@@ -34,4 +34,5 @@ public interface OrderService {
     List<Order> showHistoryByAccount(String userName);
     Order getById(Long id);
     List<Order> getByStatus(String userName,Integer status);
+    List<Order> report(Integer status);
 }

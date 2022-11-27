@@ -16,5 +16,5 @@ public interface AccountService {
 	Account get(long id);
 	List<Account> search(String keywork);
 	Account findByUserName(String userName);
-
+    List<Account> findAll();
 }
