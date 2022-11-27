@@ -26,7 +26,7 @@ public interface OrderService {
 
 
 	List<OrderDTO>getAllByStatus(Integer status);
-
+	OrderDTO getOrderbyid(Long id);
 	void updatetrangthai(Long id, OrderDTO dto);
 	Page<OrderDTO>searchByPage(SearchDto dto);
     List<OrderDetailDTO> getByOrderId(Long id);

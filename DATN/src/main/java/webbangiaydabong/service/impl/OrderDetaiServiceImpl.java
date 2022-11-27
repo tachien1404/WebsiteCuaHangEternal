@@ -7,6 +7,7 @@ import webbangiaydabong.repository.OrderDetailRepository;
 import webbangiaydabong.service.OrderDetaiService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OrderDetaiServiceImpl implements OrderDetaiService {
@@ -31,5 +32,16 @@ public class OrderDetaiServiceImpl implements OrderDetaiService {
     @Override
     public List<OrderDetail> findByOder(Long id) {
         return orderDetailRepo.findOrderDetailByOrder(id);
+    }
+
+    @Override
+    public void xoa(Long id) {
+        if(id!=null){
+            Optional<OrderDetail>optionalOrderDetail=orderDetailRepo.findById(id);
+            if(optionalOrderDetail.isPresent()){
+                OrderDetail o=optionalOrderDetail.get();
+                orderDetailRepo.delete(o);
+            }
+        }
     }
 }

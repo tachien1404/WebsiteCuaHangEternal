@@ -63,6 +63,10 @@ public class OrderRestController {
 		return orderService.getByOrderId(id);
 	}
 
+	@GetMapping("/getOrderById/{id}")
+	public OrderDTO getOrderId(@PathVariable Long id){
+		return orderService.getOrderbyid(id);
+	}
 	@PostMapping("/saveAll")
 	public ResponseEntity<ResponseObject> saveAll( @RequestParam("id") Long id,
 												  @RequestParam("userName") String userName){
