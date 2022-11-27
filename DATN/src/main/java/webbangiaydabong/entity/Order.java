@@ -26,7 +26,6 @@ import org.hibernate.annotations.CreationTimestamp;
 @Table(name = "order")
 @Getter
 @Setter
-@Data
 public class Order {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

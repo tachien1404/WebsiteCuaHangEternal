@@ -182,7 +182,12 @@ return;
 
     @Override
     public List<Order> getByStatus(String userName,Integer status) {
-        return orderRepo.findAllByStatus(userName,status);
+        return orderRepo.findAllByStatusAndUser(userName,status);
+    }
+
+    @Override
+    public List<Order> report(Integer status) {
+        return orderRepo.findAllByStatus(status);
     }
 
 }

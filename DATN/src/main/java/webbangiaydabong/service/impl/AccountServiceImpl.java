@@ -120,5 +120,10 @@ public class AccountServiceImpl implements AccountService {
 		return accountRepo.findByUsername(userName);
 	}
 
+	@Override
+	public List<Account> findAll() {
+		return accountRepo.findAll();
+	}
+
 
 }
