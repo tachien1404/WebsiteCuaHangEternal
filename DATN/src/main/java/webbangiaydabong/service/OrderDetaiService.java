@@ -12,4 +12,5 @@ public interface OrderDetaiService {
 	List<OrderDetail> saveAll(List<OrderDetail> listDetails);
 	OrderDetail create(OrderDetail orderDetail);
 	List<OrderDetail> findByOder(Long id);
+	void xoa(Long id);
 }

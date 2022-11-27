@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("api/order-detail")
+@RequestMapping("api/public/order-detail")
 public class OrderDetailRestController {
     @Autowired
     OrderDetaiService orderDetaiService;
@@ -24,5 +24,10 @@ public class OrderDetailRestController {
     public ResponseEntity<?> getOne(@PathVariable("id")Long id){
         List<OrderDetail> detailList = orderDetaiService.findByIDOrder(id);
         return new ResponseEntity<>(detailList, HttpStatus.OK);
+    }
+    @DeleteMapping("/delete/{id}")
+    public void delete(@PathVariable("id")Long id){
+        orderDetaiService.xoa(id);
+        return;
     }
 }
