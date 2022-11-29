@@ -33,6 +33,6 @@ public interface OrderRepository extends JpaRepository<Order, Long>{
 	@Query("select o from Order o where o.status=?1")
 	List<Order> findAllByStatus(Integer integer);
 
-	List<Order> findAllByStatus(String userName,Integer status);
+	//List<Order> findAllByStatus(String userName,Integer status);
 
 }
