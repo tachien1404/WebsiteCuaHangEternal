@@ -28,19 +28,26 @@ public class OrderDetailDTO {
     public String getStatusName() {
 
 
+
         if (this.status == 0) {
             return "Chờ xác nhận !";
         }
         if (this.status == 1) {
+            return "Đang chuẩn bị hàng!";
+        }
+        if (this.status == 2) {
             return "Đang giao hàng!";
         }
 
-        if (this.status == 2) {
+        if (this.status == 3) {
             return "Hoàn thành !";
         }
 
-        if (this.status == 3) {
+        if (this.status == 4) {
             return "Đã hủy ";
+        }
+        if (this.status == 5) {
+            return "Trả hàng  ";
         }
 
         return null;
