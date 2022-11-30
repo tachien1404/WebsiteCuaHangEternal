@@ -25,7 +25,7 @@ public class reportService {
     @Autowired
     AccountService accountService;
 
-         //@Scheduled(fixedRate = 5000)
+        // @Scheduled(fixedRate = 5000)
    @Scheduled(cron = "0 0 9 * * ?")
     public void auToSendMailCheckPoint()   {
        List<Account> accountList = accountService.findAll();
