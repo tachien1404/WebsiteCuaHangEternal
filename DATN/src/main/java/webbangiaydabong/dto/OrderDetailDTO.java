@@ -23,7 +23,7 @@ public class OrderDetailDTO {
     private String category_name;
     private String brand_name;
     private int status;
-    private BigInteger id;
+    private BigInteger id;//id ordeteo
 
     public String getStatusName() {
 
@@ -50,6 +50,12 @@ public class OrderDetailDTO {
             return "Trả hàng  ";
         }
 
+        if (this.status == 6) {
+            return "Đơn hàng nháp";
+        }
+        if (this.status == 7) {
+            return "Đơn off";
+        }
         return null;
     }
 }

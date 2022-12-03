@@ -92,6 +92,13 @@ public class OrderDTO {
             return "Trả hàng  ";
         }
 
+        if (this.status == 6) {
+            return "Đơn hàng nháp";
+        }
+        if (this.status == 7) {
+            return "Đơn off";
+        }
+
         return null;
     }
 }
