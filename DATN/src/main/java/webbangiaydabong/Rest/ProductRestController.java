@@ -188,18 +188,18 @@ public class ProductRestController {
     public List<Color> getColor(){
         return colorService.findAll();
     }
-//    @PostMapping("/image")
-//    public HttpStatus upload(@RequestParam("file") MultipartFile multipartFile){
-//        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-//        try {
-//        	System.out.println("oke");
-//            uploadService.saveProduct("image",fileName, multipartFile);
-//            return HttpStatus.OK;
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            return HttpStatus.CONFLICT;
-//        }
-//    }
+    @PostMapping("/image")
+    public HttpStatus upload(@RequestParam("file") MultipartFile multipartFile){
+        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        try {
+        	System.out.println("oke");
+            uploadService.saveProduct("image",fileName, multipartFile);
+            return HttpStatus.OK;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return HttpStatus.CONFLICT;
+        }
+    }
 
 }
 
