@@ -35,7 +35,8 @@ public class Order {
 	private Date create_date;// ngày tạo hóa đơn
 	private Double price;// tổng tiền
 	private String note;
-	private int status;// 0 chưa xác nhận ,1 đã xác nhận 
+	private int status;// 0 chưa xác nhận ,1 đã xác nhận
+	private int kenh;//đơn bán tại kênh nào
 	@ManyToOne
 	@JoinColumn(name = "account_id")
 	private Account account;
@@ -54,4 +55,7 @@ public class Order {
 	@ManyToOne
 	@JoinColumn(name = "custommerinfo_id")
 	private CustommerInfo diaChi;
+	@ManyToOne
+	@JoinColumn(name = "custommer_id")
+	private Customer customer ;
 }

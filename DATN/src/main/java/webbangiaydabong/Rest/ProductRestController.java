@@ -1,5 +1,6 @@
 package webbangiaydabong.Rest;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -111,7 +113,7 @@ public class ProductRestController {
 
     //Import Excel
     @PostMapping("/importproduct")
-    public ResponseEntity<?> importSinhVien(@RequestParam("file") MultipartFile uploadfile) {
+    public ResponseEntity<?> importSinhVien(@RequestParam("folder") MultipartFile uploadfile) {
         try {
 
             List<ProductDTO> list = uploadService.importProducttoExcel(uploadfile);
@@ -197,6 +199,20 @@ public class ProductRestController {
       }
       return productsTop;
     }
+
+//    @PostMapping("/image")
+//    public HttpStatus upload(@RequestParam("file") MultipartFile multipartFile){
+//        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+//        try {
+//        	System.out.println("oke");
+//            uploadService.saveProduct("image",fileName, multipartFile);
+//            return HttpStatus.OK;
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            return HttpStatus.CONFLICT;
+//        }
+//    }
+
 
 }
 

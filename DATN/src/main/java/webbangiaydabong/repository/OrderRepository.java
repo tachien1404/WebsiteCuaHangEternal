@@ -41,6 +41,4 @@ public interface OrderRepository extends JpaRepository<Order, Long>{
 	List<Order> findAllByStatusAndUserName(@Param("userName") String userName,
 										   @Param("status") Integer status);
 
-
-
 }
