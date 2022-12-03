@@ -1,5 +1,6 @@
 package webbangiaydabong.repository;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -36,5 +37,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Query("select p FROM Product  p WHERE p.delete =true ")
     List<Product> findByStatus();
+
+    @Query("select p from Product p where p.createDate <= ?1" +
+            "ORDER BY p.createDate DESC")
+    List<Product> findTop(Date date);
 
 }

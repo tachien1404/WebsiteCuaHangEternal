@@ -61,15 +61,15 @@ public class CustommerIn4Controller {
                                                     @RequestParam int page,
                                                     @RequestParam int size,
                                                     @RequestBody CustommerInfoSearch search) {
-        Account account= accountService.findByUserName(id);
+        Account account = accountService.findByUserName(id);
         try {
             page = page < 0 ? 0 : page;
             Pageable pageable = PageRequest.of(page, size, Sort.by("id").ascending());
             Page<CustommerInfo> custommerInfoPage = custommerInfoServie.findByKey(pageable, search.getName(), search.getSdt(),
-                    search.getAddress(),account);
-           return ResponseEntity.status(HttpStatus.OK).body(
+                    search.getAddress(), account);
+            return ResponseEntity.status(HttpStatus.OK).body(
                     new ResponseObject(HttpStatus.OK, "Tìm thấy thành công", custommerInfoPage));
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
                     new ResponseObject(HttpStatus.BAD_REQUEST, "Không tìm thấy",
@@ -93,5 +93,15 @@ public class CustommerIn4Controller {
         }
     }
 
+    @GetMapping("findBySdt/{sdt}")
+    public CustommerInfo findBySdt(@PathVariable("sdt") String sdt) {
+        System.out.println(custommerInfoServie.findBySdt(sdt));
+        return custommerInfoServie.findBySdt(sdt);
+    }
 
+    @GetMapping("accountLogin")
+    public Account findAccountLoginByUserName(@RequestParam("userName") String userName){
+        System.out.println(accountService.findByUserName(userName));
+       return accountService.findByUserName(userName);
+    }
 }

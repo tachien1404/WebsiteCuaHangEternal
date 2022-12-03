@@ -188,6 +188,18 @@ public class ProductRestController {
     public List<Color> getColor(){
         return colorService.findAll();
     }
+
+    @GetMapping("/top/{top}")
+    public List<Product> findTop(@PathVariable int top){
+      List<Product> productsTop = new ArrayList<>();
+      Date date = new Date();
+      List<Product> productsDb = productService.findTop(date);
+      for(int i=0;i<top;i++){
+          productsTop.add(productsDb.get(i));
+      }
+      return productsTop;
+    }
+
 //    @PostMapping("/image")
 //    public HttpStatus upload(@RequestParam("file") MultipartFile multipartFile){
 //        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
@@ -201,6 +213,10 @@ public class ProductRestController {
 //        }
 //    }
 
+
 }
+
+
+
 
 
