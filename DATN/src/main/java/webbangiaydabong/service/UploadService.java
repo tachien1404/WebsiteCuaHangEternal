@@ -14,4 +14,6 @@ List<ProductDTO>importProducttoExcel(MultipartFile file);
 List<ProductDTO> savelist(List<ProductDTO> list);
 
 void save(String folder,String fileName, MultipartFile multipartFile) throws IllegalStateException, IOException;
+void saveProduct(String folder,String fileName, MultipartFile multipartFile) throws IllegalStateException, IOException;
+
 }

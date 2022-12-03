@@ -18,7 +18,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 
@@ -35,6 +34,16 @@ import webbangiaydabong.repository.CategoryRepositoty;
 import webbangiaydabong.repository.ImageRepository;
 import webbangiaydabong.repository.ProductRepository;
 import webbangiaydabong.service.UploadService;
+
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.DeleteObjectRequest;
+import com.amazonaws.services.s3.model.PutObjectRequest;
 
 @Service
 public class UploadServiceImpl implements UploadService {
@@ -185,15 +194,16 @@ public class UploadServiceImpl implements UploadService {
 
     }
 
-    Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
-            "cloud_name", "productenternal",
-            "api_key", "552995514935254",
-            "api_secret", "SC_gB7XSr0p9zsP8LaBsisPpjtU"));
+
 
 
     @Override
 	public void save(String folder,String fileName, MultipartFile multipartFile) throws IllegalStateException, IOException {
-		if(multipartFile!=null){
+        Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
+                "cloud_name", "productenternal",
+                "api_key", "552995514935254",
+                "api_secret", "SC_gB7XSr0p9zsP8LaBsisPpjtU"));
+    	if(multipartFile!=null){
 			fileName = multipartFile.getOriginalFilename();
             File convFile = new File(System.getProperty("java.io.tmpdir")+"/"+"imageTmp");
             multipartFile.transferTo(convFile);
@@ -202,6 +212,27 @@ public class UploadServiceImpl implements UploadService {
                 "public_id", fileName.substring(0, fileName.lastIndexOf('.')),
                 "folder", "IMAGE/"+folder+"/"));
 		}
+	}
+    
+	 AWSCredentials credentials = 
+			 new BasicAWSCredentials("AKIAUTOYM6LR433GWXZ3", "lL2v08CtG53LgfC0gFt2zDMdq0yO5YLXy+G8TRxz");
+
+	 AmazonS3 s3client = AmazonS3ClientBuilder
+	 .standard()
+	 .withRegion(Regions.AP_SOUTHEAST_1)
+	 .withCredentials(new AWSStaticCredentialsProvider(credentials))
+	 .build();
+
+	@Override
+	public void saveProduct(String folder, String fileName, MultipartFile multipartFile)
+			throws IllegalStateException, IOException {
+		 
+		 File convFile = new File(System.getProperty("java.io.tmpdir")+"/"+"fileTmp");
+	        multipartFile.transferTo(convFile);
+
+	        s3client.putObject(new PutObjectRequest("enternalproduct", multipartFile
+	                .getOriginalFilename().replaceAll("\\s+",""), convFile)
+	                .withCannedAcl(CannedAccessControlList.PublicRead));
 	}
 	
 	
