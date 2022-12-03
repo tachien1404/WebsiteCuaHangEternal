@@ -189,6 +189,20 @@ public class ProductRestController {
         return colorService.findAll();
     }
 
+    @PostMapping("/image")
+    public HttpStatus upload(@RequestParam("file") MultipartFile multipartFile){
+        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        try {
+        	System.out.println("oke");
+            uploadService.saveProduct("image",fileName, multipartFile);
+            return HttpStatus.OK;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return HttpStatus.CONFLICT;
+        }
+    }
+
+
     @GetMapping("/top/{top}")
     public List<Product> findTop(@PathVariable int top){
       List<Product> productsTop = new ArrayList<>();
@@ -212,6 +226,7 @@ public class ProductRestController {
 //            return HttpStatus.CONFLICT;
 //        }
 //    }
+
 
 
 }

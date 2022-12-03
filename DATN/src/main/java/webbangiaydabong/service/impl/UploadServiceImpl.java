@@ -35,6 +35,14 @@ import webbangiaydabong.repository.ImageRepository;
 import webbangiaydabong.repository.ProductRepository;
 import webbangiaydabong.service.UploadService;
 
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.PutObjectRequest;
 
 @Service
 public class UploadServiceImpl implements UploadService {
@@ -204,27 +212,27 @@ public class UploadServiceImpl implements UploadService {
                 "folder", "IMAGE/"+folder+"/"));
 		}
 	}
-//    
-//	 AWSCredentials credentials = 
-//			 new BasicAWSCredentials("AKIAUTOYM6LR433GWXZ3", "lL2v08CtG53LgfC0gFt2zDMdq0yO5YLXy+G8TRxz");
-//
-//	 AmazonS3 s3client = AmazonS3ClientBuilder
-//	 .standard()
-//	 .withRegion(Regions.AP_SOUTHEAST_1)
-//	 .withCredentials(new AWSStaticCredentialsProvider(credentials))
-//	 .build();
-//
-//	@Override
-//	public void saveProduct(String folder, String fileName, MultipartFile multipartFile)
-//			throws IllegalStateException, IOException {
-//		 
-//		 File convFile = new File(System.getProperty("java.io.tmpdir")+"/"+"fileTmp");
-//	        multipartFile.transferTo(convFile);
-//
-//	        s3client.putObject(new PutObjectRequest("enternalproduct", multipartFile
-//	                .getOriginalFilename().replaceAll("\\s+",""), convFile)
-//	                .withCannedAcl(CannedAccessControlList.PublicRead));
-//	}
+
+	 AWSCredentials credentials =
+			 new BasicAWSCredentials("AKIAUTOYM6LR433GWXZ3", "lL2v08CtG53LgfC0gFt2zDMdq0yO5YLXy+G8TRxz");
+
+	 AmazonS3 s3client = AmazonS3ClientBuilder
+	 .standard()
+	 .withRegion(Regions.AP_SOUTHEAST_1)
+	 .withCredentials(new AWSStaticCredentialsProvider(credentials))
+	 .build();
+
+	@Override
+	public void saveProduct(String folder, String fileName, MultipartFile multipartFile)
+			throws IllegalStateException, IOException {
+
+		 File convFile = new File(System.getProperty("java.io.tmpdir")+"/"+"fileTmp");
+	        multipartFile.transferTo(convFile);
+
+	        s3client.putObject(new PutObjectRequest("enternalproduct", multipartFile
+	                .getOriginalFilename().replaceAll("\\s+",""), convFile)
+	                .withCannedAcl(CannedAccessControlList.PublicRead));
+	}
 	
 	
 }
