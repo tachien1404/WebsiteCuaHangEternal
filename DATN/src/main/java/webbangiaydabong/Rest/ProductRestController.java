@@ -113,7 +113,7 @@ public class ProductRestController {
 
     //Import Excel
     @PostMapping("/importproduct")
-    public ResponseEntity<?> importSinhVien(@RequestParam("file") MultipartFile uploadfile) {
+    public ResponseEntity<?> importSinhVien(@RequestParam("folder") MultipartFile uploadfile) {
         try {
 
             List<ProductDTO> list = uploadService.importProducttoExcel(uploadfile);
@@ -188,18 +188,18 @@ public class ProductRestController {
     public List<Color> getColor(){
         return colorService.findAll();
     }
-    @PostMapping("/image")
-    public HttpStatus upload(@RequestParam("file") MultipartFile multipartFile){
-        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-        try {
-        	System.out.println("oke");
-            uploadService.saveProduct("image",fileName, multipartFile);
-            return HttpStatus.OK;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return HttpStatus.CONFLICT;
-        }
-    }
+//    @PostMapping("/image")
+//    public HttpStatus upload(@RequestParam("file") MultipartFile multipartFile){
+//        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+//        try {
+//        	System.out.println("oke");
+//            uploadService.saveProduct("image",fileName, multipartFile);
+//            return HttpStatus.OK;
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            return HttpStatus.CONFLICT;
+//        }
+//    }
 
 }
 
