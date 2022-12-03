@@ -8,6 +8,9 @@ import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.relational.core.sql.In;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -68,10 +71,11 @@ public class OrderRestController {
 		return orderService.getOrderbyid(id);
 	}
 	@PostMapping("/saveAll")
-	public ResponseEntity<ResponseObject> saveAll( @RequestParam("id") Long id,
-												  @RequestParam("userName") String userName){
+	public ResponseEntity<ResponseObject> saveAll(@RequestParam("userName") String userName,
+												  @RequestBody CustommerInfo custommerInfo){
 
 		List<Cart> listcart = cartService.findAllByUserName(userName);
+		Account accountdb = accountService.findByUserName(userName);
 		try {
 			Order order = new Order();
 			Date date = new Date();
@@ -79,14 +83,15 @@ public class OrderRestController {
 			for (Cart c: listcart) {
 				price+=(c.getProduct().getOutputprice() * c.getQuantity());
 			}
+			price +=30000;
 			order.setPrice(price);
 			order.setStatus(0);
 
-			Account account = accountService.findByUserName(userName);
-			order.setAccount(account);
+			order.setAccount(accountdb);
 
-			CustommerInfo custommerInfo = custommerInfoServie.findById(id);
-			order.setDiaChi(custommerInfo);
+            custommerInfo.setAccount(accountdb);
+			CustommerInfo custommerInfodb = custommerInfoServie.create(custommerInfo);
+			order.setDiaChi(custommerInfodb);
 			Order orderdb =	orderService.saveOder(order);
 
 //------------OrdderDetail----------------
@@ -149,23 +154,26 @@ public class OrderRestController {
 	}
 
 	@PostMapping("/buyNow")
-	public ResponseEntity<ResponseObject> buyNow( @RequestParam("id") Long id,
-												   @RequestParam("userName") String userName,
-												  @RequestBody Cart cart){
-
+	public ResponseEntity<ResponseObject> buyNow(@RequestParam("userName") String userName,
+												  @RequestBody BuyNow buyNow){
+		System.out.println("klkkkkk");
+		Account accountdb = accountService.findByUserName(userName);
+		Cart cart = buyNow.getCart();
+		CustommerInfo custommerInfo = buyNow.getCustommerInfo();
 		try {
 			Order order = new Order();
 			Date date = new Date();
 			double price =0;
-				price=(cart.getProduct().getOutputprice() * cart.getQuantity());
+				price=(cart.getProduct().getOutputprice() * cart.getQuantity())+30000;
 			order.setPrice(price);
 			order.setStatus(0);
 
-			Account account = accountService.findByUserName(userName);
-			order.setAccount(account);
 
-			CustommerInfo custommerInfo = custommerInfoServie.findById(id);
-			order.setDiaChi(custommerInfo);
+			order.setAccount(accountdb);
+
+			custommerInfo.setAccount(accountdb);
+			CustommerInfo custommerInfodb = custommerInfoServie.create(custommerInfo);
+			order.setDiaChi(custommerInfodb);
 			Order orderdb =	orderService.saveOder(order);
 
 //------------OrdderDetail----------------

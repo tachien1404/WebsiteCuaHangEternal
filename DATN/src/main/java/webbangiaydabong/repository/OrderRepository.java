@@ -2,8 +2,11 @@ package webbangiaydabong.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import webbangiaydabong.dto.OrderDTO;
@@ -34,10 +37,8 @@ public interface OrderRepository extends JpaRepository<Order, Long>{
 	List<Order> findAllByStatus(Integer integer);
 
 
-	@Query("select o from Order o where o.account.username=?1 and o.status=?2")
-	List<Order> findAllByStatusAndUserName(String userName,Integer status);
-
-	//List<Order> findAllByStatus(String userName,Integer status);
-
+	@Query("select o from Order o where o.account.username= :userName and o.status= :status")
+	List<Order> findAllByStatusAndUserName(@Param("userName") String userName,
+										   @Param("status") Integer status);
 
 }

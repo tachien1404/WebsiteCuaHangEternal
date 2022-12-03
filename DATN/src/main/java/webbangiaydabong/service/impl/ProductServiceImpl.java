@@ -1,5 +1,6 @@
 package webbangiaydabong.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +57,11 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public List<Product> findByStatus() {
 		return productRepo.findByStatus();
+	}
+
+	@Override
+	public List<Product> findTop(Date date) {
+		return productRepo.findTop(date);
 	}
 
 
