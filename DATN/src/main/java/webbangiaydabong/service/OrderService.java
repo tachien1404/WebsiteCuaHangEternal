@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import io.swagger.models.auth.In;
 import org.hibernate.validator.cfg.defs.NormalizedDef;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import webbangiaydabong.dto.OrderDTO;
@@ -33,6 +34,6 @@ public interface OrderService {
     Order saveOder(Order order);
     List<Order> showHistoryByAccount(String userName);
     Order getById(Long id);
-    List<Order> getByStatus(String userName,Integer status);
+    List<Order> getByStatus(String userName, Integer status);
     List<Order> report(Integer status);
 }

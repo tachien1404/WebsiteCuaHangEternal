@@ -1,9 +1,12 @@
 package webbangiaydabong.service;
 
+import java.util.Date;
 import java.util.List;
 
+import lombok.Data;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.parameters.P;
 import webbangiaydabong.entity.Brand;
 import webbangiaydabong.entity.Category;
 import webbangiaydabong.entity.Product;
@@ -26,5 +29,6 @@ public interface ProductService {
 							Brand hang);
 
 	List<Product> findByStatus();
+    List<Product> findTop(Date date);
 
 }

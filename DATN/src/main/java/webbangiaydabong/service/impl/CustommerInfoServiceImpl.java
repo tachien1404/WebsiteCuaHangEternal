@@ -69,6 +69,11 @@ public class CustommerInfoServiceImpl implements CustommerInfoServie {
 		return Cusrepo.findByActive(userName);
 	}
 
+	@Override
+	public CustommerInfo findBySdt(String sdt) {
+		return Cusrepo.findBySdt(sdt);
+	}
+
 
 	@Override
 	public CustommerInfo findById(Long id) {
