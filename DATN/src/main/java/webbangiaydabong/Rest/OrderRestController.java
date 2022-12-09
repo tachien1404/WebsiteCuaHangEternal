@@ -210,4 +210,12 @@ public class OrderRestController {
 			,@RequestParam("status") Integer status){
 		return orderService.getByStatus(userName,status);
 	}
+	@PostMapping("/save")
+	public OrderDTO save(@RequestBody OrderDTO dto){
+		return orderService.save(null,dto);
+	}
+	@PostMapping("/update/{id}")
+	public OrderDTO update( @RequestBody OrderDTO dto,@PathVariable Long id){
+		return orderService.save(id,dto);
+	}
 }

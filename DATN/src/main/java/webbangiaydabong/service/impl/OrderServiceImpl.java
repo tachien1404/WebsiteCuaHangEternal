@@ -3,6 +3,7 @@ package webbangiaydabong.service.impl;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.hibernate.transform.AliasToBeanResultTransformer;
@@ -19,6 +20,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import webbangiaydabong.dto.CustomerDto;
 import webbangiaydabong.dto.OrderDTO;
 import webbangiaydabong.dto.OrderDetailDTO;
 import webbangiaydabong.dto.functiondto.DatHangDto;
@@ -45,7 +47,8 @@ public class OrderServiceImpl implements OrderService {
     AccountRepository accountRepository;
     @Autowired
     S_C_Repository s_c_repository;
-
+@Autowired
+CustomerRepository customerRepository;
     @Override
     public Object finById(Long id) {
         return orderRepo.findById(id).get();
@@ -198,5 +201,42 @@ return;
         return orderRepo.findAllByStatus(status);
     }
 
+    @Override
+    public OrderDTO save(Long id,OrderDTO dto) {
+        Order order=null;
+        if(dto.getId()!=null){
+            Optional<Order> optionalCustomer =orderRepo.findById(dto.getId());
+            if(optionalCustomer.isPresent()){
+                order=optionalCustomer.get();
+            }
+        }
+        if(order == null){
+            order=new Order();
+        }
+        if(dto.getPrice() !=null){
+            order.setPrice(dto.getPrice());
 
+        }
+        if(dto.getNote()!=null){
+            order.setNote(dto.getNote());
+        }
+
+        if(dto.getStatus()>=0){
+            order.setStatus(dto.getStatus());
+        }
+        if(dto.getKenh()>=0){
+            order.setKenh(dto.getKenh());
+        }
+        if(dto.getAccount_id()!=null){
+            Account a=accountRepository.findById(dto.getAccount_id()).get();
+            order.setAccount(a);
+        }
+        if(dto.getCustomer_id()!=null){
+            Customer c=customerRepository.findById(dto.getCustomer_id()).get();
+            order.setCustomer(c);
+        }
+       order= orderRepo.save(order);
+        return new OrderDTO( order,true);
+
+    }
 }

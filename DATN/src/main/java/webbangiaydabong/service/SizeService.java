@@ -10,4 +10,5 @@ public interface SizeService {
     List<size> findAll();
     boolean checkvalue(Integer value);
     SizeDTO save(SizeDTO dto);
+
 }

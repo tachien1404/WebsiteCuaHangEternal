@@ -18,7 +18,7 @@ import webbangiaydabong.entity.OrderDetail;
 @NoArgsConstructor
 public class OrderDTO {
     private Long id;
-
+private  Long customer_id;
     private Date create_date;
     private Double price;
     private String note;
@@ -34,6 +34,7 @@ public class OrderDTO {
     private String sdtinfo;
     private String nameinfo;
     private String addressinfo;
+    private int kenh;
     Set<OrderDetailDTO> lstOrderDetailDTOS;
     public OrderDTO(Order entity, boolean onlyVanBang) {
         this.id = entity.getId();
@@ -67,7 +68,19 @@ public class OrderDTO {
             }
         }
     }
+    public String getKenhName() {
 
+        if (this.status == 0) {
+            return "web !";
+        }
+        if (this.status == 1) {
+            return "tại quầy!";
+        }
+        if (this.status == 2) {
+            return "page!";
+        }
+        return null;
+    }
     public String getStatusName() {
 
 

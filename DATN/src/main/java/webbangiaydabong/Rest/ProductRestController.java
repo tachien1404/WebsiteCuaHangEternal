@@ -227,7 +227,11 @@ public class ProductRestController {
 //        }
 //    }
 
+    @GetMapping("/serchName/{name}")
+    public List<ProductDTO> serch(@PathVariable String name){
 
+        return productService.serchName(name);
+    }
 
 }
 

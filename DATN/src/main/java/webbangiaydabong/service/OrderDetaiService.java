@@ -13,4 +13,7 @@ public interface OrderDetaiService {
 	OrderDetail create(OrderDetail orderDetail);
 	List<OrderDetail> findByOder(Long id);
 	void xoa(Long id);
+	OrderDetailDTO saveOrEdit(OrderDetailDTO dto);
+	List<OrderDetailDTO> findByOderId(Long id);
+OrderDetailDTO sumgia(Long orderID);
 }

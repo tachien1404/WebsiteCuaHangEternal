@@ -23,7 +23,8 @@ public class Customer {
     private String sdt;
     private String name;
     private String address;
-    private boolean active;
+    private String email;
+
     @OneToMany(mappedBy = "customer")
     private List<Order> danhSachOrder;
 }
