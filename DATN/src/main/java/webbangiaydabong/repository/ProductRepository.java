@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import org.springframework.data.repository.query.Param;
+import webbangiaydabong.dto.ProductDTO;
 import webbangiaydabong.entity.Brand;
 import webbangiaydabong.entity.Category;
 import webbangiaydabong.entity.Product;
@@ -42,4 +43,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "ORDER BY p.createDate DESC")
     List<Product> findTop(Date date);
 
+    @Query("select new webbangiaydabong.dto.ProductDTO(o) from Product o where o.name like :name")
+    List<ProductDTO> serchName(String name);
 }

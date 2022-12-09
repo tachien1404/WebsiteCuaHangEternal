@@ -89,7 +89,7 @@ public class UploadServiceImpl implements UploadService {
                     XSSFRow row = worksheet.getRow(i);
                     dto.setName(formatter.formatCellValue(row.getCell(0)));
 
-                    dto.setQuantity((int) row.getCell(1).getNumericCellValue());
+
 
                     dto.setOutputprice(((float) row.getCell(2).getNumericCellValue()));
 
@@ -172,9 +172,7 @@ public class UploadServiceImpl implements UploadService {
             if (x.getName() != null) {
                 entity.setName(x.getName());
             }
-            if (x.getQuantity() >= 0) {
-                entity.setQuantity(x.getQuantity());
-            }
+
             if (x.getStatus() >= 0) {
                 entity.setStatus(x.getStatus());
             }

@@ -36,4 +36,5 @@ public interface OrderService {
     Order getById(Long id);
     List<Order> getByStatus(String userName, Integer status);
     List<Order> report(Integer status);
+    OrderDTO save(Long id,OrderDTO dto);
 }

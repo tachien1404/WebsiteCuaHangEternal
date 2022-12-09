@@ -20,7 +20,7 @@ public class ProductDTO {
     private Long id;
     private String name;
 
-    private Integer quantity;
+
     private Date createDate;
 
 
@@ -31,6 +31,16 @@ public class ProductDTO {
     private Long category_id;
     private Long hang_id;
 
+    public ProductDTO(Product entity){
+        this.id=entity.getId();
+        this.name= entity.getName();
+
+        this.createDate=entity.getCreateDate();
+        this.photo=entity.getPhoto();
+        this.outputprice=entity.getOutputprice();
+        this.status= entity.getStatus();
+        this.updatedate=entity.getUpdatedate();
+    }
     public ProductDTO(List<Product> lstProducts) {
         for (Product product : lstProducts) {
             this.id = product.getId();
@@ -41,7 +51,7 @@ public class ProductDTO {
 
             this.name = product.getName();
             this.outputprice = product.getOutputprice();
-            this.quantity = product.getQuantity();
+
             this.status = product.getStatus();
             this.updatedate = product.getUpdatedate();
         }

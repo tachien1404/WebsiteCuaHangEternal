@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import webbangiaydabong.dto.ProductDTO;
 import webbangiaydabong.entity.Brand;
 import webbangiaydabong.entity.Category;
 import webbangiaydabong.entity.Product;
@@ -64,5 +65,12 @@ public class ProductServiceImpl implements ProductService {
 		return productRepo.findTop(date);
 	}
 
-
+	@Override
+	public List<ProductDTO> serchName(String name) {
+		if(name!=null){
+			List<ProductDTO>lstProductDTOS=productRepo.serchName('%'+name+'%');
+			return lstProductDTOS;
+		}
+		return null;
+	}
 }
