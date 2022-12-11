@@ -138,6 +138,7 @@ return;
         if (dto.getKeyword() != null) {
             whereClause += " AND (o.account.fullname like :keyword ) ";
         }
+        whereClause +=" AND o.status NOT in(6) ";
         sql += whereClause + orderBy;
 
         Query q = manager.createQuery(sql, OrderDTO.class);

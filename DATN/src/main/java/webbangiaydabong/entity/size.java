@@ -25,11 +25,10 @@ public class size {
 @GeneratedValue(strategy = GenerationType.IDENTITY)
 private Long id;
 private Integer value;//38-43
-//    @JsonIgnore
-//    @OneToMany(mappedBy = "size")
-//private List<SizeDetail>danhSachSize;
+
 
     @JsonIgnore
     @OneToMany(mappedBy = "size")
     private List<S_C_Details> danhSachSizeMau;
 }
+
