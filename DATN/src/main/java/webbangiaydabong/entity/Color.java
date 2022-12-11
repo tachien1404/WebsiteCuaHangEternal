@@ -26,4 +26,9 @@ public class Color {
 	private Integer value;//màu 1 đỏ , 2 vàng ....
 	private String name;
 
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "mau")
+	private List<S_C_Details> danhSachSizeMau;
+
 }

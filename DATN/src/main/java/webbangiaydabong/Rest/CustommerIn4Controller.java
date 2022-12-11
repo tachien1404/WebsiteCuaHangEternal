@@ -46,8 +46,9 @@ public class CustommerIn4Controller {
             Account account = accountService.findByUserName(userName);
             custommerInfo.setAccount(account);
             custommerInfo.setActive(true);
+            custommerInfo.setDeafault(false);
             custommerInfoServie.create(custommerInfo);
-            return ResponseEntity.ok().body(new ResponseObject(HttpStatus.OK, "Tạo địa chỉ liên hệ thành công", ""));
+            return ResponseEntity.ok().body(new ResponseObject(HttpStatus.OK, "Tạo địa chỉ liên hệ thành công","" ));
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
@@ -93,15 +94,16 @@ public class CustommerIn4Controller {
         }
     }
 
-    @GetMapping("findBySdt/{sdt}")
-    public CustommerInfo findBySdt(@PathVariable("sdt") String sdt) {
-        System.out.println(custommerInfoServie.findBySdt(sdt));
-        return custommerInfoServie.findBySdt(sdt);
+
+    @GetMapping("custommerDefault")
+    public CustommerInfo findAccountLoginByUserName(@RequestParam("userName") String userName){
+        return custommerInfoServie.findCustommerDefalut(userName);
     }
 
-    @GetMapping("accountLogin")
-    public Account findAccountLoginByUserName(@RequestParam("userName") String userName){
-        System.out.println(accountService.findByUserName(userName));
-       return accountService.findByUserName(userName);
+    @GetMapping("findById")
+    public CustommerInfo findAccountLoginByUserName(@RequestParam("id") Long id){
+        return custommerInfoServie.findById(id);
     }
+
+
 }

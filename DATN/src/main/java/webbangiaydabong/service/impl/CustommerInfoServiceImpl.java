@@ -70,10 +70,9 @@ public class CustommerInfoServiceImpl implements CustommerInfoServie {
 	}
 
 	@Override
-	public CustommerInfo findBySdt(String sdt) {
-		return Cusrepo.findBySdt(sdt);
+	public CustommerInfo findCustommerDefalut(String userName) {
+		return Cusrepo.findCustommerInfoDefaulte(userName);
 	}
-
 
 	@Override
 	public CustommerInfo findById(Long id) {

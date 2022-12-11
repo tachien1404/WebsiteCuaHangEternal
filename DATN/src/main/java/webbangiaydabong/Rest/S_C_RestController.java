@@ -145,7 +145,7 @@ public class S_C_RestController {
     @PutMapping("/findQuantity")
     public ResponseEntity<ResponseObject> findQuantity(@RequestBody FindQuantity search) {
         int quantity = 0;
-        List<S_C_Details> list = service.findQuantity(search.getProduct(), search.getSize(), search.getMau());
+        List<S_C_Details> list = service.findQuantity(search.getProduct(), search.getSize(), search.getMau(),search.getSole());
         for (S_C_Details x : list) {
             quantity += x.getQuantity();
         }
