@@ -25,6 +25,9 @@ public class S_C_Details {
     @ManyToOne
     @JoinColumn(name = "color_id")
     private Color mau;
+    @ManyToOne
+    @JoinColumn(name = "sole_id")
+    private Sole sole;
 
     @NotNull
     private Integer quantity;

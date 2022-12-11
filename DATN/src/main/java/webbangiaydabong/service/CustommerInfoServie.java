@@ -32,5 +32,6 @@ public interface CustommerInfoServie {
     );
 
     List<CustommerInfo> findByActive(String userName);
-    CustommerInfo findBySdt(String sdt);
+
+    CustommerInfo findCustommerDefalut(String userName);
 }

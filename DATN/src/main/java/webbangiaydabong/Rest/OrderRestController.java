@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.amazonaws.services.dynamodbv2.xspec.L;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import webbangiaydabong.dto.OrderDTO;
 import webbangiaydabong.dto.OrderDetailDTO;
+import webbangiaydabong.dto.Report;
 import webbangiaydabong.dto.functiondto.DatHangDto;
 import webbangiaydabong.dto.functiondto.SearchDto;
 import webbangiaydabong.entity.*;
@@ -72,7 +74,7 @@ public class OrderRestController {
 	}
 	@PostMapping("/saveAll")
 	public ResponseEntity<ResponseObject> saveAll(@RequestParam("userName") String userName,
-												  @RequestBody CustommerInfo custommerInfo){
+												 @RequestParam("idCustommer") Long idCustommer){
 
 		List<Cart> listcart = cartService.findAllByUserName(userName);
 		Account accountdb = accountService.findByUserName(userName);
@@ -89,8 +91,8 @@ public class OrderRestController {
 
 			order.setAccount(accountdb);
 
-            custommerInfo.setAccount(accountdb);
-			CustommerInfo custommerInfodb = custommerInfoServie.create(custommerInfo);
+
+			CustommerInfo custommerInfodb = custommerInfoServie.findById(idCustommer);
 			order.setDiaChi(custommerInfodb);
 			Order orderdb =	orderService.saveOder(order);
 
@@ -147,7 +149,7 @@ public class OrderRestController {
 				s_c_detailService.update(sc);
 			}
 			order.setNote(note);
-			order.setStatus(3);
+			order.setStatus(4);
 			orderService.saveOder(order);
 		}
 		return ResponseEntity.ok().body(new ResponseObject(HttpStatus.OK, "Hủy đơn thành công",""));
@@ -155,11 +157,9 @@ public class OrderRestController {
 
 	@PostMapping("/buyNow")
 	public ResponseEntity<ResponseObject> buyNow(@RequestParam("userName") String userName,
-												  @RequestBody BuyNow buyNow){
-		System.out.println("klkkkkk");
+												  @RequestParam("idCustommer") Long idCustommer,
+												  @RequestBody Cart cart){
 		Account accountdb = accountService.findByUserName(userName);
-		Cart cart = buyNow.getCart();
-		CustommerInfo custommerInfo = buyNow.getCustommerInfo();
 		try {
 			Order order = new Order();
 			Date date = new Date();
@@ -171,9 +171,8 @@ public class OrderRestController {
 
 			order.setAccount(accountdb);
 
-			custommerInfo.setAccount(accountdb);
-			CustommerInfo custommerInfodb = custommerInfoServie.create(custommerInfo);
-			order.setDiaChi(custommerInfodb);
+			CustommerInfo c = custommerInfoServie.findById(idCustommer);
+			order.setDiaChi(c);
 			Order orderdb =	orderService.saveOder(order);
 
 //------------OrdderDetail----------------
@@ -210,4 +209,12 @@ public class OrderRestController {
 			,@RequestParam("status") Integer status){
 		return orderService.getByStatus(userName,status);
 	}
+
+	@GetMapping("/findByDay")
+		public List<Report> findByDay(@RequestParam("create") Date create,
+									  @RequestParam("end") Date end){
+		 return orderService.findByDate(create,end);
+		}
+
+
 }

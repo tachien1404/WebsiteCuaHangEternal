@@ -4,6 +4,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 import webbangiaydabong.entity.Color;
 import webbangiaydabong.entity.Product;
+import webbangiaydabong.entity.Sole;
 import webbangiaydabong.entity.size;
 
 @Data
@@ -16,4 +17,5 @@ public class FindQuantity {
     Product product;
     size size;
     Color mau;
+    Sole sole;
 }

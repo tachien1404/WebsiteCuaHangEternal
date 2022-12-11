@@ -1,5 +1,6 @@
 package webbangiaydabong.service.impl;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -21,6 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import webbangiaydabong.dto.OrderDTO;
 import webbangiaydabong.dto.OrderDetailDTO;
+import webbangiaydabong.dto.Report;
 import webbangiaydabong.dto.functiondto.DatHangDto;
 import webbangiaydabong.dto.functiondto.SearchDto;
 import webbangiaydabong.entity.*;
@@ -196,6 +198,11 @@ return;
     @Override
     public List<Order> report(Integer status) {
         return orderRepo.findAllByStatus(status);
+    }
+
+    @Override
+    public List<Report> findByDate(Date create,Date end){
+        return orderRepo.findByDay(create,end);
     }
 
 

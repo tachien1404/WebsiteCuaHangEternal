@@ -31,5 +31,6 @@ public interface S_C_DetailService {
 
     List<S_C_Details> findQuantity(Product product,
                                    size size,
-                                   Color mau);
+                                   Color mau,
+                                   Sole sole);
 }

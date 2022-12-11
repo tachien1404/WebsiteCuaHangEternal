@@ -31,10 +31,9 @@ public interface CustommerInfoRepository extends JpaRepository<CustommerInfo, Lo
             @Param("account") Account account
     );
 
-    @Query("select c from CustommerInfo  c where c.account.username =?1 and c.active=true")
+    @Query("select c from CustommerInfo  c where c.account.username =?1 and c.active=true and c.deafault = false")
     List<CustommerInfo> findByActive(String userName);
 
-    @Query("select c from CustommerInfo  c where c.sdt = ?1")
-    CustommerInfo findBySdt(String sdt);
-
+    @Query("select c from CustommerInfo c where c.account.username =?1 and c.deafault = true and c.active = true")
+    CustommerInfo findCustommerInfoDefaulte(String userName);
 }

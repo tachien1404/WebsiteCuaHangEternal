@@ -30,16 +30,16 @@ public class FileController {
             return HttpStatus.CONFLICT;
         }
     } 
-//	@PostMapping(value = "product")
-//    public HttpStatus productUpload(@RequestParam("file") MultipartFile multipartFile){
-//        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-//        try {
-//        	System.out.println("alo");
-//            uploadService.save("imageproduct",fileName, multipartFile);
-//            return HttpStatus.OK;
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            return HttpStatus.CONFLICT;
-//        }
-//    } 
+	@PostMapping(value = "product")
+    public HttpStatus productUpload(@RequestParam("file") MultipartFile multipartFile){
+        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        try {
+        	System.out.println("alo");
+            uploadService.save("imageproduct",fileName, multipartFile);
+            return HttpStatus.OK;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return HttpStatus.CONFLICT;
+        }
+    }
 }
