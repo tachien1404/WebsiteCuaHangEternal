@@ -39,4 +39,5 @@ public interface OrderService {
     List<Order> getByStatus(String userName, Integer status);
     List<Order> report(Integer status);
     List<Report> findByDate(Date create,Date end);
+    OrderDTO save(Long id,OrderDTO dto);
 }

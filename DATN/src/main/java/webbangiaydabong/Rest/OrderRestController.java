@@ -216,5 +216,12 @@ public class OrderRestController {
 		 return orderService.findByDate(create,end);
 		}
 
-
+	@PostMapping("/save")
+	public OrderDTO save(@RequestBody OrderDTO dto){
+		return orderService.save(null,dto);
+	}
+	@PostMapping("/update/{id}")
+	public OrderDTO update( @RequestBody OrderDTO dto,@PathVariable Long id){
+		return orderService.save(id,dto);
+	}
 }
