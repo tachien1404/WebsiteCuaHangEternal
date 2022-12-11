@@ -26,6 +26,7 @@ public class CustommerInfo {
 		private String sdt;
 		private String name;
 		private String address;
+		private boolean deafault;
 		@ManyToOne
 		@JoinColumn(name = "account_id")
 		private Account account;

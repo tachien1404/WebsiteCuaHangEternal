@@ -1,5 +1,6 @@
 package webbangiaydabong.repository;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -10,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import webbangiaydabong.dto.OrderDTO;
+import webbangiaydabong.dto.Report;
 import webbangiaydabong.entity.Order;
 
 import javax.transaction.Transactional;
@@ -40,5 +42,8 @@ public interface OrderRepository extends JpaRepository<Order, Long>{
 	@Query("select o from Order o where o.account.username= :userName and o.status= :status")
 	List<Order> findAllByStatusAndUserName(@Param("userName") String userName,
 										   @Param("status") Integer status);
+
+	@Query("select o.create_date,sum(o.price) as sum from Order o where o.create_date = ?1  group by o.create_date order by o.create_date asc ")
+	List<Report> findByDay(Date create,Date end);
 
 }

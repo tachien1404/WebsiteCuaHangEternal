@@ -45,6 +45,9 @@ public class ProductRestController {
     @Autowired
     ColorService colorService;
 
+    @Autowired
+    SoleService soleService;
+
 
 
     @GetMapping()
@@ -189,6 +192,11 @@ public class ProductRestController {
         return colorService.findAll();
     }
 
+    @GetMapping("/getAllSole")
+    public List<Sole> getAllSoleActive() {
+        return soleService.findAllActice();
+    }
+
     @PostMapping("/image")
     public HttpStatus upload(@RequestParam("file") MultipartFile multipartFile){
         String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
@@ -202,9 +210,8 @@ public class ProductRestController {
         }
     }
 
-
     @GetMapping("/top/{top}")
-    public List<Product> findTop(@PathVariable int top){
+    public List<Product> findTop(@PathVariable("top") Integer top){
       List<Product> productsTop = new ArrayList<>();
       Date date = new Date();
       List<Product> productsDb = productService.findTop(date);
@@ -214,18 +221,18 @@ public class ProductRestController {
       return productsTop;
     }
 
-//    @PostMapping("/image")
-//    public HttpStatus upload(@RequestParam("file") MultipartFile multipartFile){
-//        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-//        try {
-//        	System.out.println("oke");
-//            uploadService.saveProduct("image",fileName, multipartFile);
-//            return HttpStatus.OK;
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            return HttpStatus.CONFLICT;
-//        }
-//    }
+    @PostMapping("/image")
+    public HttpStatus upload(@RequestParam("file") MultipartFile multipartFile){
+        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        try {
+        	System.out.println("oke");
+            uploadService.saveProduct("image",fileName, multipartFile);
+            return HttpStatus.OK;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return HttpStatus.CONFLICT;
+        }
+    }
 
     @GetMapping("/serchName/{name}")
     public List<ProductDTO> serch(@PathVariable String name){
