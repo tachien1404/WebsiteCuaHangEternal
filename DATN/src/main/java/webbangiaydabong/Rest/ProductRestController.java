@@ -197,18 +197,7 @@ public class ProductRestController {
         return soleService.findAllActice();
     }
 
-    @PostMapping("/image")
-    public HttpStatus upload(@RequestParam("file") MultipartFile multipartFile){
-        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-        try {
-        	System.out.println("oke");
-            uploadService.saveProduct("image",fileName, multipartFile);
-            return HttpStatus.OK;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return HttpStatus.CONFLICT;
-        }
-    }
+   
 
     @GetMapping("/top/{top}")
     public List<Product> findTop(@PathVariable("top") Integer top){
@@ -232,6 +221,7 @@ public class ProductRestController {
             e.printStackTrace();
             return HttpStatus.CONFLICT;
         }
+        
     }
 
     @GetMapping("/serchName/{name}")
