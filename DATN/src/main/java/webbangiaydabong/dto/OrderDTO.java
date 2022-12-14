@@ -35,6 +35,8 @@ private  Long customer_id;
     private String nameinfo;
     private String addressinfo;
     private int kenh;
+    private String nameCustomer;
+    private long idCustomer;
     Set<OrderDetailDTO> lstOrderDetailDTOS;
     public OrderDTO(Order entity, boolean onlyVanBang) {
         this.id = entity.getId();
@@ -66,6 +68,10 @@ private  Long customer_id;
                dto.setCategory_name(deteo.getProduct().getCategory().getName());
                 this.lstOrderDetailDTOS.add(dto);
             }
+        }
+        if(entity.getCustomer()!=null){
+            this.nameCustomer=entity.getCustomer().getName();
+            this.idCustomer=entity.getCustomer().getId();
         }
     }
     public String getKenhName() {
