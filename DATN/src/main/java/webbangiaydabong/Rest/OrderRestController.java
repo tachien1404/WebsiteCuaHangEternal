@@ -15,6 +15,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.relational.core.sql.In;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import webbangiaydabong.dto.OrderDTO;
@@ -223,5 +224,9 @@ public class OrderRestController {
 	@PostMapping("/update/{id}")
 	public OrderDTO update( @RequestBody OrderDTO dto,@PathVariable Long id){
 		return orderService.save(id,dto);
+	}
+	@DeleteMapping("/delete/{id}")
+	public  void delete(@PathVariable Long id){
+		orderService.delete(id);
 	}
 }

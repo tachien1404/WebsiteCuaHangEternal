@@ -40,4 +40,5 @@ public interface OrderService {
     List<Order> report(Integer status);
     List<Report> findByDate(Date create,Date end);
     OrderDTO save(Long id,OrderDTO dto);
+    void delete(Long id);
 }
