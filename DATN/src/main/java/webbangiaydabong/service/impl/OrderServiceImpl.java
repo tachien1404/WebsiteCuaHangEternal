@@ -209,7 +209,14 @@ return;
         return orderRepo.findByDay(create,end);
     }
 
-    public OrderDTO save(Long id,OrderDTO dto) {
+    @Override
+    public void delete(Long id) {
+        if(id!=null){
+            orderRepo.deleteById(id);
+        }
+    }
+
+    public OrderDTO save(Long id, OrderDTO dto) {
         Order order=null;
         if(dto.getId()!=null){
             Optional<Order> optionalCustomer =orderRepo.findById(dto.getId());
