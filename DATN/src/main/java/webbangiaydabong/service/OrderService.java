@@ -38,7 +38,7 @@ public interface OrderService {
     Order getById(Long id);
     List<Order> getByStatus(String userName, Integer status);
     List<Order> report(Integer status);
-    List<Report> findByDate(Date create,Date end);
     OrderDTO save(Long id,OrderDTO dto);
     void delete(Long id);
+    List<Integer> statistical(Date createDate, Date endDate);
 }

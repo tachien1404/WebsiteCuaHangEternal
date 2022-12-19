@@ -1,27 +1,16 @@
 package webbangiaydabong.Rest;
 
-import java.util.ArrayList;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-
-import com.amazonaws.services.dynamodbv2.xspec.L;
-import org.aspectj.weaver.ast.Or;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.relational.core.sql.In;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
-
 import webbangiaydabong.dto.OrderDTO;
 import webbangiaydabong.dto.OrderDetailDTO;
-import webbangiaydabong.dto.Report;
-import webbangiaydabong.dto.functiondto.DatHangDto;
 import webbangiaydabong.dto.functiondto.SearchDto;
 import webbangiaydabong.entity.*;
 import webbangiaydabong.service.*;
@@ -211,12 +200,6 @@ public class OrderRestController {
 		return orderService.getByStatus(userName,status);
 	}
 
-	@GetMapping("/findByDay")
-		public List<Report> findByDay(@RequestParam("create") Date create,
-									  @RequestParam("end") Date end){
-		 return orderService.findByDate(create,end);
-		}
-
 	@PostMapping("/save")
 	public OrderDTO save(@RequestBody OrderDTO dto){
 		return orderService.save(null,dto);
@@ -228,5 +211,22 @@ public class OrderRestController {
 	@DeleteMapping("/delete/{id}")
 	public  void delete(@PathVariable Long id){
 		orderService.delete(id);
+	}
+
+	@GetMapping("/statistical")
+	public ResponseEntity<ResponseObject> statistical(@RequestParam("createDate") String createDate,
+									 @RequestParam("endDate") String endDate) {
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+		try {
+			Date date1 = formatter.parse(createDate);
+			Date date2 = formatter.parse(endDate);
+			List<Integer> content = orderService.statistical(date1,date2);
+			return ResponseEntity.ok().body(new ResponseObject(HttpStatus.OK, "OK", content));
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+					new ResponseObject(HttpStatus.BAD_REQUEST,
+							"Thất bại", ""));
+		}
 	}
 }

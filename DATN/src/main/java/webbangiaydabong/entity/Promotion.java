@@ -17,29 +17,22 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
-@Table(name="promotion")
+@Table(name = "promotion")
 @Entity
 @Getter
 @Setter
 public class Promotion {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-private Long id;
-private String name;
-	@JsonFormat(pattern="yyyy-MM-dd")
-private Date starttime;//bắt đầu
-	@JsonFormat(pattern="yyyy-MM-dd")
-private Date endtime;//kt
-private Date createDate;//ngày tạo
-private Date updatetedDate;//ngày sửa đôiỉ 
-private int value;//dis count
-	private boolean delete;
-@ManyToOne
-@JoinColumn(name = "account_id")
-private Account account;
-
-@JsonIgnore
-@OneToMany(mappedBy = "giamgia")
-private List<Order>danhSachOrders;
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String name;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date starttime;//bắt đầu
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date endtime;//kt
+    private Date createDate;//ngày tạo
+    private Date updatetedDate;//ngày sửa đôiỉ
+    private int value;//dis count
+    private boolean delete;
+    private boolean active;
 }

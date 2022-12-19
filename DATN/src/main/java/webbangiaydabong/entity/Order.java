@@ -49,9 +49,9 @@ public class Order {
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "order")
 	private Set<OrderDetail> danhSachOrder;
-	@ManyToOne
-	@JoinColumn(name = "promotion_id")
-	private Promotion giamgia;
+//	@ManyToOne
+//	@JoinColumn(name = "promotion_id")
+//	private Promotion giamgia;
 	@ManyToOne
 	@JoinColumn(name = "custommerinfo_id")
 	private CustommerInfo diaChi;
