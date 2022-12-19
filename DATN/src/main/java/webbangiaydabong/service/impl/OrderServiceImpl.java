@@ -205,15 +205,15 @@ return;
     }
 
     @Override
-    public List<Report> findByDate(Date create,Date end){
-        return orderRepo.findByDay(create,end);
-    }
-
-    @Override
     public void delete(Long id) {
         if(id!=null){
             orderRepo.deleteById(id);
         }
+    }
+
+    @Override
+    public List<Integer> statistical(Date createDate, Date endDate) {
+        return orderRepo.statistical(createDate,endDate);
     }
 
     public OrderDTO save(Long id, OrderDTO dto) {

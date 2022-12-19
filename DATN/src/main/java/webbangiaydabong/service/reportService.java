@@ -5,12 +5,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import webbangiaydabong.entity.Account;
-import webbangiaydabong.entity.Order;
+import webbangiaydabong.entity.*;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service
 @EnableScheduling
@@ -24,6 +23,15 @@ public class reportService {
 
     @Autowired
     AccountService accountService;
+
+    @Autowired
+    PromotionDetaitlsService promotionDetaitlsService;
+
+    @Autowired
+    PromotionService promotionService;
+
+    @Autowired
+    ProductService productService;
 
         // @Scheduled(fixedRate = 5000)
    @Scheduled(cron = "0 0 9 * * ?")
@@ -43,6 +51,28 @@ public class reportService {
                     "Thông báo công việc","Hiện tại đang có" +orders.size()+"đơn hàng chưa được xác nhận. Vui lòng xem xét");
         }
         }
+
+   @Scheduled(cron = "0 0 0 * * ?")
+// @Scheduled(fixedRate = 5000)
+    public void promotion()   {
+      Date date = new Date();
+     SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+     String isDate = formatter.format(date);
+     System.out.println(isDate);
+     List<Promotion> find =  promotionService.findAll();
+     List<Product>  productList = new ArrayList<>();
+     for ( Promotion p : find) {
+         if(formatter.format(p.getStarttime()).equals(isDate) ==true){
+             List<PromotionDetails> promotionDetailsList = promotionDetaitlsService.findByPromotionId(p.getId());
+             for (PromotionDetails pd : promotionDetailsList) {
+                 Product product = pd.getProduct();
+                 product.setOutputprice(product.getOutputprice() - ((product.getOutputprice() * pd.getPromotion().getValue()) / 100));
+                 productService.create(product);
+                 System.out.println("đã giảm giá");
+             }
+         }
+     }
+    }
 
 
 }

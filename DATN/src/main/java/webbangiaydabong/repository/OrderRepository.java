@@ -43,7 +43,20 @@ public interface OrderRepository extends JpaRepository<Order, Long>{
 	List<Order> findAllByStatusAndUserName(@Param("userName") String userName,
 										   @Param("status") Integer status);
 
-	@Query("select o.create_date,sum(o.price) as sum from Order o where o.create_date = ?1  group by o.create_date order by o.create_date asc ")
-	List<Report> findByDay(Date create,Date end);
+	@Query(nativeQuery = true,
+	value = "select count(status) from order where status = 0 and create_date between ?1 and ?2\n"+
+	        "union all\n" +
+			"select count(status) from order where status = 1 and create_date between ?1 and ?2\n"+
+			"union all\n" +
+			"select count(status) from order where status = 2 and create_date between ?1 and ?2\n"+
+			"union all\n" +
+			"select count(status) from order where status = 3 and create_date between ?1 and ?2\n"+
+			"union all\n" +
+			"select count(status) from order where status = 4 and create_date between ?1 and ?2\n"+
+			"union all\n" +
+			"select count(status) from order where status = 5 and create_date between ?1 and ?2\n"+
+			"union all\n" +
+			"select count(status) from order where status = 7 and create_date between ?1 and ?2\n")
+	List<Integer> statistical(Date createDate, Date endDate);
 
 }
