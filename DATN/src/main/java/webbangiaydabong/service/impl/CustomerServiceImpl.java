@@ -53,4 +53,13 @@ public class CustomerServiceImpl implements CustomerService {
         }
         return null;
     }
+
+    @Override
+    public CustomerDto getbyid(Long id) {
+        if(id!=null){
+         CustomerDto dto=  new CustomerDto(customerRepository.findById(id).get());
+         return dto;
+        }
+        return null;
+    }
 }

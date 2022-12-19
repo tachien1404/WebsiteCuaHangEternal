@@ -50,18 +50,9 @@ public class Product {
 	@ManyToOne
 	@JoinColumn(name = "hang_id")
 	private Brand hang;
-
-
 	@JsonIgnore
 	@OneToMany(mappedBy = "product")
 	private List<S_C_Details> danhSachSizeMau;
-
-//	@JsonIgnore
-//	@OneToMany(mappedBy = "product")
-//	private List<ColorDetail> danhSachMau;
-////	@JsonIgnore
-////	@OneToMany(mappedBy = "size")
-////	private List<SizeDetail> danhSachSize;
 	@JsonIgnore
 	@OneToMany(mappedBy = "product")
 	private List<Image> danhSachAnh;
