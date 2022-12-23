@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,6 +20,7 @@ import webbangiaydabong.entity.OrderDetail;
 public class OrderDTO {
     private Long id;
 private  Long customer_id;
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date create_date;
     private Double price;
     private String note;

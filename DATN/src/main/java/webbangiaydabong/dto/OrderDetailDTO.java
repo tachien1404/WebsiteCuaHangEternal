@@ -3,6 +3,7 @@ package webbangiaydabong.dto;
 import java.math.BigInteger;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import webbangiaydabong.entity.OrderDetail;
@@ -16,6 +17,7 @@ public class OrderDetailDTO {
     private float price;
 
     //    @CreationTimestamp
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date createDate;
 
     private String productName;
