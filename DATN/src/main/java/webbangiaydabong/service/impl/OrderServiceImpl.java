@@ -65,7 +65,6 @@ CustomerRepository customerRepository;
     @Override
     public List<OrderDTO> getAllByStatus(Integer status) {
         return orderRepo.getAllByStatus(status);
-
     }
 
 //    @Override
@@ -138,7 +137,7 @@ return;
         if (dto.getKeyword() != null) {
             whereClause += " AND (o.account.fullname like :keyword ) ";
         }
-        whereClause +=" AND o.status NOT in(6) ";
+        whereClause +=" AND o.status NOT in(6,7) ";
         sql += whereClause + orderBy;
 
         Query q = manager.createQuery(sql, OrderDTO.class);
