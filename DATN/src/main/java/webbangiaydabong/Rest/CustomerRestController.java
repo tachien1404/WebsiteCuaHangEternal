@@ -27,6 +27,11 @@ public class CustomerRestController {
         CustomerDto customerDto=customerService.searchName(name);
         return customerDto;
     }
+    @GetMapping("/searchSdt/{sdt}")
+    public CustomerDto searchSdt(@PathVariable String sdt){
+        CustomerDto customerDto=customerService.searchSdt(sdt);
+        return customerDto;
+    }
     @GetMapping("/getByid/{id}")
     public CustomerDto getByid(@PathVariable Long id){
         CustomerDto customerDto=customerService.getbyid(id);

@@ -53,7 +53,14 @@ public class CustomerServiceImpl implements CustomerService {
         }
         return null;
     }
-
+    @Override
+    public CustomerDto searchSdt(String sdt) {
+        if(sdt!=null){
+            CustomerDto dto=customerRepository.searchSdt('%'+sdt+'%');
+            return dto;
+        }
+        return null;
+    }
     @Override
     public CustomerDto getbyid(Long id) {
         if(id!=null){
