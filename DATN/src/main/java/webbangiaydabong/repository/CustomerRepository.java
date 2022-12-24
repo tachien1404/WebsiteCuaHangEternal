@@ -10,4 +10,6 @@ import webbangiaydabong.entity.Customer;
 public interface CustomerRepository extends JpaRepository<Customer,Long> {
     @Query("select new webbangiaydabong.dto.CustomerDto(c) from Customer c where c.name like :name")
     CustomerDto searchName(String name);
+    @Query("select new webbangiaydabong.dto.CustomerDto(c) from Customer c where c.sdt like :sdt")
+    CustomerDto searchSdt(String sdt);
 }
