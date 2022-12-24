@@ -20,7 +20,7 @@ import webbangiaydabong.entity.OrderDetail;
 public class OrderDTO {
     private Long id;
 private  Long customer_id;
-    @JsonFormat(pattern="yyyy-MM-dd")
+
     private Date create_date;
     private Double price;
     private String note;
