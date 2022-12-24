@@ -11,11 +11,11 @@ import java.util.Date;
 public class salesReportDto {
     private Integer nam;//năm//là tháng luôn
     private Double revenue;//doanh thu
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+
     private Date start;//ngày bắt đầu chọn
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+
     private Date end;//ngày kt chọn
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy", timezone="GMT+0700")
     private Date ngay;//để hứng dữ liệu trả ra
 
 }
