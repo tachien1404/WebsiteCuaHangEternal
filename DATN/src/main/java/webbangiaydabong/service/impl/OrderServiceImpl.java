@@ -129,7 +129,7 @@ return;
 
         String whereClause = "where (1=1)";
 
-        String orderBy = " ORDER BY o.id ";
+        String orderBy = " ORDER BY o.id desc ";
 
         String sqlCount = "select count(entity.id) from Order as entity where (1=1)   ";
         String sql = "select new webbangiaydabong.dto.OrderDTO(o,true) from Order o  ";
