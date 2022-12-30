@@ -20,7 +20,7 @@ public class OrderTimeLineRestController {
     @PostMapping ("/getby")
    public List<OrderTimeLineDTO>get(@RequestBody OrderTimeLineDTO dto){
         Long orderid=dto.getOrder_id();
-        Long accountId=dto.getAccount_id();
-        return orderTimeLineService.getBy(orderid,accountId);
+        String accountname=dto.getAccount_name();
+        return orderTimeLineService.getBy(orderid,accountname);
     }
 }

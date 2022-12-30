@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface OrderTimeLineService {
     OrderTimeLineDTO save(OrderTimeLineDTO dto);
-    List<OrderTimeLineDTO>getBy(Long order_id,Long account_id);
+    List<OrderTimeLineDTO>getBy(Long order_id,String accountname);
 }

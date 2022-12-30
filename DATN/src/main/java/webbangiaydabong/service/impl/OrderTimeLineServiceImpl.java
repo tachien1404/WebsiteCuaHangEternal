@@ -22,6 +22,7 @@ public class OrderTimeLineServiceImpl implements OrderTimeLineService {
     OrderRepository orderRepository;
     @Autowired
     AccountRepository accountRepository;
+
     @Override
     public OrderTimeLineDTO save(OrderTimeLineDTO dto) {
         OrderTimeLine entity=null;
@@ -41,8 +42,8 @@ public class OrderTimeLineServiceImpl implements OrderTimeLineService {
             Order o=orderRepository.findById(dto.getOrder_id()).get();
             entity.setOrder(o);
         }
-        if(dto.getAccount_id()!=null){
-            Account a=accountRepository.findById(dto.getAccount_id()).get();
+        if(dto.getAccount_name()!=null){
+            Account a=accountRepository.findByUsername(dto.getAccount_name());
             entity.setAccount(a);
         }
         entity.setDescription(dto.getDescription());
@@ -52,7 +53,9 @@ public class OrderTimeLineServiceImpl implements OrderTimeLineService {
     }
 
     @Override
-    public List<OrderTimeLineDTO> getBy(Long order_id, Long account_id) {
+    public List<OrderTimeLineDTO> getBy(Long order_id, String account_name) {
+        Account a=accountRepository.findByUsername(account_name);
+        Long account_id=a.getId();
         List<OrderTimeLineDTO>getByOvsA=orderTimeLineRepository.getByOrderIdAndAccountId(order_id,account_id);
         return getByOvsA;
     }
