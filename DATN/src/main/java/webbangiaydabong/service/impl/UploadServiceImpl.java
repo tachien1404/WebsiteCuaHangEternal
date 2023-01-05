@@ -3,10 +3,7 @@ package webbangiaydabong.service.impl;
 import javax.servlet.ServletContext;
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,17 +18,12 @@ import org.springframework.web.multipart.MultipartFile;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 
-import webbangiaydabong.dto.BrandDTO;
-import webbangiaydabong.dto.CategoryDTO;
-import webbangiaydabong.dto.ImageDTO;
 import webbangiaydabong.dto.ProductDTO;
 import webbangiaydabong.entity.Brand;
 import webbangiaydabong.entity.Category;
-import webbangiaydabong.entity.Image;
 import webbangiaydabong.entity.Product;
 import webbangiaydabong.repository.BrandRepository;
 import webbangiaydabong.repository.CategoryRepositoty;
-import webbangiaydabong.repository.ImageRepository;
 import webbangiaydabong.repository.ProductRepository;
 import webbangiaydabong.service.UploadService;
 
@@ -44,16 +36,6 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 
-import com.amazonaws.auth.AWSCredentials;
-import com.amazonaws.auth.AWSStaticCredentialsProvider;
-import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.regions.Regions;
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.amazonaws.services.s3.model.CannedAccessControlList;
-import com.amazonaws.services.s3.model.DeleteObjectRequest;
-import com.amazonaws.services.s3.model.PutObjectRequest;
-
 
 @Service
 public class UploadServiceImpl implements UploadService {
@@ -63,8 +45,6 @@ public class UploadServiceImpl implements UploadService {
     ProductRepository productRepository;
     @Autowired
     CategoryRepositoty categoryRepositoty;
-    @Autowired
-    ImageRepository imageRepository;
     @Autowired
     BrandRepository brandRepository;
 

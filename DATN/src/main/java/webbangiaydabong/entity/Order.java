@@ -41,9 +41,6 @@ public class Order {
 	@JoinColumn(name = "account_id")
 	private Account account;
 	@ManyToOne
-	@JoinColumn(name = "van_chuyen_id")
-	private VanChuyen vanChuyen;
-	@ManyToOne
 	@JoinColumn(name = "thanh_toan_id")
 	private Payment thanhToan;
 	@JsonIgnore

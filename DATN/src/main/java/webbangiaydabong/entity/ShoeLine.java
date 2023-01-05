@@ -7,22 +7,21 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name="sole")
+@Table(name="shoeLine")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Sole {
+public class ShoeLine {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private boolean isdelete;
     @JsonIgnore
-    @OneToMany(mappedBy = "sole")
+    @OneToMany(mappedBy = "shoeLine")
     private Set<Product> danhSachProduct;
 }
