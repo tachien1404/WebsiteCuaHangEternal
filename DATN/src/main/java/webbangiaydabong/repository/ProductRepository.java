@@ -10,9 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import org.springframework.data.repository.query.Param;
 import webbangiaydabong.dto.ProductDTO;
-import webbangiaydabong.entity.Brand;
-import webbangiaydabong.entity.Category;
-import webbangiaydabong.entity.Product;
+import webbangiaydabong.entity.*;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query("select p FROM Product p WHERE p.category.id=?1")
@@ -20,21 +18,21 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Query("select p FROM Product p WHERE" +
             " (lower(p.name)  like '%' ||  lower(:name) || '%' or :name is null)" +
-            " and  (p.id  = :id  or :id is null)" +
-
             " and  (p.outputprice  = :outputprice  or :outputprice is null)" +
             "and   (p.category  =:category or :category is null)" +
             "and   (p.hang  =:hang or :hang is null)" +
+            "and   (p.sole  =:sole or :sole is null)" +
+            "and   (p.shoeLine  =:shoeLine or :shoeLine is null)" +
             "and  p.delete = true")
     Page<Product> findByKey(
             Pageable pageable,
             @Param("name") String name,
-            @Param("id") Long id,
-
             @Param("outputprice") Double outputprice,
             @Param("category") Category category,
-            @Param("hang") Brand hang
-    );
+            @Param("hang") Brand hang,
+            @Param("sole") Sole sole,
+            @Param("shoeLine") ShoeLine shoeLine
+            );
 
     @Query("select p FROM Product  p WHERE p.delete =true ")
     List<Product> findByStatus();

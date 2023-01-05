@@ -9,9 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import webbangiaydabong.dto.ProductDTO;
-import webbangiaydabong.entity.Brand;
-import webbangiaydabong.entity.Category;
-import webbangiaydabong.entity.Product;
+import webbangiaydabong.entity.*;
 import webbangiaydabong.repository.ProductRepository;
 import webbangiaydabong.service.ProductService;
 @Service
@@ -51,8 +49,8 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public Page<Product> findByKey(Pageable pageable, String name,Long id,  Double outputprice, Category category, Brand hang) {
-		return productRepo.findByKey(pageable, name,id,outputprice, category, hang);
+	public Page<Product> findByKey(Pageable pageable, String name, Double outputprice, Category category, Brand hang, Sole sole, ShoeLine shoeLine) {
+		return productRepo.findByKey(pageable, name, outputprice, category, hang, sole, shoeLine);
 	}
 
 	@Override

@@ -48,6 +48,9 @@ public class ProductRestController {
     @Autowired
     SoleService soleService;
 
+    @Autowired
+    ShoeLineService shoeLineService;
+
 
 
     @GetMapping()
@@ -64,7 +67,6 @@ public class ProductRestController {
     public ResponseEntity<ResponseObject> create(@RequestBody Product product) {
         Date date = new Date();
         product.setCreateDate(date);
-        product.setStatus(1);
         product.setDelete(true);
         productService.create(product);
         return ResponseEntity.ok().body(new ResponseObject(HttpStatus.OK, "Thêm mới sản phẩm thành công", ""));
@@ -72,17 +74,6 @@ public class ProductRestController {
 
     @PutMapping("{id}")
     public ResponseEntity<ResponseObject> update(@PathVariable("id") Long id, @RequestBody Product product) {
-//        Product entity = new Product();
-//        entity = productService.findById(id);
-//        entity.setName(dto.getName());
-//        entity.setInportprice(dto.getInportprice());
-//        entity.setOutputprice(dto.getOutputprice());
-//        entity.setStatus(dto.getStatus());
-//        Date date = new Date();
-//        entity.setUpdatedate(date);
-//        entity.setCategory(categoryService.findById(dto.getCategory_id()));
-//        entity.setHang(brandService.findById(dto.getHang_id()));
-//        return productService.update(entity);
        try{
            Date date = new Date();
            product.setUpdatedate(date);
@@ -158,8 +149,8 @@ public class ProductRestController {
 
 			pageable = PageRequest.of(page,size,Sort.by(orders));
 			Page<Product> productPage;
-			productPage = productService.findByKey(pageable,dto.getName(),dto.getId(),
-					                              dto.getOutputprice(),dto.getCategory(),dto.getHang());
+			productPage = productService.findByKey(pageable,dto.getName(), dto.getOutputprice(),
+                    dto.getCategory(),dto.getHang(),dto.getSole(), dto.getShoeLine());
 			return ResponseEntity.status(HttpStatus.OK).body(
 					new ResponseObject(HttpStatus.OK,"Tìm thấy thành công",productPage)
 			);
@@ -197,7 +188,10 @@ public class ProductRestController {
         return soleService.findAllActice();
     }
 
-   
+    @GetMapping("/getAllShoeLine")
+    public List<ShoeLine> getAllShoeLineActive() {
+        return shoeLineService.findAllActivce();
+    }
 
     @GetMapping("/top/{top}")
     public List<Product> findTop(@PathVariable("top") Integer top){

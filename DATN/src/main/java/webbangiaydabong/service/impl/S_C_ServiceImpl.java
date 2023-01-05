@@ -58,7 +58,7 @@ public class S_C_ServiceImpl implements S_C_DetailService {
     }
 
     @Override
-    public List<S_C_Details> findQuantity(Product product, size size, Color mau, Sole sole) {
-        return repo.findQuantity(product, size, mau,sole);
+    public List<S_C_Details> findQuantity(Product product, size size, Color mau) {
+        return repo.findQuantity(product, size, mau);
     }
 }

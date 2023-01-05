@@ -30,12 +30,8 @@ public class Product {
 	private Long id;
 	private String name;
 	private String photo;
-
-
 	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date createDate;// ngày tạo
-
-
 	private float outputprice;// giá xuất
 	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date updatedate;// ngày sửa sẳn phẩm
@@ -50,14 +46,16 @@ public class Product {
 	@ManyToOne
 	@JoinColumn(name = "hang_id")
 	private Brand hang;
+	@ManyToOne
+	@JoinColumn(name = "sole_id")
+	private Sole sole;
+	@ManyToOne
+	@JoinColumn(name = "shoeLine_id")
+	private ShoeLine shoeLine;
 	@JsonIgnore
 	@OneToMany(mappedBy = "product")
 	private List<S_C_Details> danhSachSizeMau;
 	@JsonIgnore
 	@OneToMany(mappedBy = "product")
-	private List<Image> danhSachAnh;
-	@JsonIgnore
-	@OneToMany(mappedBy = "product")
 	private List<Exchange> danhSachExchange;
-
 }

@@ -8,9 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.parameters.P;
 import webbangiaydabong.dto.ProductDTO;
-import webbangiaydabong.entity.Brand;
-import webbangiaydabong.entity.Category;
-import webbangiaydabong.entity.Product;
+import webbangiaydabong.entity.*;
 
 public interface ProductService {
 
@@ -24,10 +22,11 @@ public interface ProductService {
 
 	Page<Product> findByKey(Pageable pageable,
 							String name,
-							Long id,
 							Double outputprice,
 							Category category,
-							Brand hang);
+							Brand hang,
+							Sole sole,
+							ShoeLine shoeLine);
 
 	List<Product> findByStatus();
     List<Product> findTop(Date date);

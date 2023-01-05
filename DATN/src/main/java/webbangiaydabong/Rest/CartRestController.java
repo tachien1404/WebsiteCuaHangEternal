@@ -6,7 +6,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import webbangiaydabong.entity.Cart;
 import webbangiaydabong.entity.ResponseObject;
+import webbangiaydabong.entity.S_C_Details;
 import webbangiaydabong.service.CartService;
+import webbangiaydabong.service.S_C_DetailService;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +20,9 @@ public class CartRestController {
 
     @Autowired
     CartService cartService;
+
+    @Autowired
+    S_C_DetailService service;
 
     @GetMapping("/byUserName/{userName}")
     public ResponseEntity<ResponseObject> getAllByUserName(@PathVariable("userName") String userName){
@@ -36,9 +41,19 @@ public class CartRestController {
     @PostMapping()
     public ResponseEntity<?> create(@RequestBody Cart cart){
         System.out.println(cart);
+        int quantity = 0;
+        List<S_C_Details> list = service.findQuantity(cart.getProduct(), cart.getSize(), cart.getMau());
+        for (S_C_Details x : list) {
+            quantity += x.getQuantity();
+        }
         Cart find =cartService.findBySizeColorAndUser(cart.getProduct().getId(),cart.getSize().getId(),
                 cart.getMau().getId(),cart.getUserName());
         if(find!=null){
+           if((find.getQuantity()+ cart.getQuantity()) > quantity){
+               find.setQuantity(quantity);
+               cartService.creat(find);
+               return ResponseEntity.ok().body(new ResponseObject(HttpStatus.OK, "Đã thêm vào giỏ hàng", ""));
+           }
            find.setQuantity(find.getQuantity()+cart.getQuantity());
            cartService.creat(find);
            return ResponseEntity.ok().body(new ResponseObject(HttpStatus.OK, "Đã thêm vào giỏ hàng", ""));
@@ -63,19 +78,5 @@ public class CartRestController {
                     new ResponseObject(HttpStatus.BAD_REQUEST,
                             "Xóa giỏ hàng thất bại", ""));
         }
-    }
-
-    @PutMapping()
-    public ResponseEntity<?> update(@RequestBody Cart cart){
-        System.out.println(cart);
-        Cart find =cartService.findBySizeColorAndUser(cart.getProduct().getId(),cart.getSize().getId(),
-                cart.getMau().getId(),cart.getUserName());
-        if(find!=null){
-            find.setQuantity(cart.getQuantity());
-            cartService.creat(find);
-            return ResponseEntity.ok().body(new ResponseObject(HttpStatus.OK, "Cập nhật thành công", ""));
-        }
-        cartService.creat(cart);
-        return ResponseEntity.ok().body(new ResponseObject(HttpStatus.OK, "Cập nhật thất bại", ""));
     }
 }
