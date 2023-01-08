@@ -49,9 +49,9 @@ public class OrderRestController {
 		orderService.updatetrangthai(id,dto);
 	}
 	@RequestMapping(value = "/search-by-page", method = RequestMethod.POST)
-	public ResponseEntity<Page<OrderDTO>> searchByPage(@RequestBody SearchDto dto) {
-		Page<OrderDTO> result = orderService.searchByPage(dto);
-		return new ResponseEntity<>(result, HttpStatus.OK);
+	public List<OrderDTO> searchByPage(@RequestBody SearchDto dto) {
+		List<OrderDTO> searchByPage = orderService.searchByPage(dto);
+		return searchByPage;
 	}
 	@GetMapping("/getOrderId/{id}")
 	public List<OrderDetailDTO> get(@PathVariable Long id){

@@ -31,6 +31,6 @@ public interface ProductService {
 
 	List<Product> findByStatus();
     List<Product> findTop(Date date);
-    List<ProductDTO>serchName(String name);
+    List<ProductDTO>serchName(ProductDTO dto);
 
 }

@@ -14,7 +14,8 @@ public interface CustommerInfoServie {
 
     CustommerInfo findById(Long id);
 
-    CustommerInfoDTO CRUD(CustommerInfoDTO CustomerIn);
+    CustommerInfoDTO edit(CustommerInfoDTO CustomerIn);
+
 
     List<CustommerInfo> findAllByAccount(String userName);
 

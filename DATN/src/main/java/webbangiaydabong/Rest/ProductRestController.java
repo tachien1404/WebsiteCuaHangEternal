@@ -224,10 +224,10 @@ public class ProductRestController {
         
     }
 
-    @GetMapping("/serchName/{name}")
-    public List<ProductDTO> serch(@PathVariable String name){
+    @PostMapping ("/serchName")
+    public List<ProductDTO> serch(@RequestBody ProductDTO dto){
 
-        return productService.serchName(name);
+        return productService.serchName(dto);
     }
 
 }
