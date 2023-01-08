@@ -26,22 +26,30 @@ public class CustommerInfoServiceImpl implements CustommerInfoServie {
 	}
 
 	@Override
-	public CustommerInfoDTO CRUD(CustommerInfoDTO CustomerIn) {
+	public CustommerInfoDTO edit(CustommerInfoDTO dto) {
 		CustommerInfo entity = null;
-		if (CustomerIn.getId()!=null) {
-			entity = Cusrepo.getOne(CustomerIn.getId());
+		if (dto.getId()!=null) {
+			entity = Cusrepo.findById(dto.getId()).get();
 		}if (entity ==null) {
 			entity = new CustommerInfo();
 		}
-		entity.setAddress(CustomerIn.getAddress());
-		entity.setName(CustomerIn.getName());
-		entity.setSdt(CustomerIn.getSdt());
+		if(dto.getAddress()!=null){
+			entity.setAddress(dto.getAddress());
+		}
+		if(dto.getName()!=null){
+			entity.setName(dto.getName());
+		}
+		if(dto.getSdt()!=null){
+			entity.setSdt(dto.getSdt());
+		}
+		if(dto.getAccount_id()!=null){
+			Account a=acountepo.findById(dto.getAccount_id()).get();
+		}
 		
-		Account acount = acountepo.getOne(CustomerIn.getAccount_id());
-		entity.setAccount(acount);
+
 		
 		 Cusrepo.save(entity);
-		 return CustomerIn;
+		 return dto;
 	}
 
 	@Override

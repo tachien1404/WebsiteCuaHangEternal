@@ -8,6 +8,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import webbangiaydabong.dto.CustommerInfoDTO;
 import webbangiaydabong.dto.CustommerInfoSearch;
 import webbangiaydabong.dto.ProductSearchDTO;
 import webbangiaydabong.entity.Account;
@@ -38,7 +39,10 @@ public class CustommerIn4Controller {
     public List<CustommerInfo> findByActive(@PathVariable("userName") String userName) {
         return custommerInfoServie.findByActive(userName);
     }
-
+@PostMapping("/edit")
+public CustommerInfoDTO edit(@RequestBody CustommerInfoDTO dto){
+        return custommerInfoServie.edit(dto);
+}
     @PostMapping("{userName}")
     public ResponseEntity<?> create(@PathVariable("userName") String userName,
                                     @RequestBody CustommerInfo custommerInfo) {

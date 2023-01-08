@@ -8,13 +8,20 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import webbangiaydabong.dto.OrderDTO;
 import webbangiaydabong.dto.ProductDTO;
 import webbangiaydabong.entity.*;
 import webbangiaydabong.repository.ProductRepository;
 import webbangiaydabong.service.ProductService;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
 @Service
 public class ProductServiceImpl implements ProductService {
-
+	@PersistenceContext
+	EntityManager manager;
 	@Autowired
 	ProductRepository productRepo;
 
@@ -64,11 +71,19 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<ProductDTO> serchName(String name) {
-		if(name!=null){
-			List<ProductDTO>lstProductDTOS=productRepo.serchName('%'+name+'%');
-			return lstProductDTOS;
+	public List<ProductDTO> serchName(ProductDTO dto) {
+		String sql="select new webbangiaydabong.dto.ProductDTO(o) from Product o ";
+		String whereClause = "where (1=1)";
+		if(dto.getName().trim()!=null){
+			whereClause+=" AND o.name like :name ";
+
 		}
-		return null;
+		sql+=whereClause;
+		Query q = manager.createQuery(sql, ProductDTO.class);
+	if(dto.getName()!=null){
+		q.setParameter("name",'%'+dto.getName().trim()+'%');
+	}
+	List<ProductDTO>lstProductDTOS=q.getResultList();
+		return lstProductDTOS;
 	}
 }

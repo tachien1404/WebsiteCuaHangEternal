@@ -34,7 +34,7 @@ public class CustommerInfoRescontroller {
 	
 	@PostMapping("/save")
 	public CustommerInfoDTO Crud(@RequestBody CustommerInfoDTO dto) {
-		return Cuservice.CRUD(dto);
+		return Cuservice.edit(dto);
 	}
 	
 	

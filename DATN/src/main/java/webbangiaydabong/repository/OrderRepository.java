@@ -23,7 +23,7 @@ public interface OrderRepository extends JpaRepository<Order, Long>{
 	@Query("SELECT o FROM Order o WHERE o.account.id=?1")
 	List<Order> findByUserId(Long id);
 	@Query("select new webbangiaydabong.dto.OrderDTO(o,true) from Order o where o.status =:status")
-	List<OrderDTO> getAllByStatus(Integer status);
+	List<OrderDTO>getAllByStatus(Integer status);
 
 	@Query("select o from Order o where o.account.username=?1")
 	List<Order> findALlOrderByAccount(String userName);

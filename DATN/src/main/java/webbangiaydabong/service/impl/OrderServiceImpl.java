@@ -49,8 +49,9 @@ public class OrderServiceImpl implements OrderService {
     AccountRepository accountRepository;
     @Autowired
     S_C_Repository s_c_repository;
-@Autowired
-CustomerRepository customerRepository;
+    @Autowired
+    CustomerRepository customerRepository;
+
     @Override
     public Object finById(Long id) {
         return orderRepo.findById(id).get();
@@ -100,11 +101,11 @@ CustomerRepository customerRepository;
             Order order = orderRepo.getById(id);
             List<OrderDetail> lstOrderDetails = orderDetailRepo.findOrderDetailByOrder(id);
 
-              if (dto.getStatus() >= 0) {
+            if (dto.getStatus() >= 0) {
                 order.setStatus(dto.getStatus());
                 orderRepo.save(order);
             }
-return;
+            return;
 
         } else {
             return;
@@ -114,45 +115,39 @@ return;
     }
 
     @Override
-    public Page<OrderDTO> searchByPage(SearchDto dto) {
+    public List<OrderDTO> searchByPage(SearchDto dto) {
         if (dto == null) {
             return null;
-        }
-        int pageIndex = dto.getPageIndex();
-        int pageSize = dto.getPageSize();
-
-        if (pageIndex > 0) {
-            pageIndex--;
-        } else {
-            pageIndex = 0;
         }
 
         String whereClause = "where (1=1)";
 
         String orderBy = " ORDER BY o.id desc ";
 
-        String sqlCount = "select count(entity.id) from Order as entity where (1=1)   ";
+
         String sql = "select new webbangiaydabong.dto.OrderDTO(o,true) from Order o  ";
 
         if (dto.getKeyword() != null) {
-            whereClause += " AND (o.account.fullname like :keyword ) ";
+            whereClause += " AND o.diaChi.name like :keyword  ";
         }
-        whereClause +=" AND o.status NOT in(6,7) ";
+        if (dto.getStatus() != null) {
+            whereClause += " AND o.status=:status";
+        }
+        whereClause += " AND o.status NOT in(6) ";
         sql += whereClause + orderBy;
 
         Query q = manager.createQuery(sql, OrderDTO.class);
-        Query qCount = manager.createQuery(sqlCount);
+
         if (dto.getKeyword() != null) {
-            q.setParameter("keyword", '%'+dto.getKeyword().trim()+'%');
+            q.setParameter("keyword", '%' + dto.getKeyword().trim() + '%');
+        }
+        if (dto.getStatus() != null) {
+            q.setParameter("status", dto.getStatus());
         }
 
-        int startPosition = pageIndex * pageSize;
-        q.setFirstResult(startPosition);
-        q.setMaxResults(pageSize);
         List<OrderDTO> entities = q.getResultList();
-        long count = (long) qCount.getSingleResult();
-        Pageable pageable = PageRequest.of(pageIndex, pageSize);
-        return new PageImpl<>(entities, pageable, count);
+
+        return entities;
 
     }
 
@@ -184,18 +179,18 @@ return;
     public Order getById(Long id) {
         return orderRepo.findById(id).get();
     }
-    
+
     @Override
     public OrderDTO getOrderbyid(Long id) {
-        OrderDTO dto=orderRepo.getOrderbyid(id);
-        if(dto!=null){
-            return  dto;
+        OrderDTO dto = orderRepo.getOrderbyid(id);
+        if (dto != null) {
+            return dto;
         }
         return null;
     }
 
-    public List<Order> getByStatus(String userName,Integer status) {
-        return orderRepo.findAllByStatusAndUser(userName,status);
+    public List<Order> getByStatus(String userName, Integer status) {
+        return orderRepo.findAllByStatusAndUser(userName, status);
     }
 
     @Override
@@ -205,51 +200,51 @@ return;
 
     @Override
     public void delete(Long id) {
-        if(id!=null){
+        if (id != null) {
             orderRepo.deleteById(id);
         }
     }
 
     @Override
     public List<Integer> statistical(Date createDate, Date endDate) {
-        return orderRepo.statistical(createDate,endDate);
+        return orderRepo.statistical(createDate, endDate);
     }
 
     public OrderDTO save(Long id, OrderDTO dto) {
-        Order order=null;
-        if(dto.getId()!=null){
-            Optional<Order> optionalCustomer =orderRepo.findById(dto.getId());
-            if(optionalCustomer.isPresent()){
-                order=optionalCustomer.get();
+        Order order = null;
+        if (dto.getId() != null) {
+            Optional<Order> optionalCustomer = orderRepo.findById(dto.getId());
+            if (optionalCustomer.isPresent()) {
+                order = optionalCustomer.get();
             }
         }
-        if(order == null){
-            order=new Order();
+        if (order == null) {
+            order = new Order();
         }
-        if(dto.getPrice() !=null){
+        if (dto.getPrice() != null) {
             order.setPrice(dto.getPrice());
 
         }
-        if(dto.getNote()!=null){
+        if (dto.getNote() != null) {
             order.setNote(dto.getNote());
         }
 
-        if(dto.getStatus()>=0){
+        if (dto.getStatus() >= 0) {
             order.setStatus(dto.getStatus());
         }
-        if(dto.getKenh()>=0){
+        if (dto.getKenh() >= 0) {
             order.setKenh(dto.getKenh());
         }
-        if(dto.getAccount_id()!=null){
-            Account a=accountRepository.findById(dto.getAccount_id()).get();
+        if (dto.getAccount_id() != null) {
+            Account a = accountRepository.findById(dto.getAccount_id()).get();
             order.setAccount(a);
         }
-        if(dto.getCustomer_id()!=null){
-            Customer c=customerRepository.findById(dto.getCustomer_id()).get();
+        if (dto.getCustomer_id() != null) {
+            Customer c = customerRepository.findById(dto.getCustomer_id()).get();
             order.setCustomer(c);
         }
-       order= orderRepo.save(order);
-        return new OrderDTO( order,true);
+        order = orderRepo.save(order);
+        return new OrderDTO(order, true);
 
     }
 }
