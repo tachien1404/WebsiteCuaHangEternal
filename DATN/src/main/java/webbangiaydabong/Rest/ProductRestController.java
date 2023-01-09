@@ -74,9 +74,13 @@ public class ProductRestController {
 
     @PutMapping("{id}")
     public ResponseEntity<ResponseObject> update(@PathVariable("id") Long id, @RequestBody Product product) {
+        Product productdb = productService.findById(id);
        try{
            Date date = new Date();
            product.setUpdatedate(date);
+           if(product.getPhoto().equals("null.png")){
+               product.setPhoto(productdb.getPhoto());
+           }
            productService.update(product);
            return ResponseEntity.ok().body(new ResponseObject(HttpStatus.OK, "Cập nhật sản phẩm thành công", ""));
        } catch (Exception e){

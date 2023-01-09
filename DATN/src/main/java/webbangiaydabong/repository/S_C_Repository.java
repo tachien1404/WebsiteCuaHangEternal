@@ -15,11 +15,8 @@ public interface S_C_Repository extends JpaRepository<S_C_Details,Long> {
     @Query("select sz FROM S_C_Details sz WHERE sz.product.id =?1 and sz.size.id =?2 and sz.mau.id =?3")
     S_C_Details findBySizeColor(Long product_id, Long size_id, Long color_id);
 
-    @Query("select sz FROM S_C_Details sz WHERE sz.product.id = ?1 and sz.size.id =?2")
-    List<S_C_Details> findBySize(Long product_id, Long size_id);
-
-    @Query("select sz FROM S_C_Details sz WHERE sz.product.id = ?1 and sz.mau.id =?2")
-    List<S_C_Details> findByColor(Long product_id, Long color_id);
+    @Query("select sz FROM S_C_Details sz WHERE sz.product.id = :id")
+    Page<S_C_Details> findConfigProduct(Pageable pageable,@Param("id") Long id);
 
     @Query("select sc FROM S_C_Details sc WHERE" +
             " (sc.id  = :id  or :id is null)" +

@@ -28,13 +28,8 @@ public class S_C_ServiceImpl implements S_C_DetailService {
     }
 
     @Override
-    public List<S_C_Details> findBySize(Long productId, Long sizeId) {
-        return repo.findBySize(productId, sizeId);
-    }
-
-    @Override
-    public List<S_C_Details> findByColor(Long productId, Long colorId) {
-        return repo.findByColor(productId, colorId);
+    public Page<S_C_Details> findConfigProduct(Pageable pageable, Long productId) {
+        return repo.findConfigProduct(pageable,productId);
     }
 
     @Override
