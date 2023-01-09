@@ -68,14 +68,26 @@ public class S_C_RestController {
         return service.findBySizeColor(id, sid, cid);
     }
 
-    @GetMapping("/s")
-    public List<S_C_Details> getS(@RequestParam("product_id") Long id, @RequestParam("size_id") Long sid) {
-        return service.findBySize(id, sid);
-    }
-
-    @GetMapping("/c")
-    public List<S_C_Details> getC(@RequestParam("product_id") Long id, @RequestParam("color_id") Long cid) {
-        return service.findByColor(id, cid);
+    @PutMapping("/configProduct")
+    public ResponseEntity<ResponseObject> getConfigProduct(@RequestParam int page,
+                                              @RequestParam int size,
+                                              @RequestParam("product_id") Long id) {
+        try {
+            page = page < 0 ? 0 : page;
+//            size = size < 0 ? 5 : page;
+            Pageable pageable;
+            pageable = PageRequest.of(page, size, Sort.by("id"));
+            Page<S_C_Details> s_c_detailsPage;
+            s_c_detailsPage = service.findConfigProduct(pageable,id);
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ResponseObject(HttpStatus.OK, "Tìm thấy thành công", s_c_detailsPage)
+            );
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                    new ResponseObject(HttpStatus.BAD_REQUEST, "Không tìm thấy",
+                            ""));
+        }
     }
 
     @PostMapping()

@@ -18,7 +18,6 @@ import java.util.List;
 public class ProductSearchDTO {
     Long id;
     String name;
-    Double inportprice;
     Double outputprice;
     Category category;
     Brand hang;

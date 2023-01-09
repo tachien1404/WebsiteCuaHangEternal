@@ -11,9 +11,7 @@ public interface S_C_DetailService {
 
     S_C_Details findBySizeColor(Long productId, Long sizeId, Long colorId);
 
-    List<S_C_Details> findBySize(Long productId, Long sizeId);
-
-    List<S_C_Details> findByColor(Long productId, Long colorId);
+    Page<S_C_Details> findConfigProduct(Pageable pageable,Long productId);
 
     S_C_Details create(S_C_Details sizeColorDetails);
 
