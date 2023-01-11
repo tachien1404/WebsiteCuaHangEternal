@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import webbangiaydabong.dto.S_C_DetailDTO;
 import webbangiaydabong.entity.*;
 import webbangiaydabong.repository.S_C_Repository;
 import webbangiaydabong.service.S_C_DetailService;
@@ -60,5 +61,24 @@ public class S_C_ServiceImpl implements S_C_DetailService {
     @Override
     public List<S_C_Details> findQuantity(Product product, size size, Color mau) {
         return repo.findQuantity(product, size, mau);
+    }
+
+    @Override
+    public List<S_C_DetailDTO> congsl(List<S_C_DetailDTO> dto) {
+        for (S_C_DetailDTO x:dto){
+            S_C_Details s_c_detail=repo.findById(x.getId()).get();
+            s_c_detail.setQuantity(s_c_detail.getQuantity()+ x.getQuantity());
+            repo.save(s_c_detail);
+        }
+        return null;
+    }
+    @Override
+    public List<S_C_DetailDTO> trusl(List<S_C_DetailDTO> dto) {
+        for (S_C_DetailDTO x:dto){
+            S_C_Details s_c_detail=repo.findById(x.getId()).get();
+            s_c_detail.setQuantity(s_c_detail.getQuantity()- x.getQuantity());
+            repo.save(s_c_detail);
+        }
+        return null;
     }
 }

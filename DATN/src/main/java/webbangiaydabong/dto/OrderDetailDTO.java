@@ -41,6 +41,7 @@ public class OrderDetailDTO {
 
     public OrderDetailDTO(OrderDetail entity) {
         if (entity.getSaimau() != null) {
+            this.scId=entity.getSaimau().getId();
             if (entity.getSaimau().getSize() != null) {
                 this.sizeId = entity.getSaimau().getSize().getId();
                 this.valuesize = entity.getSaimau().getSize().getValue();
