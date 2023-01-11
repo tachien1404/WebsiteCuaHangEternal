@@ -115,7 +115,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderDTO> searchByPage(SearchDto dto) {
+    public List<OrderDTO> timkiem(SearchDto dto) {
         if (dto == null) {
             return null;
         }
@@ -133,6 +133,10 @@ public class OrderServiceImpl implements OrderService {
         if (dto.getStatus() != null) {
             whereClause += " AND o.status=:status";
         }
+
+        if(dto.getEnd()!=null&&dto.getStart()!=null){
+            whereClause+=" AND create_date BETWEEN :start AND :end";
+        }
         whereClause += " AND o.status NOT in(6) ";
         sql += whereClause + orderBy;
 
@@ -141,6 +145,43 @@ public class OrderServiceImpl implements OrderService {
         if (dto.getKeyword() != null) {
             q.setParameter("keyword", '%' + dto.getKeyword().trim() + '%');
         }
+        if (dto.getStatus() != null) {
+            q.setParameter("status", dto.getStatus());
+        }
+        if(dto.getStart()!=null){
+            q.setParameter("start", dto.getStart());
+        }
+        if(dto.getEnd()!=null){
+            q.setParameter("end", dto.getEnd());
+        }
+        List<OrderDTO> entities = q.getResultList();
+
+        return entities;
+    }
+
+    @Override
+    public List<OrderDTO> searchByPage(SearchDto dto) {
+        if (dto == null) {
+            return null;
+        }
+
+        String whereClause = "where (1=1)";
+
+        String orderBy = " ORDER BY o.id desc ";
+
+
+        String sql = "select new webbangiaydabong.dto.OrderDTO(o,true) from Order o  ";
+
+
+        if (dto.getStatus() != null) {
+            whereClause += " AND o.status=:status";
+        }
+        whereClause += " AND o.status NOT in(6) ";
+        sql += whereClause + orderBy;
+
+        Query q = manager.createQuery(sql, OrderDTO.class);
+
+
         if (dto.getStatus() != null) {
             q.setParameter("status", dto.getStatus());
         }

@@ -27,7 +27,7 @@ public interface OrderService {
 	Object finById(Long id);
 	List<Order> findByUserId(Long id);
 
-
+List<OrderDTO>timkiem(SearchDto dto);
 	List<OrderDTO>getAllByStatus(Integer status);
 	OrderDTO getOrderbyid(Long id);
 	void updatetrangthai(Long id, OrderDTO dto);

@@ -14,8 +14,8 @@ public class SearchDto {
     private int pageIndex;
     private int pageSize;
     private String keyword;
-    private Date fromDate;
-    private Date toDate;
+    private Date end;
+    private Date start;
     private Date date;
     private Integer status;
 }

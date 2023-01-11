@@ -53,6 +53,11 @@ public class OrderRestController {
 		List<OrderDTO> searchByPage = orderService.searchByPage(dto);
 		return searchByPage;
 	}
+	@RequestMapping(value = "/timkiem", method = RequestMethod.POST)
+	public List<OrderDTO> timkiem(@RequestBody SearchDto dto) {
+		List<OrderDTO> searchByPage = orderService.timkiem(dto);
+		return searchByPage;
+	}
 	@GetMapping("/getOrderId/{id}")
 	public List<OrderDetailDTO> get(@PathVariable Long id){
 		return orderService.getByOrderId(id);

@@ -164,6 +164,14 @@ public class S_C_RestController {
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ResponseObject(HttpStatus.OK, "Tìm thấy thành công",quantity ));
     }
-
-
+@PostMapping("/congsl")
+    public List<S_C_DetailDTO>congsl(@RequestBody List<S_C_DetailDTO>lstS_c_detailDTOS){
+    List<S_C_DetailDTO>congsl=service.congsl(lstS_c_detailDTOS);
+        return congsl;
+}
+    @PostMapping("/trusl")
+    public List<S_C_DetailDTO>trusl(@RequestBody List<S_C_DetailDTO>lstS_c_detailDTOS){
+        List<S_C_DetailDTO>trusl=service.trusl(lstS_c_detailDTOS);
+        return trusl;
+    }
 }
