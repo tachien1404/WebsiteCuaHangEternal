@@ -74,7 +74,7 @@ public class ProductServiceImpl implements ProductService {
 	public List<ProductDTO> serchName(ProductDTO dto) {
 		String sql="select new webbangiaydabong.dto.ProductDTO(o) from Product o ";
 		String whereClause = "where (1=1)";
-		if(dto.getName().trim()!=null){
+		if(dto.getName()!=null){
 			whereClause+=" AND o.name like :name ";
 
 		}
