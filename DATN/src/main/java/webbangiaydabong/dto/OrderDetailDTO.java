@@ -38,10 +38,11 @@ public class OrderDetailDTO {
     private Long colorId;
     private int valuesize;
     private String namecolor;
-
+private int quantitysaimau;
     public OrderDetailDTO(OrderDetail entity) {
         if (entity.getSaimau() != null) {
             this.scId=entity.getSaimau().getId();
+            this.quantitysaimau=entity.getSaimau().getQuantity();
             if (entity.getSaimau().getSize() != null) {
                 this.sizeId = entity.getSaimau().getSize().getId();
                 this.valuesize = entity.getSaimau().getSize().getValue();
