@@ -25,12 +25,12 @@ List<S_C_DetailDTO>congsl(List<S_C_DetailDTO>dto);
     Page<S_C_Details> findByKey(Pageable pageable,
                                 Long id,
                                 Product product,
-                                size size,
+                                Size size,
                                 Color mau,
                                 Integer quantity,
                                 Integer status);
 
     List<S_C_Details> findQuantity(Product product,
-                                   size size,
+                                   Size size,
                                    Color mau);
 }

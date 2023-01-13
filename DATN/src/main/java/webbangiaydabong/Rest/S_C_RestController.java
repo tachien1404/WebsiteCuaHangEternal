@@ -53,7 +53,7 @@ public class S_C_RestController {
     }
 
     @GetMapping("/getAllSize")
-    public List<size> getAllSize() {
+    public List<Size> getAllSize() {
         return sizeService.findAll();
     }
 

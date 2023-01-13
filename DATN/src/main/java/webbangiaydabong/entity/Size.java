@@ -20,7 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class size {
+public class Size {
 @Id
 @GeneratedValue(strategy = GenerationType.IDENTITY)
 private Long id;

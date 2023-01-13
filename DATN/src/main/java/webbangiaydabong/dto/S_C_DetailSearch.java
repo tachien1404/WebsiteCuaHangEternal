@@ -5,7 +5,7 @@ import lombok.experimental.FieldDefaults;
 import webbangiaydabong.dto.functiondto.SortByValue;
 import webbangiaydabong.entity.Color;
 import webbangiaydabong.entity.Product;
-import webbangiaydabong.entity.size;
+import webbangiaydabong.entity.Size;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ import java.util.List;
 public class S_C_DetailSearch {
     Long id;
     Product product;
-    size size;
+    Size size;
     Color mau;
     private Integer quantity;
     private Integer status;

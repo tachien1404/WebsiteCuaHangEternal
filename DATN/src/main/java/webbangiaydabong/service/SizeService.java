@@ -1,14 +1,16 @@
 package webbangiaydabong.service;
 
 import webbangiaydabong.dto.SizeDTO;
-import webbangiaydabong.entity.size;
+import webbangiaydabong.entity.Size;
 
 import java.util.List;
 
 public interface SizeService {
-    size findById(Long id);
-    List<size> findAll();
+    Size findById(Long id);
+    List<Size> findAll();
     boolean checkvalue(Integer value);
-    SizeDTO save(SizeDTO dto);
+    Size save(SizeDTO dto);
+    Size update(long id, SizeDTO dto);
+    void delete(long id);
 
 }
