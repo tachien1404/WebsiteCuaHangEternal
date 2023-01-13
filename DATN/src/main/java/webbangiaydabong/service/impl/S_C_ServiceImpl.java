@@ -49,12 +49,12 @@ public class S_C_ServiceImpl implements S_C_DetailService {
     }
 
     @Override
-    public Page<S_C_Details> findByKey(Pageable pageable, Long id, Product product, size size, Color mau, Integer quantity, Integer status) {
+    public Page<S_C_Details> findByKey(Pageable pageable, Long id, Product product, Size size, Color mau, Integer quantity, Integer status) {
         return repo.findByKey(pageable, id, product, size, mau, quantity, status);
     }
 
     @Override
-    public List<S_C_Details> findQuantity(Product product, size size, Color mau) {
+    public List<S_C_Details> findQuantity(Product product, Size size, Color mau) {
         return repo.findQuantity(product, size, mau);
     }
 

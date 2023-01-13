@@ -23,7 +23,7 @@ public class Cart {
     private Product product;
     @ManyToOne
     @JoinColumn(name="size_id")
-    private size size;
+    private Size size;
     @ManyToOne
     @JoinColumn(name = "color_id")
     private Color mau;

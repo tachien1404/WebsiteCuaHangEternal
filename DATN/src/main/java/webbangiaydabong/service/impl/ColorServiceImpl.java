@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import webbangiaydabong.dto.ColorDTO;
 import webbangiaydabong.dto.SizeDTO;
 import webbangiaydabong.entity.Color;
-import webbangiaydabong.entity.size;
+import webbangiaydabong.entity.Size;
 import webbangiaydabong.repository.ColorRepository;
 import webbangiaydabong.service.ColorService;
 

@@ -178,7 +178,7 @@ public class ProductRestController {
     }
 
     @GetMapping("/getAllSize")
-    public List<size> getAllSize(){
+    public List<Size> getAllSize(){
         return sizeService.findAll();
     }
 
