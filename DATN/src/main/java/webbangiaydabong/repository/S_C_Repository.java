@@ -30,7 +30,7 @@ public interface S_C_Repository extends JpaRepository<S_C_Details,Long> {
             Pageable pageable,
             @Param("id") Long id,
             @Param("product") Product product,
-            @Param("size") size size,
+            @Param("size") Size size,
             @Param("mau") Color mau,
             @Param("quantity") Integer quantity,
             @Param("status") Integer status
@@ -41,7 +41,7 @@ public interface S_C_Repository extends JpaRepository<S_C_Details,Long> {
             "and   (sc.size  =:size or :size is null)"+
             "and   (sc.mau  =:mau or :mau is null)")
     List<S_C_Details> findQuantity(  @Param("product") Product product,
-                                     @Param("size") size size,
+                                     @Param("size") Size size,
                                      @Param("mau") Color mau);
 
 

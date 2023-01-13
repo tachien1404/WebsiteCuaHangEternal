@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;webbangiaydabong.entity.size&apos; to &apos;Size&apos;&#x0D;&#x0A;- Original project: &apos;DATN&apos;&#x0D;&#x0A;- Original element: &apos;webbangiaydabong.entity.size&apos;&#x0D;&#x0A;- Renamed element: &apos;webbangiaydabong.entity.Size&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;size&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;webbangiaydabong.entity{size.java[size" matchStrategy="1" name="Size" qualified="false" references="true" similarDeclarations="false" stamp="1673591880880" textual="false" version="1.0"/>
+</session>
