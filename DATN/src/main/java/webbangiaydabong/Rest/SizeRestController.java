@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,9 +15,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import webbangiaydabong.dto.SizeDTO;
+import webbangiaydabong.entity.Color;
 import webbangiaydabong.entity.Size;
 import webbangiaydabong.service.SizeService;
 
@@ -57,8 +60,9 @@ public class SizeRestController {
 	}
 	
 	@GetMapping()
-	public ResponseEntity<?> getAll() {
-		List<Size> sizes = sizeService.findAll();
+	public ResponseEntity<?> getAll(@RequestParam("page") int page,
+									@RequestParam("size") int size) {
+		Page<Size> sizes = sizeService.findAlls(page, size);
 		if (sizes.isEmpty()) {
 			return ResponseEntity.badRequest().build();
 		}
@@ -73,4 +77,15 @@ public class SizeRestController {
 		}
 		return new ResponseEntity<>(color, HttpStatus.OK);
 	}
+	
+	@GetMapping("/search")
+	public ResponseEntity<?> search(@RequestParam("keyword") String keyword){
+		List<Size> sizes = sizeService.search(keyword);
+		if (sizes.isEmpty()) {
+			return ResponseEntity.badRequest().build();
+		}
+		return new ResponseEntity<>(sizes, HttpStatus.OK);
+	} 
+	
+	
 }

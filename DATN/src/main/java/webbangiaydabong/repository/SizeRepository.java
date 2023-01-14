@@ -1,5 +1,9 @@
 package webbangiaydabong.repository;
 
+import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import org.springframework.data.jpa.repository.Query;
@@ -9,4 +13,8 @@ import webbangiaydabong.entity.Size;
 public interface SizeRepository extends JpaRepository<Size, Long>{
 @Query(value = "SELECT count(size.id) FROM size WHERE value=:value",nativeQuery = true)
 Integer countvalue(Integer value);
+
+Page<Size> getPage(Pageable pageable);
+
+List<Size> findByValueLike(String keyword);
 }
