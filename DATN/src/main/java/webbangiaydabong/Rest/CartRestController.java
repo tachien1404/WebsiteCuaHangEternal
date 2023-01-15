@@ -79,4 +79,10 @@ public class CartRestController {
                             "Xóa giỏ hàng thất bại", ""));
         }
     }
+
+    @PutMapping()
+    public Cart update(@RequestBody Cart cart){
+      return cartService.creat(cart);
+    }
+
 }
