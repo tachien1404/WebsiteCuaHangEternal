@@ -234,4 +234,18 @@ public class OrderRestController {
 							"Thất bại", ""));
 		}
 	}
+
+	@GetMapping("/{id}")
+	public Order getById(@PathVariable Long id){
+		return orderService.getById(id);
+	}
+
+	@GetMapping("/updateOrder")
+	public Order updateOrder(@RequestParam("idOrder") Long idOrder,
+							 @RequestParam("idCustommer") Long idCustommer){
+		Order orderdb = orderService.getById(idOrder);
+		CustommerInfo custommerInfodb = custommerInfoServie.findById(idCustommer);
+		orderdb.setDiaChi(custommerInfodb);
+		return orderService.saveOder(orderdb);
+	}
 }
