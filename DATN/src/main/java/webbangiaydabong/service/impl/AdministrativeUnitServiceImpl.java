@@ -3,11 +3,15 @@ package webbangiaydabong.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import webbangiaydabong.dto.AdministrativeUnitDto;
+import webbangiaydabong.dto.OrderDTO;
 import webbangiaydabong.dto.functiondto.AdministrativeUnitImportExcel;
 import webbangiaydabong.entity.AdministrativeUnit;
 import webbangiaydabong.repository.AdministrativeUnitRepository;
 import webbangiaydabong.service.AdministrativeUnitService;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +19,8 @@ import java.util.List;
 public class AdministrativeUnitServiceImpl implements AdministrativeUnitService {
     @Autowired
     AdministrativeUnitRepository repository;
-
+    @PersistenceContext
+    EntityManager manager;
     @Override
     public List<AdministrativeUnitDto> importExcel(List<AdministrativeUnitImportExcel> dtos) {
         if (dtos != null && dtos.size() > 0) {
@@ -84,5 +89,26 @@ public class AdministrativeUnitServiceImpl implements AdministrativeUnitService 
         }
         return null;
 
+    }
+
+    @Override
+    public List<AdministrativeUnitDto> tinhhuyenxa(Long parent_id) {
+        String whereClause = " where (1=1) ";
+
+        String orderBy = " ORDER BY a.id desc ";
+        String sql = "select new webbangiaydabong.dto.AdministrativeUnitDto(a) from AdministrativeUnit a ";
+        if(parent_id==null){
+            whereClause+=" AND parent.id=null ";
+        }
+        if(parent_id!=null){
+            whereClause+=" AND parent.id =:parent_id";
+        }
+        sql+=whereClause;
+        Query q = manager.createQuery(sql, AdministrativeUnitDto.class);
+        if(parent_id!=null){
+            q.setParameter("parent_id",parent_id);
+        }
+        List<AdministrativeUnitDto>result=q.getResultList();
+        return result;
     }
 }

@@ -18,10 +18,11 @@ public class SetupdataServiceImpl implements SetUpdataService {
     CategoryService categoryService;
     @Autowired
     BrandService brandService;
-@Autowired
+    @Autowired
     ColorService colorService;
-@Autowired
+    @Autowired
     SizeService sizeService;
+
     @Override
     public void Setupdata() {
         createCategory();
@@ -29,31 +30,34 @@ public class SetupdataServiceImpl implements SetUpdataService {
         createColor();
         createSize();
     }
-private void createColor(){
-    ColorDTO dto=new ColorDTO();
-    Integer[]a={1,2,3,4};
-    for (Integer x :a){
-        dto.setValue(x);
-        if(colorService.checkvalue(dto.getValue())==false){
-            colorService.save(dto);
+
+    private void createColor() {
+        ColorDTO dto = new ColorDTO();
+        Integer[] a = {1, 2, 3, 4};
+        for (Integer x : a) {
+            dto.setValue(x);
+            if (colorService.checkvalue(dto.getValue()) == false) {
+                colorService.save(dto);
+            }
         }
+
     }
 
-}
-    private void createSize(){
-       SizeDTO dto=new SizeDTO();
-        Integer[]a={38,39,40,41,42,43,44};
-        for (Integer x :a){
+    private void createSize() {
+        SizeDTO dto = new SizeDTO();
+        Integer[] a = {38, 39, 40, 41, 42, 43, 44};
+        for (Integer x : a) {
             dto.setValue(x);
-            if(sizeService.checkvalue(dto.getValue())==false){
+            if (sizeService.checkvalue(dto.getValue()) == false) {
                 sizeService.save(dto);
             }
         }
 
     }
+
     private void createCategory() {
         CategoryDTO dto = new CategoryDTO();
-        String[] a = {"Giay co nhan tao", "Giay co tu nhien", "Giay futSan"};
+        String[] a = {"Giày sân cỏ nhân tạo", "Giày sân cỏ tự nhiên", "Giày sân fusal","Giày 3 sọc"};
         for (String x : a) {
             dto.setName(x);
             if (categoryService.checkName(dto.getName()) == false) {
@@ -65,7 +69,7 @@ private void createColor(){
 
     private void createBrand() {
         BrandDTO dto = new BrandDTO();
-        String[] a = {"Nike", "Addidass", "FUMA", "ASICS", "KAMITO", "MIZUNO", "THUONG DINH", "BA SOC"};
+        String[] a = {"Nike", "Adidas", "FUMA", "WIKA", "KAMITO", "MIZUNO"};
         for (String x : a) {
             dto.setName(x);
             if (brandService.checkName(dto.getName()) == false) {
