@@ -1,9 +1,17 @@
 package webbangiaydabong.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import webbangiaydabong.entity.AdministrativeUnit;
 
 import java.util.ArrayList;
 import java.util.List;
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 
 public class AdministrativeUnitDto {
     private Long id;
@@ -15,9 +23,7 @@ public class AdministrativeUnitDto {
     private Long parentId;
     private String parentName;
     private String parentCode;
-    public AdministrativeUnitDto() {
-        super();
-    }
+
 
     public AdministrativeUnitDto(AdministrativeUnit entity) {
         this.id = entity.getId();

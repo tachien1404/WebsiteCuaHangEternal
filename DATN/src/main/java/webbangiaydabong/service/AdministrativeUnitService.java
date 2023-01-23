@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface AdministrativeUnitService {
     List<AdministrativeUnitDto> importExcel(List<AdministrativeUnitImportExcel> dtos);
+    List<AdministrativeUnitDto>tinhhuyenxa(Long parent_id);
 }
