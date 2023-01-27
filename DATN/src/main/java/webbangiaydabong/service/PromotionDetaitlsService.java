@@ -11,4 +11,6 @@ public interface PromotionDetaitlsService {
     PromotionDetails findByProduct(Long idProduct);
     List<PromotionDetails> findAll();
     List<PromotionDetails> findByPromotionId(Long id);
+    PromotionDetails save(PromotionDetails promotionDetails);
+
 }
