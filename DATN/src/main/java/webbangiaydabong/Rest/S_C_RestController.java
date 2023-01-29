@@ -11,10 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-import webbangiaydabong.dto.FindQuantity;
-import webbangiaydabong.dto.ProductSearchDTO;
-import webbangiaydabong.dto.S_C_DetailDTO;
-import webbangiaydabong.dto.S_C_DetailSearch;
+import webbangiaydabong.dto.*;
 import webbangiaydabong.dto.functiondto.SortByValue;
 import webbangiaydabong.entity.*;
 import webbangiaydabong.service.ColorService;
@@ -173,5 +170,10 @@ public class S_C_RestController {
     public List<S_C_DetailDTO>trusl(@RequestBody List<S_C_DetailDTO>lstS_c_detailDTOS){
         List<S_C_DetailDTO>trusl=service.trusl(lstS_c_detailDTOS);
         return trusl;
+    }
+    @PostMapping("/getsize")
+    public List<SizeDTO>getsize(@RequestBody S_C_DetailDTO dto){
+        List<SizeDTO>size=service.getsize(dto);
+        return size;
     }
 }

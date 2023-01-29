@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import webbangiaydabong.dto.S_C_DetailDTO;
+import webbangiaydabong.dto.SizeDTO;
 import webbangiaydabong.entity.*;
 import webbangiaydabong.repository.S_C_Repository;
 import webbangiaydabong.service.S_C_DetailService;
@@ -75,5 +76,23 @@ public class S_C_ServiceImpl implements S_C_DetailService {
             repo.save(s_c_detail);
         }
         return null;
+    }
+
+    @Override
+    public List<SizeDTO> getsize(S_C_DetailDTO dto) {
+        Long product_id = null;
+        Long mau_id=null;
+        if(dto.getProduct_id()!=null){
+            product_id=dto.getProduct_id();
+        }
+        if(dto.getColor_id()!=null){
+            mau_id=dto.getColor_id();
+        }
+        List<SizeDTO> getsize= repo.getsize(product_id,mau_id);
+       if(getsize!=null&&getsize.size()>0){
+           return getsize;
+       }else{
+           return null;
+       }
     }
 }

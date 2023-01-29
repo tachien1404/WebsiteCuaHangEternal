@@ -55,6 +55,7 @@ private int quantitysaimau;
         if(entity.getProduct()!=null){
             this.productId=entity.getProduct().getId();
             this.productName=entity.getProduct().getName();
+            this.photo=entity.getProduct().getPhoto();
             if(entity.getProduct().getCategory()!=null){
                 this.category_name=entity.getProduct().getCategory().getName();
             }
