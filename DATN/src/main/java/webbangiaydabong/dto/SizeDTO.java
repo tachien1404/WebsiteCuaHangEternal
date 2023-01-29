@@ -1,13 +1,17 @@
 package webbangiaydabong.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import webbangiaydabong.entity.Size;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class SizeDTO {
 	private Long id;
 	private Integer value;
+	public SizeDTO (Size entity){
+		this.id=entity.getId();
+		this.value=entity.getValue();
+	}
 }

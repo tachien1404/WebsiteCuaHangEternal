@@ -19,11 +19,7 @@ public class ProductDTO {
     private String brandName;
     private Long id;
     private String name;
-
-
     private Date createDate;
-
-
     private float outputprice;
     private Date updatedate;
     private int status;

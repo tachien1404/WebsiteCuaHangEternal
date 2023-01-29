@@ -3,6 +3,7 @@ package webbangiaydabong.service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import webbangiaydabong.dto.S_C_DetailDTO;
+import webbangiaydabong.dto.SizeDTO;
 import webbangiaydabong.entity.*;
 
 import java.util.List;
@@ -33,4 +34,5 @@ List<S_C_DetailDTO>congsl(List<S_C_DetailDTO>dto);
     List<S_C_Details> findQuantity(Product product,
                                    Size size,
                                    Color mau);
+    List<SizeDTO>getsize(S_C_DetailDTO dto);
 }

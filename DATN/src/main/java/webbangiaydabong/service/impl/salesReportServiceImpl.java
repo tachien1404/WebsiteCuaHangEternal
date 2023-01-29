@@ -25,6 +25,7 @@ public class salesReportServiceImpl implements salesReportService {
     public List<salesReportDto> gettat() {
         String sql = "Select Year(create_date) as 'nam', Sum(price) as 'revenue'\n" +
                 "FROM `order`\n" +
+                "WHERE `status`=3\n"+
                 "Group by Year(create_date)\n" +
                 "order BY Year(create_date) ";
         Query query = manager.createNativeQuery(sql).unwrap(org.hibernate.query.Query.class).setResultTransformer(new AliasToBeanResultTransformer(salesReportDto.class));
@@ -36,7 +37,7 @@ public class salesReportServiceImpl implements salesReportService {
     public List<salesReportDto> gettheoday(salesReportDto dto) {
         String sql = "Select create_date as 'ngay', sum(price) as 'revenue'\n" +
                 "FROM `order`\n" +
-                "WHERE create_date BETWEEN  :start AND :end AND `status` NOT IN (6)\n" +
+                "WHERE create_date BETWEEN  :start AND :end AND `status`=3\n" +
                 "Group by create_date\n" +
                 "order BY create_date ";
 
@@ -54,7 +55,7 @@ public class salesReportServiceImpl implements salesReportService {
     public List<salesReportDto> gettheothang(salesReportDto dto) {
         String sql = "Select month(create_date) as 'nam', sum(price) as 'revenue'\n" +
                 " FROM `order`\n" +
-                " WHERE create_date BETWEEN  :start AND :end AND `status` NOT IN (6)\n" +
+                " WHERE create_date BETWEEN  :start AND :end AND `status`=3\n" +
                 " Group by month(create_date)\n" +
                 " order BY month(create_date)";
 

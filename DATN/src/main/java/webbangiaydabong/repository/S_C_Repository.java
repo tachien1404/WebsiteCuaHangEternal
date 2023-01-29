@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.relational.core.sql.In;
 import org.springframework.data.repository.query.Param;
+import webbangiaydabong.dto.SizeDTO;
 import webbangiaydabong.entity.*;
 
 import java.util.List;
@@ -46,5 +47,7 @@ public interface S_C_Repository extends JpaRepository<S_C_Details,Long> {
 
 	void deleteAllBySizeId(long id);
 
-
+//querr tuwf p vs c ra s
+    @Query("select new webbangiaydabong.dto.SizeDTO(s.size) from S_C_Details s where s.product.id =:product_id and s.mau.id=:mau_id and s.quantity>0")
+    List<SizeDTO>getsize(Long product_id,Long mau_id);
 }
