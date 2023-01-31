@@ -128,7 +128,7 @@ public class OrderServiceImpl implements OrderService {
         String sql = "select new webbangiaydabong.dto.OrderDTO(o,true) from Order o  ";
 
         if (dto.getKeyword() != null) {
-            whereClause += " AND o.diaChi.name like :keyword  ";
+            whereClause += " AND o.diaChi.sdt like :keyword  ";
         }
         if (dto.getStatus() != null) {
             whereClause += " AND o.status=:status";

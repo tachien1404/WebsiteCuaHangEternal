@@ -12,6 +12,9 @@ import webbangiaydabong.service.salesReportService;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -25,7 +28,7 @@ public class salesReportServiceImpl implements salesReportService {
     public List<salesReportDto> gettat() {
         String sql = "Select Year(create_date) as 'nam', Sum(price) as 'revenue'\n" +
                 "FROM `order`\n" +
-                "WHERE `status`=3\n"+
+                "WHERE `status`=3\n" +
                 "Group by Year(create_date)\n" +
                 "order BY Year(create_date) ";
         Query query = manager.createNativeQuery(sql).unwrap(org.hibernate.query.Query.class).setResultTransformer(new AliasToBeanResultTransformer(salesReportDto.class));
@@ -33,6 +36,7 @@ public class salesReportServiceImpl implements salesReportService {
         List<salesReportDto> lsSalesReportDtos = query.getResultList();
         return lsSalesReportDtos;
     }
+
     @Override
     public List<salesReportDto> gettheoday(salesReportDto dto) {
         String sql = "Select create_date as 'ngay', sum(price) as 'revenue'\n" +
@@ -51,6 +55,7 @@ public class salesReportServiceImpl implements salesReportService {
         List<salesReportDto> lsSalesReportDtos = query.getResultList();
         return lsSalesReportDtos;
     }
+
     @Override
     public List<salesReportDto> gettheothang(salesReportDto dto) {
         String sql = "Select month(create_date) as 'nam', sum(price) as 'revenue'\n" +
@@ -69,4 +74,27 @@ public class salesReportServiceImpl implements salesReportService {
         List<salesReportDto> lsSalesReportDtos = query.getResultList();
         return lsSalesReportDtos;
     }
+
+    @Override
+    public salesReportDto thongke() {
+
+
+        String sql = "SELECT  SUM(price) AS doanhthuday,COUNT(id)AS sld\n" +
+                "FROM `order`\n" +
+                "WHERE create_date =:ngay AND `status` NOT IN(6)";
+        Query query = manager.createNativeQuery(sql).unwrap(org.hibernate.query.Query.class).setResultTransformer(new AliasToBeanResultTransformer(salesReportDto.class));
+
+        query.setParameter("ngay", java.time.LocalDate.now());
+
+        salesReportDto dto = (salesReportDto) query.getSingleResult();
+        return dto;
+    }
+
+    @Override
+    public List<Long> getsld01() {
+        List<Long> getsld01 = orderRepository.getsld01();
+        return getsld01;
+    }
+
+
 }

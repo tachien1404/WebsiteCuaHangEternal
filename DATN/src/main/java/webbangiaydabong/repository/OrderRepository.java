@@ -58,5 +58,14 @@ public interface OrderRepository extends JpaRepository<Order, Long>{
 			"union all\n" +
 			"select count(status) from order where status = 7 and create_date between ?1 and ?2\n")
 	List<Integer> statistical(Date createDate, Date endDate);
+@Query(value = "\n" +
+		"SELECT COUNT(id)\n" +
+		"FROM `order`\n" +
+		"WHERE `status`=0\n" +
+		"UNION ALL SELECT COUNT(id)\n" +
+		"FROM `order`\n" +
+		"WHERE `status`=1",nativeQuery = true)
+	List<Long> getsld01();
+
 
 }

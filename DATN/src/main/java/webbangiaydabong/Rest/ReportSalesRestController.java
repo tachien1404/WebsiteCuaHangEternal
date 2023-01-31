@@ -25,4 +25,13 @@ public class ReportSalesRestController {
     public List<salesReportDto>gettheothang(@RequestBody salesReportDto dto){
         return salesReportService.gettheothang(dto);
     }
+    @GetMapping("/doanhthuhomnay")
+    public salesReportDto doanhthuhomnay(){
+        return salesReportService.thongke();
+    }
+    @GetMapping("/sld01")
+    public List<Long> sld01(){
+        //sld chưa xác nhận và chuản bị hàng
+        return salesReportService.getsld01();
+    }
 }
