@@ -10,4 +10,7 @@ public interface salesReportService {
     List<salesReportDto> gettheoday(salesReportDto dto);
 
     List<salesReportDto> gettheothang(salesReportDto dto);
+    salesReportDto thongke();
+    List<Long> getsld01();//sld chưa xác nhận và chuẩn bịnhangf
+
 }
