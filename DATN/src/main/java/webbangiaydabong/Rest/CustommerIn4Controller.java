@@ -39,10 +39,12 @@ public class CustommerIn4Controller {
     public List<CustommerInfo> findByActive(@PathVariable("userName") String userName) {
         return custommerInfoServie.findByActive(userName);
     }
-@PostMapping("/edit")
-public CustommerInfoDTO edit(@RequestBody CustommerInfoDTO dto){
+
+    @PostMapping("/edit")
+    public CustommerInfoDTO edit(@RequestBody CustommerInfoDTO dto) {
         return custommerInfoServie.edit(dto);
-}
+    }
+
     @PostMapping("{userName}")
     public ResponseEntity<?> create(@PathVariable("userName") String userName,
                                     @RequestBody CustommerInfo custommerInfo) {
@@ -52,7 +54,7 @@ public CustommerInfoDTO edit(@RequestBody CustommerInfoDTO dto){
             custommerInfo.setActive(true);
             custommerInfo.setDeafault(false);
             custommerInfoServie.create(custommerInfo);
-            return ResponseEntity.ok().body(new ResponseObject(HttpStatus.OK, "Tạo địa chỉ liên hệ thành công","" ));
+            return ResponseEntity.ok().body(new ResponseObject(HttpStatus.OK, "Tạo địa chỉ liên hệ thành công", ""));
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
@@ -100,12 +102,12 @@ public CustommerInfoDTO edit(@RequestBody CustommerInfoDTO dto){
 
 
     @GetMapping("custommerDefault")
-    public CustommerInfo findAccountLoginByUserName(@RequestParam("userName") String userName){
+    public CustommerInfo findAccountLoginByUserName(@RequestParam("userName") String userName) {
         return custommerInfoServie.findCustommerDefalut(userName);
     }
 
     @GetMapping("findById")
-    public CustommerInfo findAccountLoginByUserName(@RequestParam("id") Long id){
+    public CustommerInfo findAccountLoginByUserName(@RequestParam("id") Long id) {
         return custommerInfoServie.findById(id);
     }
 
