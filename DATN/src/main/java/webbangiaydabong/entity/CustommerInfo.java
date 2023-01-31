@@ -14,6 +14,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
+
 @Getter
 @Setter
 @Entity
@@ -25,6 +26,10 @@ public class CustommerInfo {
 		private Long id;
 		private String sdt;
 		private String name;
+		private String city;
+		private String district;
+		private String ward;
+		private String detailAddress;
 		private String address;
 		private boolean deafault;
 		@ManyToOne
