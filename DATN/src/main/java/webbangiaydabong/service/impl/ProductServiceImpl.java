@@ -86,4 +86,10 @@ public class ProductServiceImpl implements ProductService {
 	List<ProductDTO>lstProductDTOS=q.getResultList();
 		return lstProductDTOS;
 	}
+
+	@Override
+	public List<Product> topbanchay() {
+		List<Product>topbanchay=productRepo.topbanchay();
+		return topbanchay;
+	}
 }
