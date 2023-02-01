@@ -69,7 +69,8 @@ public class OrderRestController {
 	}
 	@PostMapping("/saveAll")
 	public ResponseEntity<ResponseObject> saveAll(@RequestParam("userName") String userName,
-												 @RequestParam("idCustommer") Long idCustommer){
+												 @RequestParam("idCustommer") Long idCustommer,
+												  @RequestParam("shippingFee") String shippingFee){
 
 		List<Cart> listcart = cartService.findAllByUserName(userName);
 		Account accountdb = accountService.findByUserName(userName);
@@ -80,9 +81,10 @@ public class OrderRestController {
 			for (Cart c: listcart) {
 				price+=(c.getProduct().getOutputprice() * c.getQuantity());
 			}
-			price +=30000;
+//			price +=shippingFee;
 			order.setPrice(price);
 			order.setStatus(0);
+			order.setShippingFee(Double.parseDouble(shippingFee));
 
 			order.setAccount(accountdb);
 
@@ -159,7 +161,7 @@ public class OrderRestController {
 			Order order = new Order();
 			Date date = new Date();
 			double price =0;
-				price=(cart.getProduct().getOutputprice() * cart.getQuantity())+30000;
+				price=(cart.getProduct().getOutputprice() * cart.getQuantity());
 			order.setPrice(price);
 			order.setStatus(0);
 
