@@ -25,6 +25,8 @@ public class OrderDTO {
     private Double price;
     private String note;
     private int status;
+    private Double giamgia;
+    private Double ship;
     private Long account_id;
     private Long van_chuyen_id;
     private Long thanh_toan_id;
@@ -49,7 +51,9 @@ public class OrderDTO {
         this.price = entity.getPrice();
         this.status = entity.getStatus();
         this.note = entity.getNote();
-        this.kenh=entity.getKenh();
+        this.kenh = entity.getKenh();
+        this.giamgia = entity.getGiamgia();
+        this.ship = entity.getShippingFee();
         if (onlyVanBang && entity.getAccount() != null) {
             this.account_id = entity.getAccount().getId();
             this.name_acount = entity.getAccount().getFullname();
@@ -80,13 +84,13 @@ public class OrderDTO {
             this.nameCustomer = entity.getCustomer().getName();
             this.idCustomer = entity.getCustomer().getId();
             this.sdtCustomer = entity.getCustomer().getSdt();
-            this.addresscustomer=entity.getCustomer().getAddress();
+            this.addresscustomer = entity.getCustomer().getAddress();
         }
     }
 
     public String getKenhName() {
 
-        if (this.kenh ==0) {
+        if (this.kenh == 0) {
             return "web !";
         }
         if (this.kenh == 1) {

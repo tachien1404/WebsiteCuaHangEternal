@@ -276,6 +276,12 @@ public class OrderServiceImpl implements OrderService {
         if (dto.getKenh() >= 0) {
             order.setKenh(dto.getKenh());
         }
+        if(dto.getGiamgia()!=null){
+            order.setGiamgia(dto.getGiamgia());
+        }
+        if(dto.getShip()!=null){
+            order.setShippingFee(dto.getShip());
+        }
         if (dto.getAccount_id() != null) {
             Account a = accountRepository.findById(dto.getAccount_id()).get();
             order.setAccount(a);
