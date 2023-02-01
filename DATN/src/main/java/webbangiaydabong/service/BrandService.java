@@ -11,4 +11,6 @@ public interface BrandService {
     List<BrandDTO>getAllBrandDtos();
     List<Brand>  getAll();
     boolean checkName(String name);
+    Brand getByName(String name);
+    Brand create(Brand brand);
 }

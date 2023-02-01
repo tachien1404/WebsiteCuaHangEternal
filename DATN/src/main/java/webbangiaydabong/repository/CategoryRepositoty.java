@@ -1,5 +1,6 @@
 package webbangiaydabong.repository;
 
+import com.amazonaws.services.dynamodbv2.xspec.S;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -35,4 +36,6 @@ public interface CategoryRepositoty extends JpaRepository<Category, Long> {
 
     @Query(value = "SELECT COUNT(category.id) FROM category WHERE category.name LIKE :name", nativeQuery = true)
     Integer countName(String name);
+
+    Category getByName(String name);
 }

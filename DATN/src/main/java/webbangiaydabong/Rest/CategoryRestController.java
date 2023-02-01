@@ -13,6 +13,7 @@ import webbangiaydabong.dto.CategoryDTO;
 import webbangiaydabong.dto.CategorySearch;
 import webbangiaydabong.dto.ProductSearchDTO;
 import webbangiaydabong.dto.functiondto.SortByValue;
+import webbangiaydabong.entity.Brand;
 import webbangiaydabong.entity.Category;
 import webbangiaydabong.entity.Product;
 import webbangiaydabong.entity.ResponseObject;
@@ -115,5 +116,18 @@ public class CategoryRestController {
         }
 
 
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<ResponseObject> quickAdd(@RequestBody Category category){
+        if(categoryService.getByName(category.getName()) != null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                    new ResponseObject(HttpStatus.BAD_REQUEST,
+                            "Danh mục đã tồn tại", ""));
+        }
+        category.setDelete(true);
+        categoryService.createOrUpdate(category);
+        return ResponseEntity.ok().body(new ResponseObject(HttpStatus.OK,
+                "Tạo mới danh mục thành công",""));
     }
 }
