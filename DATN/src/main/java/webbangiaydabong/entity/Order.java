@@ -56,4 +56,6 @@ public class Order {
 	@ManyToOne
 	@JoinColumn(name = "custommer_id")
 	private Customer customer ;
+	private Double giamgia;
+
 }
