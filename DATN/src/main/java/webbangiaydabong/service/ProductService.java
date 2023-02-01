@@ -31,5 +31,5 @@ public interface ProductService {
 	List<Product> findByStatus();
     List<Product> findTop(Date date);
     List<ProductDTO>serchName(ProductDTO dto);
-
+List<Product>topbanchay();
 }

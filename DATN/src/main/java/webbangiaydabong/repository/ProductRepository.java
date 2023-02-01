@@ -32,7 +32,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             @Param("hang") Brand hang,
             @Param("sole") Sole sole,
             @Param("shoeLine") ShoeLine shoeLine
-            );
+    );
 
     @Query("select p FROM Product  p WHERE p.delete =true ")
     List<Product> findByStatus();
@@ -42,4 +42,10 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Query("select new webbangiaydabong.dto.ProductDTO(o) from Product o where o.name like :name")
     List<ProductDTO> serchName(String name);
+
+    @Query("Select  o.product \n "+
+            "from  OrderDetail  o\n" +
+            "group by o.product.name\n" +
+            "order by SUM(o.quantity) desc")
+    List<Product> topbanchay();
 }

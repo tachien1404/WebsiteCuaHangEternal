@@ -227,7 +227,11 @@ public class ProductRestController {
 
         return productService.serchName(dto);
     }
+    @GetMapping ("/topbanchay")
+    public List<Product> topbanchay(){
 
+        return productService.topbanchay();
+    }
 }
 
 
