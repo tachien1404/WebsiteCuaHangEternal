@@ -22,4 +22,5 @@ CategoryDTO saveOrUpdate(CategoryDTO dto);
 	Category createOrUpdate(Category category);
 
     boolean checkName(String name);
+    Category getByName(String name);
 }

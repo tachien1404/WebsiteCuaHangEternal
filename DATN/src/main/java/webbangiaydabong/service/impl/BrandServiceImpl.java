@@ -45,6 +45,16 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
+    public Brand getByName(String name) {
+        return brandRepository.getByName(name);
+    }
+
+    @Override
+    public Brand create(Brand brand) {
+        return brandRepository.save(brand);
+    }
+
+    @Override
     public List<BrandDTO> getAllBrandDtos() {
         return brandRepository.getAllBrand();
     }

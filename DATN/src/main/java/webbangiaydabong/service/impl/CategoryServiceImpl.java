@@ -69,6 +69,11 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
+	public Category getByName(String name) {
+		return categoryRepo.getByName(name);
+	}
+
+	@Override
 	public List<CategoryDTO> findAll() {
 		return categoryRepo.getAllCategory();
 	}
