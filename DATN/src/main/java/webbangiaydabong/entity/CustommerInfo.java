@@ -27,7 +27,9 @@ public class CustommerInfo {
 		private String sdt;
 		private String name;
 		private String city;
+		private String nameCity;
 		private String district;
+		private String nameDistrict;
 		private String ward;
 		private String detailAddress;
 		private String address;

@@ -34,6 +34,7 @@ public class Order {
 	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date create_date;// ngày tạo hóa đơn
 	private Double price;// tổng tiền
+	private Double shippingFee; // phí ship
 	private String note;
 	private int status;// 0 chưa xác nhận ,1 đã xác nhận
 	private int kenh;//đơn bán tại kênh nào
