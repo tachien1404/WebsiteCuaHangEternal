@@ -8,7 +8,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import webbangiaydabong.dto.OrderDTO;
 import webbangiaydabong.dto.ProductDTO;
 import webbangiaydabong.entity.*;
 import webbangiaydabong.repository.ProductRepository;
@@ -88,8 +87,8 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<Product> topbanchay() {
-		List<Product>topbanchay=productRepo.topbanchay();
+	public List<Object> topbanchay() {
+		List<Object>topbanchay=productRepo.topbanchay();
 		return topbanchay;
 	}
 }

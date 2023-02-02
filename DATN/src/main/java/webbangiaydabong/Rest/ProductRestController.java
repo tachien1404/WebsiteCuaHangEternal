@@ -1,12 +1,10 @@
 package webbangiaydabong.Rest;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,7 +23,7 @@ import webbangiaydabong.entity.*;
 import webbangiaydabong.service.*;
 
 @RestController
-@CrossOrigin("*" )
+@CrossOrigin("*")
 @RequestMapping("/api/public/products")
 public class ProductRestController {
     @Autowired
@@ -52,7 +50,6 @@ public class ProductRestController {
     ShoeLineService shoeLineService;
 
 
-
     @GetMapping()
     public List<Product> getAll() {
         return productService.findAll();
@@ -75,32 +72,32 @@ public class ProductRestController {
     @PutMapping("{id}")
     public ResponseEntity<ResponseObject> update(@PathVariable("id") Long id, @RequestBody Product product) {
         Product productdb = productService.findById(id);
-       try{
-           Date date = new Date();
-           product.setUpdatedate(date);
-           if(product.getPhoto().equals("null.png")){
-               product.setPhoto(productdb.getPhoto());
-           }
-           productService.update(product);
-           return ResponseEntity.ok().body(new ResponseObject(HttpStatus.OK, "Cập nhật sản phẩm thành công", ""));
-       } catch (Exception e){
-           e.printStackTrace();
-           return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-                   new ResponseObject(HttpStatus.BAD_REQUEST, "Cập nhật thất bại",
-                           ""));
-       }
+        try {
+            Date date = new Date();
+            product.setUpdatedate(date);
+            if (product.getPhoto().equals("null.png")) {
+                product.setPhoto(productdb.getPhoto());
+            }
+            productService.update(product);
+            return ResponseEntity.ok().body(new ResponseObject(HttpStatus.OK, "Cập nhật sản phẩm thành công", ""));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                    new ResponseObject(HttpStatus.BAD_REQUEST, "Cập nhật thất bại",
+                            ""));
+        }
 
     }
 
     @GetMapping("/delete/{id}")
-    public  ResponseEntity<ResponseObject> delete(@PathVariable("id") Long id) {
+    public ResponseEntity<ResponseObject> delete(@PathVariable("id") Long id) {
 //        productService.delete(id);
         try {
-            Product p =productService.findById(id);
+            Product p = productService.findById(id);
             p.setDelete(false);
             productService.update(p);
-            return ResponseEntity.ok().body(new ResponseObject(HttpStatus.OK,"Xóa thành công",""));
-        } catch (Exception e){
+            return ResponseEntity.ok().body(new ResponseObject(HttpStatus.OK, "Xóa thành công", ""));
+        } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
                     new ResponseObject(HttpStatus.BAD_REQUEST, "Xóa thất bại",
@@ -118,72 +115,74 @@ public class ProductRestController {
             uploadService.savelist(list);
             return new ResponseEntity<>("Import success!", HttpStatus.OK);
         } catch (Exception e) {
-            System.out.println(e.getMessage() );
+            System.out.println(e.getMessage());
             return new ResponseEntity<>("Import failed!", HttpStatus.BAD_REQUEST);
         }
     }
 
-	private Sort.Direction getSortDirection(String direction) {
-		if (direction.equals("asc")) {
-			return Sort.Direction.ASC;
-		} else if (direction.equals("desc")) {
-			return Sort.Direction.DESC;
-		}
-		return Sort.Direction.ASC;
-	}
+    private Sort.Direction getSortDirection(String direction) {
+        if (direction.equals("asc")) {
+            return Sort.Direction.ASC;
+        } else if (direction.equals("desc")) {
+            return Sort.Direction.DESC;
+        }
+        return Sort.Direction.ASC;
+    }
 
     @PutMapping("/sortByKey")
     public ResponseEntity<ResponseObject> sortByKey(@RequestParam int page,
                                                     @RequestParam int size,
-													@RequestBody ProductSearchDTO dto) {
-    	try {
-			page = page <0? 0:page;
-			Pageable pageable;
-			List<Sort.Order> orders = new ArrayList<>();
-			List<SortByValue> sortByValueList = dto.getSortByValues();
-			System.out.println(sortByValueList);
-			if(sortByValueList.isEmpty()){
-				orders.add(new Sort.Order(Sort.Direction.ASC,"id"){
-				});
-			}else {
-				sortByValueList.forEach(value ->{
-					orders.add(new Sort.Order(getSortDirection(value.getType()),value.getName()));
-				});
-			}
+                                                    @RequestBody ProductSearchDTO dto) {
+        try {
+            page = page < 0 ? 0 : page;
+            Pageable pageable;
+            List<Sort.Order> orders = new ArrayList<>();
+            List<SortByValue> sortByValueList = dto.getSortByValues();
+            System.out.println(sortByValueList);
+            if (sortByValueList.isEmpty()) {
+                orders.add(new Sort.Order(Sort.Direction.ASC, "id") {
+                });
+            } else {
+                sortByValueList.forEach(value -> {
+                    orders.add(new Sort.Order(getSortDirection(value.getType()), value.getName()));
+                });
+            }
 
-			pageable = PageRequest.of(page,size,Sort.by(orders));
-			Page<Product> productPage;
-			productPage = productService.findByKey(pageable,dto.getName(), dto.getOutputprice(),
-                    dto.getCategory(),dto.getHang(),dto.getSole(), dto.getShoeLine());
-			return ResponseEntity.status(HttpStatus.OK).body(
-					new ResponseObject(HttpStatus.OK,"Tìm thấy thành công",productPage)
-			);
+            pageable = PageRequest.of(page, size, Sort.by(orders));
+            Page<Product> productPage;
+            productPage = productService.findByKey(pageable, dto.getName(), dto.getOutputprice(),
+                    dto.getCategory(), dto.getHang(), dto.getSole(), dto.getShoeLine());
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ResponseObject(HttpStatus.OK, "Tìm thấy thành công", productPage)
+            );
 
-		} catch (Exception e){
-    		e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-					new ResponseObject(HttpStatus.BAD_REQUEST, "Không tìm thấy",
-							""));
-		}
-    };
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                    new ResponseObject(HttpStatus.BAD_REQUEST, "Không tìm thấy",
+                            ""));
+        }
+    }
+
+    ;
 
     @GetMapping("/getAllCategory")
-    public List<Category> getAllCategory(){
+    public List<Category> getAllCategory() {
         return categoryService.getAll();
     }
 
     @GetMapping("/getAllBrand")
-    public List<Brand> getAllBrand(){
+    public List<Brand> getAllBrand() {
         return brandService.getAll();
     }
 
     @GetMapping("/getAllSize")
-    public List<Size> getAllSize(){
+    public List<Size> getAllSize() {
         return sizeService.findAll();
     }
 
     @GetMapping("/getColor")
-    public List<Color> getColor(){
+    public List<Color> getColor() {
         return colorService.findAll();
     }
 
@@ -198,22 +197,22 @@ public class ProductRestController {
     }
 
     @GetMapping("/top/{top}")
-    public List<Product> findTop(@PathVariable("top") Integer top){
-      List<Product> productsTop = new ArrayList<>();
-      Date date = new Date();
-      List<Product> productsDb = productService.findTop(date);
-      for(int i=0;i<top;i++){
-          productsTop.add(productsDb.get(i));
-      }
-      return productsTop;
+    public List<Product> findTop(@PathVariable("top") Integer top) {
+        List<Product> productsTop = new ArrayList<>();
+        Date date = new Date();
+        List<Product> productsDb = productService.findTop(date);
+        for (int i = 0; i < top; i++) {
+            productsTop.add(productsDb.get(i));
+        }
+        return productsTop;
     }
 
     @PostMapping("/image")
-    public HttpStatus upload(@RequestParam("file") MultipartFile multipartFile){
+    public HttpStatus upload(@RequestParam("file") MultipartFile multipartFile) {
         String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
         try {
-        	System.out.println("oke");
-            uploadService.saveProduct("image",fileName, multipartFile);
+            System.out.println("oke");
+            uploadService.saveProduct("image", fileName, multipartFile);
             return HttpStatus.OK;
         } catch (IOException e) {
             e.printStackTrace();
@@ -221,14 +220,25 @@ public class ProductRestController {
         }
     }
 
-    @PostMapping ("/serchName")
-    public List<ProductDTO> serch(@RequestBody ProductDTO dto){
+    @PostMapping("/serchName")
+    public List<ProductDTO> serch(@RequestBody ProductDTO dto) {
         return productService.serchName(dto);
     }
-    @GetMapping ("/topbanchay")
-    public List<Product> topbanchay(){
 
-        return productService.topbanchay();
+    @GetMapping("/topbanchay")
+    public List<Object> topbanchay() {
+        List<Object> listBanChay = productService.topbanchay();
+        List<Object> top5BanChay = new ArrayList<>();
+        if (listBanChay.size() >= 5) {
+            for (int i = 0; i < 5; i++) {
+                top5BanChay.add(listBanChay.get(i));
+            }
+        } else {
+            for (int i = 0; i < listBanChay.size(); i++) {
+                top5BanChay.add(listBanChay.get(i));
+            }
+        }
+        return top5BanChay;
     }
 }
 
