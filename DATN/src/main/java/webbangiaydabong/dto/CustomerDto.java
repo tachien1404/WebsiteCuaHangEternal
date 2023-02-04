@@ -21,12 +21,14 @@ public class CustomerDto {
     private String address;
     private String email;
     private Set<OrderDTO> danhSachOrder;
-
+    private String nameCity;
+    private String nameDistrict;
     public CustomerDto(Customer entity) {
         this.address = entity.getAddress();
         this.sdt = entity.getSdt();
         this.name = entity.getName();
         this.id = entity.getId();
         this.email = entity.getEmail();
+
     }
 }

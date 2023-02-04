@@ -19,76 +19,108 @@ import javax.persistence.Query;
 
 @Service
 public class ProductServiceImpl implements ProductService {
-	@PersistenceContext
-	EntityManager manager;
-	@Autowired
-	ProductRepository productRepo;
+    @PersistenceContext
+    EntityManager manager;
+    @Autowired
+    ProductRepository productRepo;
 
-	@Override
-	public List<Product> findAll() {
-		return productRepo.findByStatus();
-	}
+    @Override
+    public List<Product> findAll() {
+        return productRepo.findByStatus();
+    }
 
-	@Override
-	public List<Product> findByCategoryId(String categoryId) {
-		return productRepo.finByCategoryId(categoryId);
-	}
+    @Override
+    public List<Product> findByCategoryId(String categoryId) {
+        return productRepo.finByCategoryId(categoryId);
+    }
 
-	@Override
-	public Product findById(Long id) {
-		return productRepo.findById(id).get();
-	}
+    @Override
+    public Product findById(Long id) {
+        return productRepo.findById(id).get();
+    }
 
-	@Override
-	public Product create(Product product) {
-		return productRepo.save(product);
-	}
+    @Override
+    public Product create(Product product) {
+        return productRepo.save(product);
+    }
 
-	@Override
-	public Product update(Product product) {
-		return productRepo.save(product);
-	}
+    @Override
+    public Product update(Product product) {
+        return productRepo.save(product);
+    }
 
-	@Override
-	public void delete(Long id) {
-		productRepo.deleteById(id);
-	}
+    @Override
+    public void delete(Long id) {
+        productRepo.deleteById(id);
+    }
 
-	@Override
-	public Page<Product> findByKey(Pageable pageable, String name, Double outputprice, Category category, Brand hang, Sole sole, ShoeLine shoeLine) {
-		return productRepo.findByKey(pageable, name, outputprice, category, hang, sole, shoeLine);
-	}
+    @Override
+    public Page<Product> findByKey(Pageable pageable, String name, Double outputprice, Category category, Brand hang, Sole sole, ShoeLine shoeLine) {
+        return productRepo.findByKey(pageable, name, outputprice, category, hang, sole, shoeLine);
+    }
 
-	@Override
-	public List<Product> findByStatus() {
-		return productRepo.findByStatus();
-	}
+    @Override
+    public List<Product> findByStatus() {
+        return productRepo.findByStatus();
+    }
 
-	@Override
-	public List<Product> findTop(Date date) {
-		return productRepo.findTop(date);
-	}
+    @Override
+    public List<Product> findTop(Date date) {
+        return productRepo.findTop(date);
+    }
 
-	@Override
-	public List<ProductDTO> serchName(ProductDTO dto) {
-		String sql="select new webbangiaydabong.dto.ProductDTO(o) from Product o ";
-		String whereClause = "where (1=1)";
-		if(dto.getName()!=null){
-			whereClause+=" AND o.name like :name ";
+    @Override
+    public List<ProductDTO> serchName(ProductDTO dto) {
+        String sql = "select new webbangiaydabong.dto.ProductDTO(o) from Product o ";
+        String whereClause = "where (1=1)";
+        if (dto.getName() != null) {
+            whereClause += " AND o.name like :name ";
+        }
+        if (dto.getHang_id() != null) {
+            whereClause += " AND o.hang.id=:hang_id";
+        }
+        if (dto.getCategory_id() != null) {
+            whereClause += " AND o.category.id=:category_id";
+        }
+        if (dto.getShoeLine_id() != null) {
+            whereClause += " AND o.shoeLine.id=:shoeline_id";
+        }
+        if (dto.getSole_id() != null) {
+            whereClause += " AND o.sole.id=:sole_id";
+        }
+        if (dto.getStartgia() != null&&dto.getEndgia()!=null) {
+            whereClause += " AND o.outputprice BETWEEN  :start AND :end";
+        }
+        sql += whereClause;
+        Query q = manager.createQuery(sql, ProductDTO.class);
+        if(dto.getStartgia()!=null){
+            q.setParameter("start",dto.getStartgia());
+        }
+        if(dto.getEndgia()!=null){
+            q.setParameter("end",dto.getEndgia());
+        }
+        if (dto.getName() != null) {
+            q.setParameter("name", '%' + dto.getName().trim() + '%');
+        }
+        if (dto.getCategory_id() != null) {
+            q.setParameter("category_id", dto.getCategory_id());
+        }
+        if (dto.getSole_id() != null) {
+            q.setParameter("sole_id", dto.getSole_id());
+        }
+        if (dto.getHang_id() != null) {
+            q.setParameter("hang_id", dto.getHang_id());
+        }
+        if (dto.getShoeLine_id() != null) {
+            q.setParameter("shoeline_id", dto.getShoeLine_id());
+        }
+        List<ProductDTO> lstProductDTOS = q.getResultList();
+        return lstProductDTOS;
+    }
 
-		}
-		sql+=whereClause;
-		Query q = manager.createQuery(sql, ProductDTO.class);
-	if(dto.getName()!=null){
-		q.setParameter("name",'%'+dto.getName().trim()+'%');
-	}
-	List<ProductDTO>lstProductDTOS=q.getResultList();
-		return lstProductDTOS;
-	}
-
-	@Override
-	public List<Object> topbanchay() {
-		List<Object>topbanchay=productRepo.topbanchay();
-		return topbanchay;
-	}
+    @Override
+    public List<Object> topbanchay() {
+        List<Object> topbanchay = productRepo.topbanchay();
+        return topbanchay;
+    }
 }

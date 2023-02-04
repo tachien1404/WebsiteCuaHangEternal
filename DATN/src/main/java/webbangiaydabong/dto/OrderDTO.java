@@ -97,7 +97,7 @@ public class OrderDTO {
             return "Tại quầy!";
         }
         if (this.kenh == 2) {
-            return "page!";
+            return "Giao hàng";
         }
         return null;
     }

@@ -26,7 +26,10 @@ public class ProductDTO {
     private String photo;
     private Long category_id;
     private Long hang_id;
-
+    private Long sole_id;
+    private Long shoeLine_id;
+    private Float startgia;
+    private Float endgia;
     public ProductDTO(Product entity){
         this.id=entity.getId();
         this.name= entity.getName();
