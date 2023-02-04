@@ -61,4 +61,10 @@ public class SoleServiceImpl implements SoleService {
 	public List<Sole> search(String keyword) {
 		return soleRepository.findByNameLikeAndIsdeleteFalse("%" + keyword + "%");
 	}
+
+	@Override
+	public List<Sole> getall() {
+    	return soleRepository.findAll();
+
+	}
 }

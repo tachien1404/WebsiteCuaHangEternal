@@ -14,5 +14,5 @@ public interface SoleService {
     void delete(long id);
     Page<Sole> findAll(int page, int size);
     List<Sole> search(String keyword);
-    
+    List<Sole>getall();
 }

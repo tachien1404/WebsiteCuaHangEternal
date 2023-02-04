@@ -85,4 +85,9 @@ public class SoleRestController {
 		}
 		return new ResponseEntity<>(soles, HttpStatus.OK);
 	}
+	@GetMapping("/getAll")
+	public List<Sole>getAlll(){
+		List<Sole>getall=soleService.getall();
+		return getall;
+	}
 }
