@@ -95,4 +95,14 @@ public class S_C_ServiceImpl implements S_C_DetailService {
            return null;
        }
     }
+
+    @Override
+    public List<Size> sizeAvailable(Long idProduct) {
+        return repo.sizeAvailable(idProduct);
+    }
+
+    @Override
+    public List<Color> colorAvailable(Long idProduct) {
+        return repo.colorAvailable(idProduct);
+    }
 }

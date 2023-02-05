@@ -45,7 +45,36 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Query("Select  o.product , SUM(o.quantity) \n "+
             "from  OrderDetail  o\n" +
+            "where o.product.status = 1" +
             "group by o.product.name\n" +
             "order by SUM(o.quantity) desc")
     List<Object> topbanchay();
+
+    @Query("select p FROM Product p WHERE" +
+            " (lower(p.name)  like '%' ||  lower(:name) || '%' or :name is null)" +
+            " and  (p.outputprice  >= :priceStart  or :priceStart is null)" +
+            " and  (p.outputprice  <= :priceEnd  or :priceEnd is null)" +
+            "and   (p.category  =:category or :category is null)" +
+            "and   (p.hang  =:hang or :hang is null)" +
+            "and   (p.sole  =:sole or :sole is null)" +
+            "and   (p.shoeLine  =:shoeLine or :shoeLine is null)" +
+            "and  p.status = 1" +
+            "and  p.delete = true")
+    Page<Product> findByKey2(
+            Pageable pageable,
+            @Param("name") String name,
+            @Param("priceStart") Float priceStart,
+            @Param("priceEnd") Float priceEnd,
+            @Param("category") Category category,
+            @Param("hang") Brand hang,
+            @Param("sole") Sole sole,
+            @Param("shoeLine") ShoeLine shoeLine
+    );
+
+    @Query("Select o.saimau, SUM(o.quantity) \n "+
+            "from  OrderDetail o \n" +
+            "where o.product.id=?1 \n" +
+            "group by o.saimau.mau \n" +
+            "order by SUM(o.quantity) desc")
+    List<Object> hotTrend(Long idProduct);
 }

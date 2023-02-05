@@ -91,4 +91,14 @@ public class ProductServiceImpl implements ProductService {
 		List<Object>topbanchay=productRepo.topbanchay();
 		return topbanchay;
 	}
+
+	@Override
+	public Page<Product> findByKey2(Pageable pageable, String name, Float priceStart, Float priceEnd, Category category, Brand hang, Sole sole, ShoeLine shoeLine) {
+		return productRepo.findByKey2(pageable, name, priceStart, priceEnd, category, hang, sole, shoeLine);
+	}
+
+	@Override
+	public List<Object> hotTrend(Long idProduct) {
+		return productRepo.hotTrend(idProduct);
+	}
 }

@@ -35,4 +35,7 @@ List<S_C_DetailDTO>congsl(List<S_C_DetailDTO>dto);
                                    Size size,
                                    Color mau);
     List<SizeDTO>getsize(S_C_DetailDTO dto);
+
+    List<Size> sizeAvailable(Long idProduct);
+    List<Color> colorAvailable(Long idProduct);
 }

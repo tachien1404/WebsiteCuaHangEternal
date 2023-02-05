@@ -103,5 +103,11 @@ public HttpStatus upload(@RequestParam("file") MultipartFile multipartFile){
         return HttpStatus.CONFLICT;
     }
 }
+
+	@GetMapping("findByUserName/{userName}")
+	public Account getAccountByUserName(@PathVariable("userName") String userName){
+		return accountService.findByUserName(userName);
+	}
+
 }
 
