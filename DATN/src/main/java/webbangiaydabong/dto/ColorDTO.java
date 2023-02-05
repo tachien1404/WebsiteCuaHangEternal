@@ -17,6 +17,6 @@ public class ColorDTO {
 private Long id;
 @NotNull(message = "Ten mau khong duoc de trong")
 private String name;
-private Integer value;
+private String value;
 
 }

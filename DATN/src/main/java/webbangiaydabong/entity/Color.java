@@ -25,8 +25,10 @@ public class Color {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private Integer value;//màu 1 đỏ , 2 vàng ....
-	@NotNull(message = "Ten mau khogn duoc de trong")
+	private String value;//màu 1 đỏ , 2 vàng ....
+  @NotNull(message = "Ten mau khong duoc de trong")
 	private String name;
+  private boolean isdelete;
 
 
 	@JsonIgnore
