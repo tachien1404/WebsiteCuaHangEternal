@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
@@ -23,9 +24,11 @@ public class Color {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	private Integer value;//màu 1 đỏ , 2 vàng ....
 	private String value;//màu 1 đỏ , 2 vàng ....
+  @NotNull(message = "Ten mau khong duoc de trong")
 	private String name;
-    private boolean isdelete;
+  private boolean isdelete;
 
 
 	@JsonIgnore

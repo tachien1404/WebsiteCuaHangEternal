@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -28,10 +29,13 @@ public class Product {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@NotNull(message = "Ten san pham khong duoc de trong")
 	private String name;
+	@NotNull(message = "Anh san pham khong duoc de trong")
 	private String photo;
 	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date createDate;// ngày tạo
+	@NotNull(message = "Gia san pham khong duoc de trong")
 	private float outputprice;// giá xuất
 	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date updatedate;// ngày sửa sẳn phẩm

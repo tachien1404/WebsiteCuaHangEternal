@@ -9,17 +9,24 @@ import lombok.NoArgsConstructor;
 import webbangiaydabong.entity.Account;
 import webbangiaydabong.entity.Authority;
 
+import javax.validation.constraints.NotNull;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class AccountDTO {
 	private Long id;
 	private String email;
+	@NotNull(message = "Ho ten khong duoc de trong")
 	private String fullname;
+	@NotNull(message = "Ten dang nhap khong duoc de trong")
 	private String username;
+	@NotNull(message = "Mat khau khong duoc de trong")
 	private String password;
 	private Date birthday;
+	@NotNull(message = "Dia chi khong duoc de trong")
 	private String address;
+	@NotNull(message = "So dien thoai khong duoc de trong")
 	private String sdt;
 	private String photo;
 	private boolean active;
