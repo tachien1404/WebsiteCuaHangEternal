@@ -1,5 +1,6 @@
 package webbangiaydabong.dto;
 
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 
@@ -26,14 +27,20 @@ public class ProductDTO {
     @NotNull(message = "Gia ban khong duoc de trong")
     private float outputprice;
     private Date updatedate;
-    private int status;
+    private Integer status;
     private String photo;
     private Long category_id;
     private Long hang_id;
     private Long sole_id;
+    private String soleName;
+    private String shoelineName;
     private Long shoeLine_id;
     private Float startgia;
     private Float endgia;
+  private  Long sumquantity=0L;//to
+
+
+
     public ProductDTO(Product entity){
         this.id=entity.getId();
         this.name= entity.getName();
@@ -43,6 +50,32 @@ public class ProductDTO {
         this.outputprice=entity.getOutputprice();
         this.status= entity.getStatus();
         this.updatedate=entity.getUpdatedate();
+        if(entity.getCategory()!=null){
+            this.category_id=entity.getCategory().getId();
+            this.categoryName=entity.getCategory().getName();
+        }
+        if(entity.getHang()!=null){
+            this.brandName=entity.getHang().getName();
+            this.hang_id=entity.getHang().getId();
+        }
+        if(entity.getShoeLine()!=null){
+            this.shoelineName=entity.getShoeLine().getName();
+            this.shoeLine_id=entity.getShoeLine().getId();
+        }
+        if(entity.getSole()!=null){
+            this.sole_id=entity.getSole().getId();
+            this.soleName=entity.getSole().getName();
+        }
+    }
+    public String getStatusName() {
+
+        if (this.status == 1) {
+            return "Kinh Doanh!";
+        }
+        if (this.status == 0) {
+            return "Ngừng kinh doanh!";
+        }
+        return null;
     }
     public ProductDTO(List<Product> lstProducts) {
         for (Product product : lstProducts) {

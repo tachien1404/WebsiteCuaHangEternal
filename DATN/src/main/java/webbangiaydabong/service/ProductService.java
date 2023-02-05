@@ -37,5 +37,5 @@ public interface ProductService {
     List<ProductDTO> serchName(ProductDTO dto);
 
     List<Object> topbanchay();
-
+    List<ProductDTO>locproductadmin(ProductDTO dto);
 }

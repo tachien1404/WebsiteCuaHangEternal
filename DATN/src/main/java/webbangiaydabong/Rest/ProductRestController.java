@@ -224,7 +224,10 @@ public class ProductRestController {
     public List<ProductDTO> serch(@RequestBody ProductDTO dto) {
         return productService.serchName(dto);
     }
-
+    @PostMapping("/bolocproductadmin")
+    public List<ProductDTO> bolocproductadmin(@RequestBody ProductDTO dto) {
+        return productService.locproductadmin(dto);
+    }
     @GetMapping("/topbanchay")
     public List<Object> topbanchay() {
         List<Object> listBanChay = productService.topbanchay();
