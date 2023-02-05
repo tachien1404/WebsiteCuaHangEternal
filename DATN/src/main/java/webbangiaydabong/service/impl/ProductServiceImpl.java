@@ -1,14 +1,18 @@
 package webbangiaydabong.service.impl;
 
-import java.util.Date;
-import java.util.List;
+import java.math.BigInteger;
+import java.util.*;
 
+import org.hibernate.transform.AliasToBeanResultTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.relational.core.sql.In;
 import org.springframework.stereotype.Service;
 
+import webbangiaydabong.dto.OrderDetailDTO;
 import webbangiaydabong.dto.ProductDTO;
+import webbangiaydabong.dto.S_C_DetailDTO;
 import webbangiaydabong.entity.*;
 import webbangiaydabong.repository.ProductRepository;
 import webbangiaydabong.service.ProductService;
@@ -72,7 +76,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductDTO> serchName(ProductDTO dto) {
         String sql = "select new webbangiaydabong.dto.ProductDTO(o) from Product o ";
-        String whereClause = "where (1=1)";
+        String whereClause = "where (1=1) AND o.status=1 ";
         if (dto.getName() != null) {
             whereClause += " AND o.name like :name ";
         }
@@ -88,16 +92,16 @@ public class ProductServiceImpl implements ProductService {
         if (dto.getSole_id() != null) {
             whereClause += " AND o.sole.id=:sole_id";
         }
-        if (dto.getStartgia() != null&&dto.getEndgia()!=null) {
+        if (dto.getStartgia() != null && dto.getEndgia() != null) {
             whereClause += " AND o.outputprice BETWEEN  :start AND :end";
         }
         sql += whereClause;
         Query q = manager.createQuery(sql, ProductDTO.class);
-        if(dto.getStartgia()!=null){
-            q.setParameter("start",dto.getStartgia());
+        if (dto.getStartgia() != null) {
+            q.setParameter("start", dto.getStartgia());
         }
-        if(dto.getEndgia()!=null){
-            q.setParameter("end",dto.getEndgia());
+        if (dto.getEndgia() != null) {
+            q.setParameter("end", dto.getEndgia());
         }
         if (dto.getName() != null) {
             q.setParameter("name", '%' + dto.getName().trim() + '%');
@@ -115,6 +119,81 @@ public class ProductServiceImpl implements ProductService {
             q.setParameter("shoeline_id", dto.getShoeLine_id());
         }
         List<ProductDTO> lstProductDTOS = q.getResultList();
+        return lstProductDTOS;
+    }
+
+    @Override
+    public List<ProductDTO> locproductadmin(ProductDTO dto) {
+        String sql = "select new webbangiaydabong.dto.ProductDTO(o) from Product o ";
+String oderby=" order by o.id desc";
+        String whereClause = "where (1=1)";
+        if (dto.getName() != null) {
+            whereClause += " AND o.name like :name ";
+        }
+        if (dto.getHang_id() != null) {
+            whereClause += " AND o.hang.id=:hang_id";
+        }
+        if (dto.getCategory_id() != null) {
+            whereClause += " AND o.category.id=:category_id";
+        }
+        if (dto.getShoeLine_id() != null) {
+            whereClause += " AND o.shoeLine.id=:shoeline_id";
+        }
+        if (dto.getSole_id() != null) {
+            whereClause += " AND o.sole.id=:sole_id";
+        }
+        if (dto.getStartgia() != null && dto.getEndgia() != null) {
+            whereClause += " AND o.outputprice BETWEEN  :start AND :end";
+        }
+        if(dto.getStatus()!=null){
+            whereClause +=" AND o.status =:status";
+        }
+        sql += whereClause+oderby;
+        Query q = manager.createQuery(sql, ProductDTO.class);
+
+        if (dto.getStartgia() != null) {
+            q.setParameter("start", dto.getStartgia());
+        }
+        if (dto.getEndgia() != null) {
+            q.setParameter("end", dto.getEndgia());
+        }
+        if (dto.getName() != null) {
+            q.setParameter("name", '%' + dto.getName().trim() + '%');
+        }
+        if (dto.getCategory_id() != null) {
+            q.setParameter("category_id", dto.getCategory_id());
+        }
+        if (dto.getSole_id() != null) {
+            q.setParameter("sole_id", dto.getSole_id());
+        }
+        if (dto.getHang_id() != null) {
+            q.setParameter("hang_id", dto.getHang_id());
+        }
+        if (dto.getShoeLine_id() != null) {
+            q.setParameter("shoeline_id", dto.getShoeLine_id());
+        }
+        if (dto.getStatus() != null) {
+            q.setParameter("status", dto.getStatus());
+        }
+
+        List<ProductDTO> lstProductDTOS = q.getResultList();
+        List<Object[]> lstcount = productRepo.adminproduct();
+        Map<Long, Long> map = new HashMap<>();
+        for (Object[] x : lstcount) {
+            map.put((Long) x[0], (Long) x[1]);
+        }
+        Set<Long> set = map.keySet();
+        List<ProductDTO> litcuoi = new ArrayList<>();
+        for (ProductDTO x : lstProductDTOS) {
+            for (Long y : set) {
+                if (x.getId() == y) {
+                    x.setSumquantity((Long) map.get(y));
+
+                }
+
+            }
+
+        }
         return lstProductDTOS;
     }
 

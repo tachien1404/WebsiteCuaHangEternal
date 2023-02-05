@@ -122,8 +122,6 @@ public class OrderDetaiServiceImpl implements OrderDetaiService {
                 entity.setSaimau(sc);
             }
 
-        }else{
-            return null;
         }
         if (dto.getQuantity() > 0) {
             entity.setQuantity(dto.getQuantity());
@@ -147,8 +145,9 @@ public class OrderDetaiServiceImpl implements OrderDetaiService {
         OrderDetailDTO dto = new OrderDetailDTO();
         int sumquantity = orderDetailRepo.sumquantity(orderID);
         float sumprice = orderDetailRepo.sumgia(orderID);
-        dto.setPrice(sumprice);
-        dto.setQuantity(sumquantity);
+
+            dto.setPrice(sumprice);
+            dto.setQuantity( sumquantity);
         return dto;
     }
 }
