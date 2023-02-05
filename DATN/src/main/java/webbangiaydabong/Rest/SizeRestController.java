@@ -79,8 +79,9 @@ public class SizeRestController {
 	}
 	
 	@GetMapping("/search")
-	public ResponseEntity<?> search(@RequestParam("keyword") String keyword){
-		List<Size> sizes = sizeService.search(keyword);
+	public ResponseEntity<?> search(@RequestParam("keyword") String keyword,
+			@RequestParam("status") String status){
+		List<Size> sizes = sizeService.search(keyword, status);
 		if (sizes.isEmpty()) {
 			return ResponseEntity.badRequest().build();
 		}

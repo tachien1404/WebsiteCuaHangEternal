@@ -170,7 +170,8 @@ public class AccountServiceImpl implements AccountService {
 	public List<AccountDTO> search(String keywork, String active, String role) {
 		
 		List<Account> accounts = accountRepo
-				.findByEmailLike("%" +keywork + "%");
+				.findByEmailLikeOrFullnameLikeOrUsernameLike(
+						"%" +keywork + "%", "%" +keywork + "%", "%" +keywork + "%");
 		List<AccountDTO> accountDTOs = new ArrayList<AccountDTO>();
 		for (Account account : accounts) {
 			AccountDTO accountDTO = new AccountDTO(account);

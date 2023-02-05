@@ -72,8 +72,14 @@ public class SizeServiceImpl implements SizeService {
 	}
 
 	@Override
-	public List<Size> search(String keyword) {
-		return repository.findByValueLike(Integer.parseInt(keyword));
+	public List<Size> search(String keyword, String status) {
+		if (status.equals("all")) {
+			return repository.findByValueLike(Integer.parseInt(keyword));
+		} 
+		if (status.equals("1")){
+			return repository.findByValueLikeAndIsdeleteFalse(Integer.parseInt(keyword));
+		}
+		return repository.findByValueLikeAndIsdeleteTrue(Integer.parseInt(keyword));
 	}
 
 	@Override

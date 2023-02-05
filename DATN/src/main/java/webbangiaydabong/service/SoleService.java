@@ -13,6 +13,6 @@ public interface SoleService {
     Sole update(long id, Sole sole);
     void delete(long id);
     Page<Sole> findAll(int page, int size);
-    List<Sole> search(String keyword);
+    List<Sole> search(String keyword, String status);
     
 }

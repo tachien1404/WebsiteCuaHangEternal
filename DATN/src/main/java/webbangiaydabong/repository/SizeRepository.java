@@ -19,4 +19,8 @@ Page<Size> findAll(Pageable pageable);
 List<Size> findByValueLike(Integer keyword);
 
 boolean existsByValue(int value);
+
+List<Size> findByValueLikeAndIsdeleteFalse(int parseInt);
+
+List<Size> findByValueLikeAndIsdeleteTrue(int parseInt);
 }

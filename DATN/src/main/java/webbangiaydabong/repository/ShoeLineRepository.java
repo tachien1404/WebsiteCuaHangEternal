@@ -19,4 +19,8 @@ public interface ShoeLineRepository extends JpaRepository<ShoeLine,Long> {
 	List<ShoeLine> findByNameLikeAndIsdeleteFalse(String keyword);
 	
 	boolean existsByName(String value);
+
+	List<ShoeLine> findByNameLike(String string);
+
+	List<ShoeLine> findByNameLikeAndIsdeleteTrue(String string);
 }

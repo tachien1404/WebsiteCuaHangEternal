@@ -70,8 +70,14 @@ public class ColorServiceImpl implements ColorService {
 	}
 
 	@Override
-	public List<Color> search(String keyword) {
-		return repository.findByNameLike("%" + keyword + "%");
+	public List<Color> search(String keyword, String status) {
+		if (status.equals("all")) {
+			return repository.findByNameLike("%" + keyword + "%");
+		} 
+		if (status.equals("1")){
+			return repository.findByNameLikeAndIsdeleteFalse("%" + keyword + "%");
+		}
+		return repository.findByNameLikeAndIsdeleteTrue("%" + keyword + "%");
 	}
 
 

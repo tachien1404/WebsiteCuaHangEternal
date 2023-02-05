@@ -59,7 +59,13 @@ public class SoleServiceImpl implements SoleService {
 	}
 
 	@Override
-	public List<Sole> search(String keyword) {
-		return soleRepository.findByNameLikeAndIsdeleteFalse("%" + keyword + "%");
+	public List<Sole> search(String keyword, String status) {
+		if (status.equals("all")) {
+			return soleRepository.findByNameLike("%" + keyword + "%");
+		} 
+		if (status.equals("1")){
+			return soleRepository.findByNameLikeAndIsdeleteFalse("%" + keyword + "%");
+		}
+		return soleRepository.findByNameLikeAndIsdeleteTrue("%" + keyword + "%");
 	}
 }
