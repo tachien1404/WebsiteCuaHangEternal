@@ -132,8 +132,8 @@ public class OrderDetaiServiceImpl implements OrderDetaiService {
 
     @Override
     public List<OrderDetailDTO> findByOderId(Long id) {
-        List<OrderDetailDTO>lstOrderDetailDTOS=orderDetailRepo.getByOrderId(id);
-        if(lstOrderDetailDTOS!=null&&lstOrderDetailDTOS.size()>0){
+        List<OrderDetailDTO> lstOrderDetailDTOS = orderDetailRepo.getByOrderId(id);
+        if (lstOrderDetailDTOS != null && lstOrderDetailDTOS.size() > 0) {
             return lstOrderDetailDTOS;
         }
         return null;
@@ -142,11 +142,12 @@ public class OrderDetaiServiceImpl implements OrderDetaiService {
     @Override
     public OrderDetailDTO sumgia(Long orderID) {
 
-        OrderDetailDTO dto=new OrderDetailDTO();
-      int sumquantity=orderDetailRepo.sumquantity(orderID);
-      float sumprice=orderDetailRepo.sumgia(orderID);
-      dto.setPrice(sumprice);
-dto.setQuantity(sumquantity);
+        OrderDetailDTO dto = new OrderDetailDTO();
+        int sumquantity = orderDetailRepo.sumquantity(orderID);
+        float sumprice = orderDetailRepo.sumgia(orderID);
+
+            dto.setPrice(sumprice);
+            dto.setQuantity( sumquantity);
         return dto;
     }
 }

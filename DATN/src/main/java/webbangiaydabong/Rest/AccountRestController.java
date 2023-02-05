@@ -70,26 +70,30 @@ public ResponseEntity<?> delete(@PathVariable("id") long id) {
 }
 
 @GetMapping("/")
-public ResponseEntity<?> getAll(@RequestParam("page")int page ){
-	List<Account> accounts = accountService.getAll(page);
+public ResponseEntity<?> getAll(@RequestParam("page")int page,
+		@RequestParam("size") int size){
+	List<AccountDTO> accounts = accountService.getAll(page, size);
 	return new ResponseEntity<>(accounts, HttpStatus.OK);
 }
 
 @GetMapping("/{id}")
 public ResponseEntity<?> get(@PathVariable("id") long id){
-	Account account = accountService.get(id);
+	AccountDTO account = accountService.get(id);
 	return new ResponseEntity<>(account, HttpStatus.OK);
 }
 
 @GetMapping("/search")
-public ResponseEntity<?> search(@RequestParam("email") String keywork){
-	List<Account> accounts = accountService.search(keywork);
+public ResponseEntity<?> search(@RequestParam("email") String keywork,
+		@RequestParam("active") String active,
+		@RequestParam("role") String role){
+	List<AccountDTO> accounts = accountService.search(keywork, active, role);
 	return new ResponseEntity<>(accounts, HttpStatus.OK);
 } 
 
 @GetMapping("/size")
-public ResponseEntity<?> get(){
-	return new ResponseEntity<>(repository.findAll().size(), HttpStatus.OK);
+public ResponseEntity<?> get(@RequestParam("page")int page,
+		@RequestParam("size") int size){
+	return new ResponseEntity<>(accountService.getSize(page, size), HttpStatus.OK);
 }
 
 @PostMapping("/image")

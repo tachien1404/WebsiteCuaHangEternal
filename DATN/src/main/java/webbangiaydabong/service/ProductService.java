@@ -48,5 +48,6 @@ public interface ProductService {
                             ShoeLine shoeLine);
 
     List<Object> hotTrend(Long idProduct);
-
+    
+    List<ProductDTO>locproductadmin(ProductDTO dto);
 }

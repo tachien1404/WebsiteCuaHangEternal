@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 
@@ -20,8 +21,11 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotNull(message = "So dien thoai khong duoc bo trong")
     private String sdt;
+    @NotNull(message = "Ho ten khong duoc bo trong")
     private String name;
+    @NotNull(message = "Dia chi khong duoc bo trong")
     private String address;
     private String email;
 

@@ -77,4 +77,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "group by o.saimau.mau \n" +
             "order by SUM(o.quantity) desc")
     List<Object> hotTrend(Long idProduct);
+    
+    @Query("SELECT s.product.id ,SUM(s.quantity)  \n" +
+            "FROM  S_C_Details s\n" +
+            "GROUP BY s.product.id")
+        List<Object[]>adminproduct();
 }

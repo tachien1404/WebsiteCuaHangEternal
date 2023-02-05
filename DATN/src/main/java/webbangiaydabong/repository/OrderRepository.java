@@ -25,7 +25,7 @@ public interface OrderRepository extends JpaRepository<Order, Long>{
 	@Query("select o from Order o where o.account.username=?1")
 	List<Order> findALlOrderByAccount(String userName);
 
-	@Query("select new webbangiaydabong.dto.OrderDTO(o,true) from Order o where o.id=:id")
+	@Query("select new webbangiaydabong.dto.OrderDTO(o,true) from Order o where o.id=:id ")
 	OrderDTO getOrderbyid(Long id);
 
 

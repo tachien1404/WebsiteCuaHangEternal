@@ -29,8 +29,8 @@ public class CustomerServiceImpl implements CustomerService {
         }
         if(dto.getName()!=null){
             customer.setName(dto.getName());
-
         }
+
         if(dto.getSdt()!=null){
             customer.setSdt(dto.getSdt());
         }

@@ -32,14 +32,14 @@ public class SetupdataServiceImpl implements SetUpdataService {
     }
 
     private void createColor() {
-        ColorDTO dto = new ColorDTO();
-        Integer[] a = {1, 2, 3, 4};
-        for (Integer x : a) {
-            dto.setValue(x);
-            if (colorService.checkvalue(dto.getValue()) == false) {
-                colorService.save(dto);
-            }
-        }
+//        ColorDTO dto = new ColorDTO();
+//        Integer[] a = {1, 2, 3, 4};
+//        for (Integer x : a) {
+//            dto.setValue(x);
+//            if (colorService.checkvalue(dto.getValue()) == false) {
+//                colorService.save(dto);
+//            }
+//        }
 
     }
 
