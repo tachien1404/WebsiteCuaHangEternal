@@ -24,7 +24,6 @@ public class Color {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private Integer value;//màu 1 đỏ , 2 vàng ....
 	private String value;//màu 1 đỏ , 2 vàng ....
   @NotNull(message = "Ten mau khong duoc de trong")
 	private String name;
