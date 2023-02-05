@@ -1,5 +1,8 @@
 package webbangiaydabong.service.impl;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.engine.jdbc.Size;
@@ -7,12 +10,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 
 import webbangiaydabong.dto.AccountDTO;
 import webbangiaydabong.entity.Account;
+import webbangiaydabong.entity.Authority;
 import webbangiaydabong.repository.AccountRepository;
+import webbangiaydabong.repository.AuthorityRepository;
+import webbangiaydabong.repository.RolesRepository;
 import webbangiaydabong.service.AccountService;
 
 @Service
@@ -20,6 +27,12 @@ public class AccountServiceImpl implements AccountService {
 
 	@Autowired
 	AccountRepository accountRepo;
+	
+	@Autowired
+	AuthorityRepository authorityRepository;
+	
+	@Autowired
+	RolesRepository rolesRepository;
 
 	@Override
 	public Account findById(Long id) {
@@ -43,7 +56,20 @@ public class AccountServiceImpl implements AccountService {
 		acc.setPassword(dto.getPassword());
 		acc.setSdt(dto.getSdt());
 		acc.setPhoto(dto.getPhoto());
+		acc.setActive(true);
 		acc=accountRepo.save(acc);
+		
+		Authority authority = new Authority();
+		authority.setAccount(acc);
+
+
+		if (dto.isRole()) {
+			authority.setRole(rolesRepository.findByNameLike("ROLE_ADMIN").get());
+		} else {
+			authority.setRole(rolesRepository.findByNameLike("ROLE_USER").get());
+					
+		}
+		authorityRepository.save(authority);
 		return new AccountDTO(acc);
 	}
 
@@ -65,8 +91,21 @@ public class AccountServiceImpl implements AccountService {
 		acc.setPassword(dto.getPassword());
 		acc.setSdt(dto.getSdt());
 		acc.setPhoto(dto.getPhoto());
+		acc.setActive(dto.isActive());
 		acc=accountRepo.save(acc);
+		
+		Authority authority = authorityRepository.findByAccountId(id);
+		authority.setAccount(acc);
+		if (dto.isRole()) {
+			authority.setRole(rolesRepository.findByNameLike("ROLE_ADMIN").get());
+		} else {
+			authority.setRole(rolesRepository.findByNameLike("ROLE_USER").get());
+		}
+		authorityRepository.save(authority);
+		
+		acc = accountRepo.findById(acc.getId()).get();
 		return new AccountDTO(acc);
+		
 	}
 
 	@Override
@@ -76,16 +115,20 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
-	public List<Account> getAll(int page) {
-		Pageable pageable = PageRequest.of(page, 5);
+	public List<AccountDTO> getAll(int page, int size) {
+		Pageable pageable = PageRequest.of(page, size, Sort.by("id").descending());
 		Page<Account> accountspage = accountRepo.findAll(pageable);
 		List<Account> accounts = accountspage.getContent();
-		return accounts;
+		List<AccountDTO> accountDTOs = new ArrayList<AccountDTO>();
+		for (Account account : accounts) {
+			accountDTOs.add(new AccountDTO(account));
+		}
+		return accountDTOs;
 	}
 
 	@Override
-	public Account get(long id) {
-		return accountRepo.findById(id).get();
+	public AccountDTO get(long id) {
+		return new AccountDTO(accountRepo.findById(id).get());
 	}
 
 	@Override
@@ -105,14 +148,56 @@ public class AccountServiceImpl implements AccountService {
 		acc.setPassword(dto.getPassword());
 		acc.setSdt(dto.getSdt());
 		acc.setPhoto(dto.getPhoto());
+		acc.setActive(true);
 		acc=accountRepo.save(acc);
+		
+		Authority authority = new Authority();
+		authority.setAccount(acc);
+		if (dto.isRole()) {
+			authority.setRole(rolesRepository.findByNameLike("ROLE_ADMIN").get());
+		} else {
+			authority.setRole(rolesRepository.findByNameLike("ROLE_USER").get());
+					
+		}
+		authorityRepository.save(authority);
+		
+		acc = accountRepo.findById(acc.getId()).get();
+		
 		return new AccountDTO(acc);
 	}
 
 	@Override
-	public List<Account> search(String keywork) {
-		List<Account> accounts = accountRepo.findByEmailLike(keywork);
-		return accounts;
+	public List<AccountDTO> search(String keywork, String active, String role) {
+		
+		List<Account> accounts = accountRepo
+				.findByEmailLike("%" +keywork + "%");
+		List<AccountDTO> accountDTOs = new ArrayList<AccountDTO>();
+		for (Account account : accounts) {
+			AccountDTO accountDTO = new AccountDTO(account);
+			if (role.equals("all")) {
+				accountDTOs.add(accountDTO);
+			} else if (role.equals("true")) {
+				if (accountDTO.isRole()) {
+					accountDTOs.add(accountDTO);
+				}
+			} else {
+				if (!accountDTO.isRole()) {
+					accountDTOs.add(accountDTO);
+				}
+			}
+		}
+		for (AccountDTO account : accountDTOs) {
+			if (active.equals("true")) {
+				if (!account.isActive()) {
+					accountDTOs.remove(account);
+				}
+			} else if (active.equals("false")) {
+				if (account.isActive()) {
+					accountDTOs.remove(account);
+				}
+			} 
+		}
+		return accountDTOs;
 	}
 
 	@Override
@@ -123,6 +208,13 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public List<Account> findAll() {
 		return accountRepo.findAll();
+	}
+
+	@Override
+	public int getSize(int page, int size) {
+		Pageable pageable = PageRequest.of(page, size);
+		Page<Account> accountspage = accountRepo.findAll(pageable);
+		return accountspage.getTotalPages();
 	}
 
 

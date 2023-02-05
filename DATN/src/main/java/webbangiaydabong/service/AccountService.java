@@ -12,9 +12,10 @@ public interface AccountService {
 	AccountDTO create(AccountDTO dto);
 	AccountDTO update(long id, AccountDTO dto);
 	void delete(long id);
-	List<Account> getAll(int page);
-	Account get(long id);
-	List<Account> search(String keywork);
+	List<AccountDTO> getAll(int page, int size);
+	AccountDTO get(long id);
+	List<AccountDTO> search(String keywork, String active, String role);
 	Account findByUserName(String userName);
     List<Account> findAll();
+    int getSize(int page, int size);
 }

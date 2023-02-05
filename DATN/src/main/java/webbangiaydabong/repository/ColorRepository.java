@@ -17,5 +17,5 @@ public interface ColorRepository extends JpaRepository<Color, Long>{
 
 	List<Color> findByNameLike(String nameKey);
 	boolean existsByName(String value);
-	boolean existsByValue(int value);
+	boolean existsByValue(String value);
 }

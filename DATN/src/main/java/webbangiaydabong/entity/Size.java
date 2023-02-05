@@ -27,6 +27,7 @@ public class Size {
 @GeneratedValue(strategy = GenerationType.IDENTITY)
 private Long id;
 private Integer value;//38-43
+private boolean isdelete;
 
 
     @JsonIgnore

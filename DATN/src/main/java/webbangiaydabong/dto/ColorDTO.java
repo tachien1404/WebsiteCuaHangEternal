@@ -14,6 +14,6 @@ import lombok.Setter;
 public class ColorDTO {
 private Long id;
 private String name;
-private Integer value;
+private String value;
 
 }

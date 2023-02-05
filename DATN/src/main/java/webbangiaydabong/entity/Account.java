@@ -41,7 +41,7 @@ public class Account {
     Set<Order> danhSachOrder;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "account", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "account")
     Set<Authority> authorities;
 
 //    @JsonIgnore
