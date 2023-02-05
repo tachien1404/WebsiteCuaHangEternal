@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
@@ -24,7 +25,9 @@ public class CustommerInfo {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 		private Long id;
+		@NotNull(message = "So dien thoai khong duoc bo trong")
 		private String sdt;
+		@NotNull(message = "Ho ten khong duoc bo trong")
 		private String name;
 		private String city;
 		private String nameCity;

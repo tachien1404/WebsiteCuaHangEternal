@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import webbangiaydabong.entity.Product;
 
+import javax.validation.constraints.NotNull;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -18,8 +20,10 @@ public class ProductDTO {
     private String categoryName;
     private String brandName;
     private Long id;
+    @NotNull(message = "Ten san pham khong duoc de trong")
     private String name;
     private Date createDate;
+    @NotNull(message = "Gia ban khong duoc de trong")
     private float outputprice;
     private Date updatedate;
     private int status;

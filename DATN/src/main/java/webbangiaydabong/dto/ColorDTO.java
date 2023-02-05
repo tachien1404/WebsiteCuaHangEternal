@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotNull;
+
 @Data
 @Getter
 @Setter
@@ -13,6 +15,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ColorDTO {
 private Long id;
+@NotNull(message = "Ten mau khong duoc de trong")
 private String name;
 private Integer value;
 

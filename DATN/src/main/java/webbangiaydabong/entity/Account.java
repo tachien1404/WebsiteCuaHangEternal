@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -27,12 +28,18 @@ public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotNull(message = "Ten dang nhap khong duoc de trong")
     private String username;
+    @NotNull(message = "Email khong duoc de trong")
     private String email;
+    @NotNull(message = "Ho ten khong duoc de trong")
     private String fullname;
+    @NotNull(message = "Mat khau khong duoc de trong")
     private String password;
     private Date birthday;
+    @NotNull(message = "Dia chi khong duoc de trong")
     private String address;
+    @NotNull(message = "So dien thoai khong duoc de trong")
     private String sdt;
     private String photo;
     private boolean isActive;
