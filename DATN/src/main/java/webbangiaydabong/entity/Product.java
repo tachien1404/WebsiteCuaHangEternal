@@ -18,6 +18,7 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.springframework.format.annotation.NumberFormat;
 
 @Getter
 @Setter
@@ -40,6 +41,7 @@ public class Product {
 	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date updatedate;// ngày sửa sẳn phẩm
 	private Integer status;
+	private Integer about;
 	private boolean delete;
 //	@JsonIgnore
 //	@OneToMany(mappedBy = "product")

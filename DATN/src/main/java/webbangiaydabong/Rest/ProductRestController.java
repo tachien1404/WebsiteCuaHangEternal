@@ -163,7 +163,6 @@ public class ProductRestController {
                             ""));
         }
     }
-
     ;
 
     @GetMapping("/getAllCategory")
@@ -242,6 +241,57 @@ public class ProductRestController {
             }
         }
         return top5BanChay;
+    }
+
+    @PutMapping("/sortByKey2")
+    public ResponseEntity<ResponseObject> sortByKey2(@RequestParam int page,
+                                                    @RequestParam int size,
+                                                    @RequestBody ProductSearchDTO dto) {
+        try {
+            page = page < 0 ? 0 : page;
+            Pageable pageable;
+            List<Sort.Order> orders = new ArrayList<>();
+            List<SortByValue> sortByValueList = dto.getSortByValues();
+            System.out.println(sortByValueList);
+            if (sortByValueList.isEmpty()) {
+                orders.add(new Sort.Order(Sort.Direction.DESC, "createDate") {
+                });
+            } else {
+                sortByValueList.forEach(value -> {
+                    orders.add(new Sort.Order(getSortDirection(value.getType()), value.getName()));
+                });
+            }
+
+            pageable = PageRequest.of(page, size, Sort.by(orders));
+            Page<Product> productPage;
+            productPage = productService.findByKey2(pageable, dto.getName(), dto.getPriceStart(), dto.getPriceEnd(),
+                    dto.getCategory(), dto.getHang(), dto.getSole(), dto.getShoeLine());
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ResponseObject(HttpStatus.OK, "Tìm thấy thành công", productPage)
+            );
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                    new ResponseObject(HttpStatus.BAD_REQUEST, "Không tìm thấy",
+                            ""));
+        }
+    };
+
+    @GetMapping("/hotTrend/{idProduct}")
+    public List<Object> hotTrend(@PathVariable("idProduct") String idProduct) {
+        List<Object> listHotTrend = productService.hotTrend(Long.parseLong(idProduct));
+        List<Object> top3 = new ArrayList<>();
+        if (listHotTrend.size() >= 5) {
+            for (int i = 0; i < 3; i++) {
+                top3.add(listHotTrend.get(i));
+            }
+        } else {
+            for (int i = 0; i < listHotTrend.size(); i++) {
+                top3.add(listHotTrend.get(i));
+            }
+        }
+        return top3;
     }
 }
 

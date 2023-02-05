@@ -2,12 +2,11 @@ package webbangiaydabong.dto;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.springframework.format.annotation.NumberFormat;
 import webbangiaydabong.dto.functiondto.SortByValue;
-import webbangiaydabong.entity.Brand;
-import webbangiaydabong.entity.Category;
-import webbangiaydabong.entity.ShoeLine;
-import webbangiaydabong.entity.Sole;
+import webbangiaydabong.entity.*;
 
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -19,6 +18,8 @@ public class ProductSearchDTO {
     Long id;
     String name;
     Double outputprice;
+    Float priceStart;
+    Float priceEnd;
     Category category;
     Brand hang;
     Sole sole;

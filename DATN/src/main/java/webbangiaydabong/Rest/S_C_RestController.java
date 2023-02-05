@@ -176,4 +176,14 @@ public class S_C_RestController {
         List<SizeDTO>size=service.getsize(dto);
         return size;
     }
+
+    @GetMapping("/sizeAvailable/{idProduct}")
+    public List<Size> sizeAvailable(@PathVariable("idProduct") Long idProduct){
+        return service.sizeAvailable(idProduct);
+    }
+
+    @GetMapping("/colorAvailable/{idProduct}")
+    public List<Color> colorAvailable(@PathVariable("idProduct") Long idProduct){
+        return service.colorAvailable(idProduct);
+    }
 }

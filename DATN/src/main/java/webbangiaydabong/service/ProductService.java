@@ -37,5 +37,17 @@ public interface ProductService {
     List<ProductDTO> serchName(ProductDTO dto);
 
     List<Object> topbanchay();
+
+    Page<Product> findByKey2(Pageable pageable,
+                            String name,
+                            Float priceStart,
+                             Float priceEnd,
+                            Category category,
+                            Brand hang,
+                            Sole sole,
+                            ShoeLine shoeLine);
+
+    List<Object> hotTrend(Long idProduct);
+    
     List<ProductDTO>locproductadmin(ProductDTO dto);
 }

@@ -50,4 +50,10 @@ public interface S_C_Repository extends JpaRepository<S_C_Details,Long> {
 //querr tuwf p vs c ra s
     @Query("select new webbangiaydabong.dto.SizeDTO(s.size) from S_C_Details s where s.product.id =:product_id and s.mau.id=:mau_id and s.quantity>0")
     List<SizeDTO>getsize(Long product_id,Long mau_id);
+
+    @Query("select sc.size from S_C_Details sc where sc.product.id = ?1 group by sc.size")
+    List<Size> sizeAvailable (Long idProduct);
+
+    @Query("select sc.mau from S_C_Details sc where sc.product.id = ?1 group by sc.mau")
+    List<Color> colorAvailable (Long idProduct);
 }
