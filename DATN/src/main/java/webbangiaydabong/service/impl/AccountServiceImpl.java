@@ -111,7 +111,8 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public void delete(long id) {
 		Account acc = accountRepo.findById(id).get();
-		accountRepo.delete(acc);
+		acc.setActive(false);
+		accountRepo.save(acc);
 	}
 
 	@Override
@@ -168,36 +169,41 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	public List<AccountDTO> search(String keywork, String active, String role) {
-		
-		List<Account> accounts = accountRepo
-				.findByEmailLike("%" +keywork + "%");
-		List<AccountDTO> accountDTOs = new ArrayList<AccountDTO>();
-		for (Account account : accounts) {
-			AccountDTO accountDTO = new AccountDTO(account);
-			if (role.equals("all")) {
-				accountDTOs.add(accountDTO);
-			} else if (role.equals("true")) {
-				if (accountDTO.isRole()) {
+		try {
+			List<Account> accounts = accountRepo
+					.findByEmailLike("%" +keywork + "%");
+			if(accounts.isEmpty()) return null;
+			List<AccountDTO> accountDTOs = new ArrayList<AccountDTO>();
+			for (Account account : accounts) {
+				AccountDTO accountDTO = new AccountDTO(account);
+				if (role.equals("all")) {
 					accountDTOs.add(accountDTO);
-				}
-			} else {
-				if (!accountDTO.isRole()) {
-					accountDTOs.add(accountDTO);
+				} else if (role.equals("true")) {
+					if (accountDTO.isRole()) {
+						accountDTOs.add(accountDTO);
+					}
+				} else {
+					if (!accountDTO.isRole()) {
+						accountDTOs.add(accountDTO);
+					}
 				}
 			}
+			if(accountDTOs.isEmpty()) return null;
+			for (AccountDTO account : accountDTOs) {
+				if (active.equals("true")) {
+					if (!account.isActive()) {
+						accountDTOs.remove(account);
+					}
+				} else if (active.equals("false")) {
+					if (account.isActive()) {
+						accountDTOs.remove(account);
+					}
+				} 
+			}
+			return accountDTOs;
+		} catch (Exception ex) {
+			return null;
 		}
-		for (AccountDTO account : accountDTOs) {
-			if (active.equals("true")) {
-				if (!account.isActive()) {
-					accountDTOs.remove(account);
-				}
-			} else if (active.equals("false")) {
-				if (account.isActive()) {
-					accountDTOs.remove(account);
-				}
-			} 
-		}
-		return accountDTOs;
 	}
 
 	@Override

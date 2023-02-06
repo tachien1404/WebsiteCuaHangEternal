@@ -22,5 +22,5 @@ public interface SizeService {
 
 	void delete(long id);
 
-	List<Size> search(String keyword);
+	List<Size> search(String keyword, String status);
 }

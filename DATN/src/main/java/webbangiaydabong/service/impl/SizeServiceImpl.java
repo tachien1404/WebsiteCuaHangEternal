@@ -23,7 +23,7 @@ public class SizeServiceImpl implements SizeService {
 
 	@Autowired
 	SizeRepository repository;
-	
+
 	@Autowired
 	S_C_Repository s_C_Repository;
 
@@ -34,9 +34,9 @@ public class SizeServiceImpl implements SizeService {
 
 	@Override
 	public Page<Size> findAlls(int page, int size) {
-		page = page <0? 0:page;
+		page = page < 0 ? 0 : page;
 		Pageable pageable;
-		pageable = PageRequest.of(page,size,Sort.by("id").descending());
+		pageable = PageRequest.of(page, size, Sort.by("id").descending());
 		return repository.findAll(pageable);
 	}
 
@@ -51,7 +51,8 @@ public class SizeServiceImpl implements SizeService {
 
 	@Override
 	public Size save(SizeDTO dto) {
-		if (repository.existsByValue(dto.getValue())) return null;
+		if (repository.existsByValue(dto.getValue()))
+			return null;
 		Size size = new Size();
 		size.setValue(dto.getValue());
 		return repository.save(size);
@@ -59,21 +60,44 @@ public class SizeServiceImpl implements SizeService {
 
 	@Override
 	public Size update(long id, SizeDTO dto) {
-		if (repository.existsByValue(dto.getValue())) return null;
+		List<Size> sizes = repository.findAll();
+		for (Size size : sizes) {
+			if (size.getValue().equals(dto.getValue()) && size.getId() != id) {
+				return null;
+			}
+		}
 		Size size = repository.findById(id).get();
 		size.setValue(dto.getValue());
+		size.setIsdelete(dto.isIsdelete());
 		return repository.save(size);
 	}
 
 	@Override
 	public void delete(long id) {
-		s_C_Repository.deleteAllBySizeId(id);
-		repository.deleteById(id);
+//		s_C_Repository.deleteAllBySizeId(id);
+		Size size = repository.findById(id).get();
+		size.setIsdelete(true);
+		repository.save(size);
 	}
 
 	@Override
-	public List<Size> search(String keyword) {
-		return repository.findByValueLike(Integer.parseInt(keyword));
+	public List<Size> search(String keyword, String status) {
+		if (status.equals("all")) {
+			if (keyword.trim().length() == 0) {
+				return repository.findAll();
+			}
+			return repository.findByValueLike(Integer.parseInt(keyword));
+		}
+		if (status.equals("1")) {
+			if (keyword.trim().length() == 0) {
+				return repository.findByIsdeleteFalse();
+			}
+			return repository.findByValueLikeAndIsdeleteFalse(Integer.parseInt(keyword));
+		}
+		if (keyword.trim().length() == 0) {
+			return repository.findByIsdeleteTrue();
+		}
+		return repository.findByValueLikeAndIsdeleteTrue(Integer.parseInt(keyword));
 	}
 
 	@Override

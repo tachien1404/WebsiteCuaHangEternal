@@ -4,6 +4,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+
+import webbangiaydabong.entity.Color;
 import webbangiaydabong.entity.Sole;
 
 import java.util.List;
@@ -20,4 +22,10 @@ public interface SoleRepository extends JpaRepository<Sole,Long> {
 	List<Sole> findByNameLikeAndIsdeleteFalse(String keyword);
 	
 	boolean existsByName(String value);
+
+	List<Sole> findByNameLike(String keyword);
+
+	List<Sole> findByNameLikeAndIsdeleteTrue(String string);
+	
+	
 }

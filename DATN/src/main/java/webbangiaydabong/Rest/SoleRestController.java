@@ -78,8 +78,9 @@ public class SoleRestController {
 	}
 
 	@GetMapping("/search")
-	public ResponseEntity<?> search(@RequestParam("keyword") String keyword) {
-		List<Sole> soles = soleService.search(keyword);
+	public ResponseEntity<?> search(@RequestParam("keyword") String keyword,
+			@RequestParam("status") String status) {
+		List<Sole> soles = soleService.search(keyword, status);
 		if (soles.isEmpty()) {
 			return ResponseEntity.badRequest().build();
 		}

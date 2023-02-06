@@ -10,8 +10,10 @@ import webbangiaydabong.entity.Size;
 public class SizeDTO {
 	private Long id;
 	private Integer value;
+	private boolean isdelete;
 	public SizeDTO (Size entity){
 		this.id=entity.getId();
 		this.value=entity.getValue();
+		this.isdelete=entity.isIsdelete();
 	}
 }

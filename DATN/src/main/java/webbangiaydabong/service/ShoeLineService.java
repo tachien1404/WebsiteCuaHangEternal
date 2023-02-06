@@ -14,5 +14,5 @@ public interface ShoeLineService {
     ShoeLine update(long id, ShoeLine shoeLine);
     void delete(long id);
     Page<ShoeLine> findAll(int page, int shoeLine);
-    List<ShoeLine> search(String keyword);
+    List<ShoeLine> search(String keyword, String status);
 }

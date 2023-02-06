@@ -70,7 +70,6 @@ public class ColorServiceImpl implements ColorService {
 		color.setName(dto.getName());
 		color.setValue(dto.getValue());
 		color.setIsdelete(dto.isIsdelete());
-		System.out.println(dto.isIsdelete());
 		return repository.save(color);
 	}
 
