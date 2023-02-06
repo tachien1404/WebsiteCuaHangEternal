@@ -18,4 +18,5 @@ public class SearchDto {
     private Date start;
     private Date date;
     private Integer status;
+    private Integer kenh;
 }

@@ -117,7 +117,9 @@ public class OrderServiceImpl implements OrderService {
         if (dto.getStatus() != null) {
             whereClause += " AND o.status=:status";
         }
-
+        if(dto.getKenh()!=null){
+            whereClause+=" AND o.kenh=:kenh";
+        }
         if(dto.getEnd()!=null&&dto.getStart()!=null){
             whereClause+=" AND create_date BETWEEN :start AND :end";
         }
@@ -137,6 +139,9 @@ public class OrderServiceImpl implements OrderService {
         }
         if(dto.getEnd()!=null){
             q.setParameter("end", dto.getEnd());
+        }
+        if(dto.getKenh()!=null){
+            q.setParameter("kenh",dto.getKenh());
         }
         List<OrderDTO> entities = q.getResultList();
 
@@ -160,6 +165,9 @@ public class OrderServiceImpl implements OrderService {
         if (dto.getStatus() != null) {
             whereClause += " AND o.status=:status";
         }
+        if(dto.getKenh()!=null){
+            whereClause+=" AND o.kenh=:kenh";
+        }
         whereClause += " AND o.status NOT in(6) ";
         sql += whereClause + orderBy;
 
@@ -169,7 +177,9 @@ public class OrderServiceImpl implements OrderService {
         if (dto.getStatus() != null) {
             q.setParameter("status", dto.getStatus());
         }
-
+if(dto.getKenh()!=null){
+    q.setParameter("kenh",dto.getKenh());
+}
         List<OrderDTO> entities = q.getResultList();
 
         return entities;

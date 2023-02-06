@@ -81,7 +81,7 @@ public class salesReportServiceImpl implements salesReportService {
 
         String sql = "SELECT  SUM(price) AS doanhthuday,COUNT(id)AS sld\n" +
                 "FROM `order`\n" +
-                "WHERE create_date =:ngay AND `status` NOT IN(6)";
+                "WHERE create_date =:ngay AND `status` =3";
         Query query = manager.createNativeQuery(sql).unwrap(org.hibernate.query.Query.class).setResultTransformer(new AliasToBeanResultTransformer(salesReportDto.class));
 
         query.setParameter("ngay", java.time.LocalDate.now());
