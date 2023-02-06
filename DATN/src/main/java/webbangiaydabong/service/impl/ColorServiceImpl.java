@@ -13,6 +13,7 @@ import webbangiaydabong.entity.Size;
 import webbangiaydabong.repository.ColorRepository;
 import webbangiaydabong.service.ColorService;
 
+import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -56,11 +57,20 @@ public class ColorServiceImpl implements ColorService {
 
 	@Override
 	public Color update(long id, ColorDTO dto) {
-		if (repository.existsByValue(dto.getValue())
-				|| repository.existsByName(dto.getName())) return null;
+		List<Color> colors = repository.findAll();
+		for (Color color: colors) {
+			if(color.getName().equals(dto.getName()) && color.getId() != id) {
+				return null;
+			}
+			if(color.getValue().equals(dto.getValue()) && color.getId() != id) {
+				return null;
+			}
+		}
 		Color color = repository.findById(id).get();
 		color.setName(dto.getName());
 		color.setValue(dto.getValue());
+		color.setIsdelete(dto.isIsdelete());
+		System.out.println(dto.isIsdelete());
 		return repository.save(color);
 	}
 
@@ -70,8 +80,14 @@ public class ColorServiceImpl implements ColorService {
 	}
 
 	@Override
-	public List<Color> search(String keyword) {
-		return repository.findByNameLike("%" + keyword + "%");
+	public List<Color> search(String keyword, String status) {
+		if (status.equals("all")) {
+			return repository.findByNameLike("%" + keyword + "%");
+		} 
+		if (status.equals("1")){
+			return repository.findByNameLikeAndIsdeleteFalse("%" + keyword + "%");
+		}
+		return repository.findByNameLikeAndIsdeleteTrue("%" + keyword + "%");
 	}
 
 

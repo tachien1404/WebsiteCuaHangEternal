@@ -18,5 +18,5 @@ private Long id;
 @NotNull(message = "Ten mau khong duoc de trong")
 private String name;
 private String value;
-
+private boolean isdelete;
 }

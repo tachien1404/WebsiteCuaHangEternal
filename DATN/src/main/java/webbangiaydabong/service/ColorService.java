@@ -17,5 +17,5 @@ public interface ColorService {
     Color save(ColorDTO dto);
     Color update(long id,ColorDTO dto);
     void delete(long id);
-    List<Color> search(String keyword);
+    List<Color> search(String keyword, String status);
 }
