@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
-import org.hibernate.engine.jdbc.Size;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -217,5 +216,16 @@ public class AccountServiceImpl implements AccountService {
 		return accountspage.getTotalPages();
 	}
 
+<<<<<<< Updated upstream
+=======
+	@Override
+	public  Account findBySdt(String sdt){
+		return accountRepo.findBySdt(sdt);
+	}
+	@Override
+	public Account tao(Account account){
+		return accountRepo.save(account);
+	}
+>>>>>>> Stashed changes
 
 }

@@ -16,6 +16,14 @@ public interface AccountService {
 	AccountDTO get(long id);
 	List<AccountDTO> search(String keywork, String active, String role);
 	Account findByUserName(String userName);
+<<<<<<< Updated upstream
     List<Account> findAll();
     int getSize(int page, int size);
+=======
+	List<Account> findAll();
+	int getSize(int page, int size);
+	Account findBySdt(String sdt);
+
+	Account tao(Account account);
+>>>>>>> Stashed changes
 }
