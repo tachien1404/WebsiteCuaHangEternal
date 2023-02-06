@@ -59,6 +59,10 @@ public class ProductRestController {
     public Product getOne(@PathVariable("id") Long id) {
         return productService.findById(id);
     }
+    @GetMapping("/getbyid/{id}")
+    public Product getbyid(@PathVariable("id") Long id) {
+        return productService.findById(id);
+    }
 
     @PostMapping()
     public ResponseEntity<ResponseObject> create(@RequestBody Product product) {

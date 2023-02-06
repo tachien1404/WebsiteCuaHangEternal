@@ -14,9 +14,10 @@ import java.util.List;
 
 public interface S_C_Repository extends JpaRepository<S_C_Details,Long> {
 
-    @Query("select sz FROM S_C_Details sz WHERE sz.product.id =?1 and sz.size.id =?2 and sz.mau.id =?3")
+    @Query("select sz FROM S_C_Details sz WHERE sz.product.id =?1 and sz.size.id =?2 and sz.mau.id =?3 and sz.quantity>0 ")
     S_C_Details findBySizeColor(Long product_id, Long size_id, Long color_id);
-
+    @Query("select sz FROM S_C_Details sz WHERE sz.product.id =?1 and sz.size.id =?2 and sz.mau.id =?3 and sz.quantity>0 ")
+    S_C_Details findBySizeColor1(Long product_id, Long size_id, Long color_id);
     @Query("select sz FROM S_C_Details sz WHERE sz.product.id = :id")
     Page<S_C_Details> findConfigProduct(Pageable pageable,@Param("id") Long id);
 
@@ -63,4 +64,5 @@ public interface S_C_Repository extends JpaRepository<S_C_Details,Long> {
 
     @Query("select new webbangiaydabong.dto.ColorDTO(sc.mau) from S_C_Details sc where sc.product.id = ?1 group by sc.mau")
     List<ColorDTO> color (Long idProduct);
+
 }
