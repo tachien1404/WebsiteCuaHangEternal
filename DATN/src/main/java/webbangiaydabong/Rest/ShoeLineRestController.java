@@ -75,8 +75,9 @@ public class ShoeLineRestController {
 	}
 
 	@GetMapping("/search")
-	public ResponseEntity<?> search(@RequestParam("keyword") String keyword) {
-		List<ShoeLine> shoeLine = shoeLineService.search(keyword);
+	public ResponseEntity<?> search(@RequestParam("keyword") String keyword,
+			@RequestParam("status") String status) {
+		List<ShoeLine> shoeLine = shoeLineService.search(keyword, status);
 		if (shoeLine.isEmpty()) {
 			return ResponseEntity.badRequest().build();
 		}

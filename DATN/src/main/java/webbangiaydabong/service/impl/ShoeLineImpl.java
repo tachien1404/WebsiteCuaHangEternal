@@ -36,9 +36,15 @@ public class ShoeLineImpl implements ShoeLineService {
 	}
 	@Override
 	public ShoeLine update(long id, ShoeLine shoeLine) {
-		if(repository.existsByName(shoeLine.getName())) return null;
-		ShoeLine updated = repository.findByIdAndIsdeleteFalse(id).get();
+		List<ShoeLine> shoes = repository.findAll();
+		for (ShoeLine shoe : shoes) {
+			if (shoe.getName().equals(shoeLine.getName()) && shoe.getId() != id) {
+				return null;
+			}
+		}
+		ShoeLine updated = repository.findById(id).get();
 		updated.setName(shoeLine.getName());
+		updated.setIsdelete(shoeLine.isIsdelete());
 		return repository.save(updated);
 	}
 	@Override
@@ -52,10 +58,17 @@ public class ShoeLineImpl implements ShoeLineService {
 		page =page <0? 0:page;
 		Pageable pageable;
 		pageable = PageRequest.of(page, shoeLine,Sort.by("id").descending());
-		return repository.findAllByIsdeleteFalse(pageable);
+		return repository.findAll(pageable);
 	}
 	@Override
-	public List<ShoeLine> search(String keyword) {
-		return repository.findByNameLikeAndIsdeleteFalse("%" +keyword +"%");
+	public List<ShoeLine> search(String keyword, String status) {
+
+		if (status.equals("all")) {
+			return repository.findByNameLike("%" + keyword + "%");
+		} 
+		if (status.equals("1")){
+			return repository.findByNameLikeAndIsdeleteFalse("%" + keyword + "%");
+		}
+		return repository.findByNameLikeAndIsdeleteTrue("%" + keyword + "%");
 	}
 }

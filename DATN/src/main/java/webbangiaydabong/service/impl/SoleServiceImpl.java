@@ -37,9 +37,15 @@ public class SoleServiceImpl implements SoleService {
 
 	@Override
 	public Sole update(long id, Sole sole) {
-		if(soleRepository.existsByName(sole.getName())) return null;
-		Sole updated = soleRepository.findByIdAndIsdeleteFalse(id).get();
+		List<Sole> soles = soleRepository.findAll();
+		for(Sole s : soles) {
+			if (s.getName().equals(sole.getName()) && s.getId() != sole.getId()) {
+				return null;
+			}
+		}
+		Sole updated = soleRepository.findById(id).get();
 		updated.setName(sole.getName());
+		updated.setIsdelete(sole.isIsdelete());
 		return soleRepository.save(updated);
 	}
 
@@ -55,12 +61,18 @@ public class SoleServiceImpl implements SoleService {
 		page = page <0? 0:page;
 		Pageable pageable;
 		pageable = PageRequest.of(page,size,Sort.by("id").descending());
-		return soleRepository.findAllByIsdeleteFalse(pageable);
+		return soleRepository.findAll(pageable);
 	}
 
 	@Override
-	public List<Sole> search(String keyword) {
-		return soleRepository.findByNameLikeAndIsdeleteFalse("%" + keyword + "%");
+	public List<Sole> search(String keyword, String status) {
+		if (status.equals("all")) {
+			return soleRepository.findByNameLike("%" + keyword + "%");
+		} 
+		if (status.equals("1")){
+			return soleRepository.findByNameLikeAndIsdeleteFalse("%" + keyword + "%");
+		}
+		return soleRepository.findByNameLikeAndIsdeleteTrue("%" + keyword + "%");
 	}
 
 	@Override
