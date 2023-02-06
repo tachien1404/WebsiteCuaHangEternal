@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.relational.core.sql.In;
 import org.springframework.data.repository.query.Param;
+import webbangiaydabong.dto.ColorDTO;
 import webbangiaydabong.dto.SizeDTO;
 import webbangiaydabong.entity.*;
 
@@ -56,4 +57,10 @@ public interface S_C_Repository extends JpaRepository<S_C_Details,Long> {
 
     @Query("select sc.mau from S_C_Details sc where sc.product.id = ?1 group by sc.mau")
     List<Color> colorAvailable (Long idProduct);
+
+    @Query("select new webbangiaydabong.dto.SizeDTO(sc.size) from S_C_Details sc where sc.product.id = ?1 group by sc.size")
+    List<SizeDTO> size (Long idProduct);
+
+    @Query("select new webbangiaydabong.dto.ColorDTO(sc.mau) from S_C_Details sc where sc.product.id = ?1 group by sc.mau")
+    List<ColorDTO> color (Long idProduct);
 }

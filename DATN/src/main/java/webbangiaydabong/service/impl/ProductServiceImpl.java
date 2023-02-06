@@ -10,11 +10,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.relational.core.sql.In;
 import org.springframework.stereotype.Service;
 
-import webbangiaydabong.dto.OrderDetailDTO;
-import webbangiaydabong.dto.ProductDTO;
-import webbangiaydabong.dto.S_C_DetailDTO;
+import webbangiaydabong.dto.*;
 import webbangiaydabong.entity.*;
 import webbangiaydabong.repository.ProductRepository;
+import webbangiaydabong.repository.S_C_Repository;
 import webbangiaydabong.service.ProductService;
 
 import javax.persistence.EntityManager;
@@ -27,7 +26,8 @@ public class ProductServiceImpl implements ProductService {
 	EntityManager manager;
 	@Autowired
 	ProductRepository productRepo;
-
+    @Autowired
+    S_C_Repository s_c_repository;
 	@Override
 	public List<Product> findAll() {
 		return productRepo.findByStatus();
@@ -142,6 +142,16 @@ public class ProductServiceImpl implements ProductService {
             q.setParameter("shoeline_id", dto.getShoeLine_id());
         }
         List<ProductDTO> lstProductDTOS = q.getResultList();
+        for (ProductDTO x:lstProductDTOS) {
+            List<SizeDTO>litsai=s_c_repository.size(x.getId());
+            List<ColorDTO>litcolor=s_c_repository.color(x.getId());
+            if(litsai!=null&&litsai.size()>0){
+                x.setLitsai(litsai);
+            }
+            if(litcolor!=null&&litcolor.size()>0){
+                x.setLitcolor(litcolor);
+            }
+        }
         return lstProductDTOS;
     }
 

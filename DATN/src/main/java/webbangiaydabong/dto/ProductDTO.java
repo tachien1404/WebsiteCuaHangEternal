@@ -38,8 +38,8 @@ public class ProductDTO {
     private Float startgia;
     private Float endgia;
   private  Long sumquantity=0L;//to
-
-
+private List<SizeDTO>litsai ;
+    private List<ColorDTO>litcolor ;
 
     public ProductDTO(Product entity){
         this.id=entity.getId();
