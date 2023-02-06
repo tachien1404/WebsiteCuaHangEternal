@@ -75,7 +75,7 @@ public class OrderDetaiServiceImpl implements OrderDetaiService {
         }
         //quantity khi thêm trùng sp
         if (dto.getSizeId() != null && dto.getColorId() != null && dto.getProductId() != null) {
-            S_C_Details sc = s_c_repository.findBySizeColor(dto.getProductId(), dto.getSizeId(), dto.getColorId());
+            S_C_Details sc = s_c_repository.findBySizeColor1(dto.getProductId(), dto.getSizeId(), dto.getColorId());
             Order order = null;
             if (dto.getOrderId() != null) {
                 Optional<Order> optionalOrder = orderRepository.findById(dto.getOrderId());
@@ -115,7 +115,7 @@ public class OrderDetaiServiceImpl implements OrderDetaiService {
             }
         }
         if (dto.getSizeId() != null && dto.getColorId() != null && dto.getProductId() != null) {
-            S_C_Details sc = s_c_repository.findBySizeColor(dto.getProductId(), dto.getSizeId(), dto.getColorId());
+            S_C_Details sc = s_c_repository.findBySizeColor1(dto.getProductId(), dto.getSizeId(), dto.getColorId());
             if (sc == null) {
                 return null;
             } else {
@@ -143,11 +143,11 @@ public class OrderDetaiServiceImpl implements OrderDetaiService {
     public OrderDetailDTO sumgia(Long orderID) {
 
         OrderDetailDTO dto = new OrderDetailDTO();
-        int sumquantity = orderDetailRepo.sumquantity(orderID);
+        long sumquantity = orderDetailRepo.sumquantity(orderID);
         float sumprice = orderDetailRepo.sumgia(orderID);
 
             dto.setPrice(sumprice);
-            dto.setQuantity( sumquantity);
+            dto.setQuantity((int) sumquantity);
         return dto;
     }
 }

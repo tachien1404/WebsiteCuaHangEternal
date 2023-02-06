@@ -23,7 +23,7 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetail, Long>{
 @Query("SELECT SUM(o.quantity)\n" +
         "FROM OrderDetail o\n" +
         "WHERE o.order.id=:orderid")
-    int sumquantity(Long orderid);
+    Long sumquantity(Long orderid);
     @Query("SELECT SUM(o.price*o.quantity)\n" +
             "FROM OrderDetail o\n" +
             "WHERE o.order.id=:orderid")

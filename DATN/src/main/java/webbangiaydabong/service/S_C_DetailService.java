@@ -14,7 +14,7 @@ List<S_C_DetailDTO>congsl(List<S_C_DetailDTO>dto);
 
     List<S_C_DetailDTO>trusl(List<S_C_DetailDTO>dto);
     S_C_Details findBySizeColor(Long productId, Long sizeId, Long colorId);
-
+    S_C_Details findBySizeColor1(Long productId, Long sizeId, Long colorId);
     Page<S_C_Details> findConfigProduct(Pageable pageable,Long productId);
 
     S_C_Details create(S_C_Details sizeColorDetails);

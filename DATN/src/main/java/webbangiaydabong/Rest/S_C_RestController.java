@@ -186,4 +186,9 @@ public class S_C_RestController {
     public List<Color> colorAvailable(@PathVariable("idProduct") Long idProduct){
         return service.colorAvailable(idProduct);
     }
+    @PostMapping("/soluongsaimau")
+    public S_C_Details soluongsaimau(@RequestBody S_C_DetailDTO dto) {
+        Long product_id=dto.getProduct_id(); Long size_id=dto.getSize_id(); Long color_id=dto.getColor_id();
+        return service.findBySizeColor1( product_id, size_id, color_id);
+    }
 }

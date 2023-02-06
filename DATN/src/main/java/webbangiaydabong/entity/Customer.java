@@ -25,7 +25,6 @@ public class Customer {
     private String sdt;
     @NotNull(message = "Ho ten khong duoc bo trong")
     private String name;
-    @NotNull(message = "Dia chi khong duoc bo trong")
     private String username;
     private String city;
     private String nameCity;
