@@ -37,7 +37,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query("select p FROM Product  p WHERE p.delete =true ")
     List<Product> findByStatus();
 
-    @Query("select p from Product p where p.createDate <= ?1 ORDER BY p.createDate DESC")
+    @Query("select p from Product p where p.createDate <= ?1 and p.status = 1 ORDER BY p.createDate DESC")
     List<Product> findTop(Date date);
 
     @Query("select new webbangiaydabong.dto.ProductDTO(o) from Product o where o.name like :name")

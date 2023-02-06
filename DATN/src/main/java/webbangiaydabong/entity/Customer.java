@@ -26,9 +26,15 @@ public class Customer {
     @NotNull(message = "Ho ten khong duoc bo trong")
     private String name;
     @NotNull(message = "Dia chi khong duoc bo trong")
+    private String username;
+    private String city;
+    private String nameCity;
+    private String district;
+    private String nameDistrict;
+    private String ward;
+    private String detailAddress;
     private String address;
     private String email;
-
     @OneToMany(mappedBy = "customer")
     private List<Order> danhSachOrder;
 }
