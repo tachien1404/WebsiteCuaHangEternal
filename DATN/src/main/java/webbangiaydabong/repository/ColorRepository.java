@@ -18,4 +18,8 @@ public interface ColorRepository extends JpaRepository<Color, Long>{
 	List<Color> findByNameLike(String nameKey);
 	boolean existsByName(String value);
 	boolean existsByValue(String value);
+
+	List<Color> findByNameLikeAndIsdeleteFalse(String string);
+
+	List<Color> findByNameLikeAndIsdeleteTrue(String string);
 }

@@ -87,8 +87,9 @@ public class ColorRestController {
 	}
 	
 	@GetMapping("/search")
-	public ResponseEntity<?> search(@RequestParam("keyword") String keyword){
-		List<Color> colors = colorService.search(keyword);
+	public ResponseEntity<?> search(@RequestParam("keyword") String keyword,
+			@RequestParam("status") String status){
+		List<Color> colors = colorService.search(keyword, status);
 		if (colors.isEmpty()) {
 			return ResponseEntity.badRequest().build();
 		}
