@@ -96,22 +96,14 @@ public ResponseEntity<?> search(@RequestParam("email") String keywork,
 		@RequestParam("role") String role){
 	List<AccountDTO> accounts = accountService.search(keywork, active, role);
 	return new ResponseEntity<>(accounts, HttpStatus.OK);
-<<<<<<< Updated upstream
 } 
 
 @GetMapping("/size")
 public ResponseEntity<?> get(@RequestParam("page")int page,
 		@RequestParam("size") int size){
 	return new ResponseEntity<>(accountService.getSize(page, size), HttpStatus.OK);
-=======
->>>>>>> Stashed changes
 }
 
-	@GetMapping("/size")
-	public ResponseEntity<?> get(@RequestParam("page")int page,
-								 @RequestParam("size") int size){
-		return new ResponseEntity<>(accountService.getSize(page, size), HttpStatus.OK);
-	}
 
 @PostMapping("/image")
 public HttpStatus upload(@RequestParam("file") MultipartFile multipartFile){
@@ -124,13 +116,13 @@ public HttpStatus upload(@RequestParam("file") MultipartFile multipartFile){
         return HttpStatus.CONFLICT;
     }
 }
-<<<<<<< Updated upstream
+
 
 	@GetMapping("findByUserName/{userName}")
 	public Account getAccountByUserName(@PathVariable("userName") String userName){
 		return accountService.findByUserName(userName);
 	}
-=======
+
 @PostMapping("/signUp")
 	public ResponseEntity<ResponseObject> signUp(@RequestBody AccountSignUp accountSignUp){
 	try{
@@ -187,7 +179,6 @@ public HttpStatus upload(@RequestParam("file") MultipartFile multipartFile){
 						""));
 	}
 }
->>>>>>> Stashed changes
 
 }
 

@@ -216,8 +216,7 @@ public class AccountServiceImpl implements AccountService {
 		return accountspage.getTotalPages();
 	}
 
-<<<<<<< Updated upstream
-=======
+
 	@Override
 	public  Account findBySdt(String sdt){
 		return accountRepo.findBySdt(sdt);
@@ -226,6 +225,6 @@ public class AccountServiceImpl implements AccountService {
 	public Account tao(Account account){
 		return accountRepo.save(account);
 	}
->>>>>>> Stashed changes
+
 
 }
