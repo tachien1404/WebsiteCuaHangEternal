@@ -71,4 +71,14 @@ public class ShoeLineImpl implements ShoeLineService {
 		}
 		return repository.findByNameLikeAndIsdeleteTrue("%" + keyword + "%");
 	}
+
+	@Override
+	public ShoeLine findByName(String name) {
+		return repository.findByName(name);
+	}
+
+	@Override
+	public ShoeLine save(ShoeLine shoeLine) {
+		return repository.save(shoeLine);
+	}
 }

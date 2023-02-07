@@ -80,4 +80,9 @@ public class SoleServiceImpl implements SoleService {
     	return soleRepository.findAll();
 
 	}
+
+	@Override
+	public Sole findName(String name) {
+		return soleRepository.findByName(name);
+	}
 }

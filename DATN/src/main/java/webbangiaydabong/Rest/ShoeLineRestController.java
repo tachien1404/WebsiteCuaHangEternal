@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import webbangiaydabong.entity.ResponseObject;
 import webbangiaydabong.entity.ShoeLine;
 import webbangiaydabong.entity.Sole;
 import webbangiaydabong.service.ShoeLineService;
@@ -82,5 +83,19 @@ public class ShoeLineRestController {
 			return ResponseEntity.badRequest().build();
 		}
 		return new ResponseEntity<>(shoeLine, HttpStatus.OK);
+	}
+
+
+	@PostMapping("/create")
+	public ResponseEntity<ResponseObject> save(@RequestBody ShoeLine shoeLine){
+		if(shoeLineService.findByName(shoeLine.getName()) != null){
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+					new ResponseObject(HttpStatus.BAD_REQUEST,
+							"Dòng giày đã tồn tại", ""));
+		}
+		shoeLine.setIsdelete(true);
+		shoeLineService.save(shoeLine);
+		return ResponseEntity.ok().body(new ResponseObject(HttpStatus.OK,
+				"Tạo mới dòng giày thành công",""));
 	}
 }
