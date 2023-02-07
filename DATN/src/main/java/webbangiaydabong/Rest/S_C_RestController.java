@@ -90,11 +90,19 @@ public class S_C_RestController {
     @PostMapping()
     public ResponseEntity<ResponseObject> create(@RequestBody S_C_Details scDetails) {
         try {
-            if (scDetails.getQuantity() > 0) {
-                scDetails.setStatus(1);
-            } else {
-                scDetails.setStatus(0);
-            }
+           if(scDetails.getQuantity()<=0){
+               return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                       new ResponseObject(HttpStatus.BAD_REQUEST, "Thêm mới thất bại",
+                               ""));
+           }
+           if(service.findBySizeColor(scDetails.getProduct().getId(), scDetails.getSize().getId(),scDetails.getMau().getId()) != null){
+               S_C_Details s_c_detailsdb = service.findBySizeColor(scDetails.getProduct().getId(), scDetails.getSize().getId(),scDetails.getMau().getId());
+               s_c_detailsdb.setQuantity(s_c_detailsdb.getQuantity() + scDetails.getQuantity());
+               s_c_detailsdb.setStatus(1);
+               service.create(s_c_detailsdb);
+               return ResponseEntity.ok().body(new ResponseObject(HttpStatus.OK, "Thêm mới thành công", ""));
+           }
+           scDetails.setStatus(1);
             service.create(scDetails);
             return ResponseEntity.ok().body(new ResponseObject(HttpStatus.OK, "Thêm mới thành công", ""));
         } catch (Exception e) {
@@ -190,5 +198,12 @@ public class S_C_RestController {
     public S_C_Details soluongsaimau(@RequestBody S_C_DetailDTO dto) {
         Long product_id=dto.getProduct_id(); Long size_id=dto.getSize_id(); Long color_id=dto.getColor_id();
         return service.findBySizeColor1( product_id, size_id, color_id);
+    }
+
+    @GetMapping("/delete/{id}")
+    public S_C_Details delete(@PathVariable("id") Long idProduct){
+        S_C_Details s_c_detailsdb = service.findById(idProduct);
+        s_c_detailsdb.setStatus(0);
+        return service.create(s_c_detailsdb);
     }
 }
