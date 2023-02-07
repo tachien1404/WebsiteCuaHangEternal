@@ -108,4 +108,9 @@ public class S_C_ServiceImpl implements S_C_DetailService {
     public List<Color> colorAvailable(Long idProduct) {
         return repo.colorAvailable(idProduct);
     }
+
+    @Override
+    public S_C_Details findById(Long id) {
+        return repo.findById(id).get();
+    }
 }

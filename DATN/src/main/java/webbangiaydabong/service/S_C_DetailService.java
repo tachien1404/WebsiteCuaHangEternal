@@ -38,4 +38,6 @@ List<S_C_DetailDTO>congsl(List<S_C_DetailDTO>dto);
 
     List<Size> sizeAvailable(Long idProduct);
     List<Color> colorAvailable(Long idProduct);
+
+    S_C_Details findById(Long id);
 }
