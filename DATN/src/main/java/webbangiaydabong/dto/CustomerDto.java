@@ -33,6 +33,7 @@ public class CustomerDto {
         this.name = entity.getName();
         this.id = entity.getId();
         this.email = entity.getEmail();
-
+this.nameDistrict= entity.getNameDistrict();
+this.nameCity= entity.getNameCity();
     }
 }

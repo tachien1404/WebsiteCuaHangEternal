@@ -44,4 +44,10 @@ public class OrderDetailRestController {
     public OrderDetailDTO sum(@PathVariable Long id){
         return orderDetaiService.sumgia(id);
     }
+
+    @GetMapping("/count/{id}")
+    public Long count(@PathVariable Long id){
+     Long a=   orderDetaiService.sumsoluongmathang(id);
+        return a;
+    }
 }

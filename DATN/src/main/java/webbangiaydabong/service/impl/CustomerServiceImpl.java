@@ -37,7 +37,12 @@ public class CustomerServiceImpl implements CustomerService {
         if(dto.getAddress()!=null){
             customer.setAddress(dto.getAddress());
         }
-
+if(dto.getNameDistrict()!=null){
+    customer.setNameDistrict(dto.getNameDistrict());
+}
+if(dto.getNameCity()!=null){
+    customer.setNameCity(dto.getNameCity());
+}
         customerRepository.save(customer);
         return new CustomerDto( customerRepository.save(customer));
     }

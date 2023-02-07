@@ -16,4 +16,5 @@ public interface OrderDetaiService {
 	OrderDetailDTO saveOrEdit(OrderDetailDTO dto);
 	List<OrderDetailDTO> findByOderId(Long id);
 OrderDetailDTO sumgia(Long orderID);
+Long sumsoluongmathang(long id);
 }

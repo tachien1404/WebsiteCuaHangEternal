@@ -150,4 +150,10 @@ public class OrderDetaiServiceImpl implements OrderDetaiService {
             dto.setQuantity((int) sumquantity);
         return dto;
     }
+
+    @Override
+    public Long sumsoluongmathang(long id) {
+        long sum= orderDetailRepo.sumsoluongmathang(id);
+        return sum;
+    }
 }
