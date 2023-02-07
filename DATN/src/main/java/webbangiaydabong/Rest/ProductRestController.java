@@ -66,6 +66,22 @@ public class ProductRestController {
 
     @PostMapping()
     public ResponseEntity<ResponseObject> create(@RequestBody Product product) {
+        if(productService.checktrung(product)!= null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                    new ResponseObject(HttpStatus.BAD_REQUEST, "Đã có sản phẩm tồn tại",
+                            ""));
+        }
+        if(product.getName() == null || product.getCategory() == null || product.getHang() == null
+    || product.getSole() == null || product.getShoeLine() == null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                    new ResponseObject(HttpStatus.BAD_REQUEST, "Thiếu trường thuộc tính",
+                            ""));
+        }
+        if(product.getOutputprice() <=0){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                    new ResponseObject(HttpStatus.BAD_REQUEST, "Giá bán phải lớn hơn 0",
+                            ""));
+        }
         Date date = new Date();
         product.setCreateDate(date);
         product.setDelete(true);
