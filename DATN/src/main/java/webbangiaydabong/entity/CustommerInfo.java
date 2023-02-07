@@ -27,7 +27,6 @@ public class CustommerInfo {
 		private Long id;
 		@NotNull(message = "So dien thoai khong duoc bo trong")
 		private String sdt;
-		@NotNull(message = "Ho ten khong duoc bo trong")
 		private String name;
 		private String city;
 		private String nameCity;

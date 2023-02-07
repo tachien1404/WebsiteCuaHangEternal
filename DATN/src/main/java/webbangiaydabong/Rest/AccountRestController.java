@@ -30,6 +30,7 @@ import webbangiaydabong.entity.CustommerInfo;
 import webbangiaydabong.entity.ResponseObject;
 import webbangiaydabong.repository.AccountRepository;
 import webbangiaydabong.service.AccountService;
+import webbangiaydabong.service.CustommerInfoServie;
 import webbangiaydabong.service.UploadService;
 
 @RestController
@@ -37,6 +38,9 @@ import webbangiaydabong.service.UploadService;
 public class AccountRestController {
 @Autowired
 AccountService accountService;
+
+@Autowired
+CustommerInfoServie custommerInfoServie;
 
 @Autowired
 AccountRepository repository;
@@ -159,17 +163,9 @@ public HttpStatus upload(@RequestParam("file") MultipartFile multipartFile){
 		custommerInfonew.setWard(accountSignUp.getWard());
 		custommerInfonew.setAddress(accountSignUp.getAddress());
 		custommerInfonew.setAccount(dbAcc);
+		custommerInfonew.setDeafault(true);
 
-		Customer customernew = new Customer();
-		customernew.setSdt(dbAcc.getSdt());
-		customernew.setName(dbAcc.getFullname());
-		customernew.setCity(accountSignUp.getCity());
-		customernew.setNameCity(accountSignUp.getNameCity());
-		customernew.setDistrict(accountSignUp.getDistrict());
-		customernew.setNameDistrict(accountSignUp.getNameDistrict());
-		customernew.setWard(accountSignUp.getWard());
-		customernew.setAddress(accountSignUp.getAddress());
-
+		custommerInfoServie.create(custommerInfonew);
 		return ResponseEntity.ok().body(new ResponseObject(HttpStatus.OK, "Tạo mới thành công", ""));
 
 	}catch (Exception e){
