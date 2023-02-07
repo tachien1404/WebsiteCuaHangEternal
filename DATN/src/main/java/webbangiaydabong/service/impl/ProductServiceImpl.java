@@ -99,7 +99,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductDTO> serchName(ProductDTO dto) {
         String sql = "select new webbangiaydabong.dto.ProductDTO(o) from Product o ";
-        String whereClause = "where (1=1) AND o.status=1 ";
+        String whereClause = "where (1=1) AND o.status=1 AND o.delete=1 ";
         if (dto.getName() != null) {
             whereClause += " AND o.name like :name ";
         }
@@ -159,7 +159,7 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductDTO> locproductadmin(ProductDTO dto) {
         String sql = "select new webbangiaydabong.dto.ProductDTO(o) from Product o ";
 String oderby=" order by o.id desc";
-        String whereClause = "where (1=1)";
+        String whereClause = "where (1=1) AND o.delete=1 ";
         if (dto.getName() != null) {
             whereClause += " AND o.name like :name ";
         }
