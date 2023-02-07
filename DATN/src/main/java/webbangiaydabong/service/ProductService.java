@@ -11,6 +11,7 @@ import webbangiaydabong.entity.*;
 public interface ProductService {
 
     List<Product> findAll();
+    Product checktrung(Product p);
 
     List<Product> findByCategoryId(String categoryId);
 

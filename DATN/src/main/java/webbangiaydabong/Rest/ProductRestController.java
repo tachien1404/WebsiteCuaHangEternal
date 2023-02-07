@@ -167,7 +167,11 @@ public class ProductRestController {
                             ""));
         }
     }
-    ;
+    @PostMapping("/checktrung")
+    public Product check(@RequestBody Product p){
+        return productService.checktrung(p);
+    }
+
 
     @GetMapping("/getAllCategory")
     public List<Category> getAllCategory() {
