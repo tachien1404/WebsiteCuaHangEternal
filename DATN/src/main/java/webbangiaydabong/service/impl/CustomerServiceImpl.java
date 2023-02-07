@@ -15,59 +15,62 @@ import java.util.Optional;
 public class CustomerServiceImpl implements CustomerService {
     @Autowired
     CustomerRepository customerRepository;
+
     @Override
     public CustomerDto saveOrUpdate(Long id, CustomerDto dto) {
-        Customer customer=null;
-        if(id!=null){
-            Optional<Customer> optionalCustomer =customerRepository.findById(id);
-            if(optionalCustomer.isPresent()){
-                customer=optionalCustomer.get();
+        Customer customer = null;
+        if (id != null) {
+            Optional<Customer> optionalCustomer = customerRepository.findById(id);
+            if (optionalCustomer.isPresent()) {
+                customer = optionalCustomer.get();
             }
         }
-        if(customer==null){
-            customer=new Customer();
+        if (customer == null) {
+            customer = new Customer();
         }
-        if(dto.getName()!=null){
+        if (dto.getName() != null) {
             customer.setName(dto.getName());
         }
 
-        if(dto.getSdt()!=null){
+        if (dto.getSdt() != null) {
             customer.setSdt(dto.getSdt());
         }
-        if(dto.getAddress()!=null){
+        if (dto.getAddress() != null) {
             customer.setAddress(dto.getAddress());
         }
-if(dto.getNameDistrict()!=null){
-    customer.setNameDistrict(dto.getNameDistrict());
-}
-if(dto.getNameCity()!=null){
-    customer.setNameCity(dto.getNameCity());
-}
+        if (dto.getNameDistrict() != null) {
+            customer.setNameDistrict(dto.getNameDistrict());
+        }
+        if (dto.getNameCity() != null) {
+            customer.setNameCity(dto.getNameCity());
+        }
         customerRepository.save(customer);
-        return new CustomerDto( customerRepository.save(customer));
+        return new CustomerDto(customerRepository.save(customer));
     }
 
     @Override
     public CustomerDto searchName(String name) {
-        if(name!=null){
-            CustomerDto dto=customerRepository.searchName('%'+name+'%');
+        if (name != null) {
+            CustomerDto dto = customerRepository.searchName('%' + name + '%');
             return dto;
         }
         return null;
     }
+
     @Override
     public CustomerDto searchSdt(String sdt) {
-        if(sdt!=null){
-            CustomerDto dto=customerRepository.searchSdt('%'+sdt+'%');
+        if (sdt != null) {
+            CustomerDto dto = customerRepository.searchSdt('%' + sdt + '%');
             return dto;
         }
         return null;
     }
+
     @Override
     public CustomerDto getbyid(Long id) {
-        if(id!=null){
-         CustomerDto dto=  new CustomerDto(customerRepository.findById(id).get());
-         return dto;
+        if (id != null) {
+            CustomerDto dto = new CustomerDto(customerRepository.findById(id).get());
+            return dto;
         }
         return null;
     }
