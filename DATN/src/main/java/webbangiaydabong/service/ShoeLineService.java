@@ -15,4 +15,6 @@ public interface ShoeLineService {
     void delete(long id);
     Page<ShoeLine> findAll(int page, int shoeLine);
     List<ShoeLine> search(String keyword, String status);
+    ShoeLine findByName(String name);
+    ShoeLine save(ShoeLine shoeLine);
 }

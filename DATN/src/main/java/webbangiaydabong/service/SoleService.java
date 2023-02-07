@@ -15,4 +15,5 @@ public interface SoleService {
     Page<Sole> findAll(int page, int size);
     List<Sole> search(String keyword, String status);
     List<Sole>getall();
+    Sole findName(String name);
 }

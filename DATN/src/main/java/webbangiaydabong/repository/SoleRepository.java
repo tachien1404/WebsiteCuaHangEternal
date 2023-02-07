@@ -27,5 +27,5 @@ public interface SoleRepository extends JpaRepository<Sole,Long> {
 
 	List<Sole> findByNameLikeAndIsdeleteTrue(String string);
 	
-	
+	Sole findByName(String name);
 }

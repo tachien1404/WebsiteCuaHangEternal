@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import webbangiaydabong.entity.Brand;
 import webbangiaydabong.entity.Color;
+import webbangiaydabong.entity.ResponseObject;
 import webbangiaydabong.entity.Sole;
 import webbangiaydabong.service.SoleService;
 
@@ -90,5 +92,18 @@ public class SoleRestController {
 	public List<Sole>getAlll(){
 		List<Sole>getall=soleService.getall();
 		return getall;
+	}
+
+	@PostMapping("/create")
+	public ResponseEntity<ResponseObject> save(@RequestBody Sole sole){
+		if(soleService.findName(sole.getName()) != null){
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+					new ResponseObject(HttpStatus.BAD_REQUEST,
+							"Loại đinh giày đã tồn tại", ""));
+		}
+		sole.setIsdelete(true);
+		soleService.create(sole);
+		return ResponseEntity.ok().body(new ResponseObject(HttpStatus.OK,
+				"Tạo mới loại đinh giày thành công",""));
 	}
 }
