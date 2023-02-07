@@ -28,4 +28,6 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetail, Long>{
             "FROM OrderDetail o\n" +
             "WHERE o.order.id=:orderid")
     float sumgia(Long orderid);
+    @Query("select count(o.id) from OrderDetail o where o.order.id=:id")
+    Long sumsoluongmathang(long id);
 }
