@@ -82,4 +82,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "FROM  S_C_Details s\n" +
             "GROUP BY s.product.id")
         List<Object[]>adminproduct();
+@Query("Select o from Product o where o.name=:name and o.category.id=:category_id and o.hang.id=:brand_id and o.sole.id=:sole_id and o.shoeLine.id=:shoeline")
+    Product checktrung(String name, Long category_id, Long brand_id, Long sole_id, Long shoeline_id);
 }

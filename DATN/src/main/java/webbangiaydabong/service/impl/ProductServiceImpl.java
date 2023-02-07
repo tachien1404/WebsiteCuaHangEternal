@@ -33,7 +33,18 @@ public class ProductServiceImpl implements ProductService {
 		return productRepo.findByStatus();
 	}
 
-	@Override
+    @Override
+    public Product checktrung(Product product) {
+	    String name=product.getName();
+	    Long category_id=product.getCategory().getId();
+	    Long brand_id=product.getHang().getId();
+	    Long sole_id=product.getSole().getId();
+	    Long shoeline_id=product.getShoeLine().getId();
+	    Product p=productRepo.checktrung(name,category_id,brand_id,sole_id,shoeline_id);
+        return p;
+    }
+
+    @Override
 	public List<Product> findByCategoryId(String categoryId) {
 		return productRepo.finByCategoryId(categoryId);
 	}
